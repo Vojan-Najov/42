@@ -1,0 +1,307 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    subject.txt                                        :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ccartman <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/05/03 15:56:29 by ccartman          #+#    #+#              #
+#    Updated: 2021/05/05 23:52:34 by ccartman         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+Get Next Line
+
+Получить Следующую Строку
+
+Reading a line on a fd is way too tedious
+
+Чтение строки из файлового дескриптора слишком утомительно
+
+Summary: The aim of this project is to make you code a function that returns 
+a line ending with a newline, read from a file descriptor.
+
+Резюме: Цель этого проекта состоит в том, чтобы заставить вас закодировать 
+функцию, которая возвращает строку, заканчивающуюся новой строкой, считанной
+из файлового дескриптора.
+
+_______________________________________________________________________________
+
+Contents
+I Goals
+II Common Instructions
+III Mandatory part - Get_next_line
+IV Bonus part
+
+Содержание
+I Цели
+II Общие инструкции
+III Обязательная часть - Get_next_line
+IV Бонусная часть
+
+______________________________________________________________________________
+
+Chapter I
+Goals
+This project will not only allow you to add a very convenient function to your
+collection, but it will also allow you to learn a highly interesting
+new concept in C programming: static variables.
+
+Глава I
+Цели
+Этот проект не только позволит вам добавить очень удобную функцию в вашу
+коллекцию, но и позволит вам изучить очень интересную новую концепцию
+программирования на языке Си: статические переменные.
+
+____________________________________________________________________________
+
+Chapter II
+Common Instructions
+
+• Your project must be written in accordance with the Norm. If you
+have bonus files/functions, they are included in the norm check and you will
+receive a 0 if there is a norm error inside.
+
+• Your functions should not quit unexpectedly (segmentation fault, bus error,
+double free, etc) apart from undefined behaviors. If this happens,
+your project will be considered non functional and will receive a 0 during
+the evaluation.
+
+• All heap allocated memory space must be properly freed when necessary. No leaks
+will be tolerated.
+
+• If the subject requires it, you must submit a Makefile which will compile your
+source files to the required output with the flags -Wall, -Wextra and -Werror, and
+your Makefile must not relink.
+
+• Your Makefile must at least contain the rules $(NAME), all, clean, fclean and
+re.
+
+• To turn in bonuses to your project, you must include a rule bonus to your Makefile,
+which will add all the various headers, librairies or functions that are forbidden on
+the main part of the project. Bonuses must be in a different file _bonus.{c/h}.
+Mandatory and bonus part evaluation is done separately.
+
+• If your project allows you to use your libft, you must copy its sources and its
+associated Makefile in a libft folder with its associated Makefile. Your project’s
+Makefile must compile the library by using its Makefile, then compile the project.
+
+• We encourage you to create test programs for your project even though this work
+won’t have to be submitted and won’t be graded. It will give you a chance
+to easily test your work and your peers’ work. You will find those tests especially
+useful during your defence. Indeed, during defence, you are free to use your tests
+and/or the tests of the peer you are evaluating.
+
+• Submit your work to your assigned git repository. Only the work in the git
+repository will be graded. If Deepthought is assigned to grade your work,
+it will be done after your peer-evaluations. If an error happens in any section
+of your work during Deepthought’s grading, the evaluation will stop.
+
+Глава II
+Общие инструкции
+
+• Ваш проект должен быть написан в соответствии с Нормой. Если у вас есть
+бонусные файлы/функции, они включены в проверку нормы, и вы получите 0,
+если внутри есть ошибка нормы.
+
+• Ваши функции не должны завершаться неожиданно (ошибка сегментации, ошибка шины,
+двойное свободное и т. Д.), Кроме неопределенного поведения. Если это произойдет,
+ваш проект будет считаться нефункциональным и получит 0 во время оценки.
+
+• При необходимости все пространство памяти, выделенное для кучи, должно быть
+правильно освобождено. Утечки не допускаются.
+
+• Если субъект требует этого, вы должны отправить файл Makefile, который
+скомпилирует ваши исходные файлы в требуемый вывод с флагами
+-Wall, -Wextra и-Werror, и ваш файл Makefile не должен повторно связываться.
+
+• Ваш файл Makefile должен, по крайней мере, содержать правила $(NAME),
+all, clean, fclean и re.
+
+• Чтобы включить бонусы в свой проект, вы должны включить бонус правила в свой
+файл Makefile, который добавит все различные заголовки, библиотеки или функции,
+которые запрещены в основной части проекта. Бонусы должны быть в другом файле
+_bonus.{c/h}. Обязательная и бонусная части оцениваются отдельно.
+
+• Если ваш проект позволяет вам использовать ваш libft, вы должны скопировать
+его исходные файлы и связанный с ним файл Makefile в папку libft с соответствующим
+файлом Makefile. Ваш проект Makefile должен скомпилировать библиотеку, используя
+ее Makefile, а затем скомпилировать проект.
+
+• Мы рекомендуем вам создавать тестовые программы для вашего проекта, даже если
+эта работа не будет представлена и не будет оценена. Это даст вам возможность
+легко проверить свою работу и работу ваших коллег. Вы найдете эти тесты особенно
+полезными во время вашей защиты. Действительно, во время защиты вы можете свободно
+использовать свои тесты и/или тесты сверстника, которого вы оцениваете.
+
+• Отправьте свою работу в назначенный вам репозиторий git. Оцениваться будет только 
+работа в репозитории git. Если Deepthought назначена для оценки вашей работы, это
+будет сделано после оценки ваших коллег. Если в каком-либо разделе вашей работы
+во время Оценка глубокой мысли, оценка прекратится.
+
+_______________________________________________________________________________
+
+
+Chapter III
+
+Mandatory part - Get_next_line
+
+Function name get_next_line
+
+Prototype 		int get_next_line(int fd, char **line);
+
+Turn in files 	get_next_line.c, get_next_line_utils.c,
+				get_next_line.h
+
+Parameters 		#1. file descriptor for reading
+				#2. The value of what has been read
+Return value 	1 : A line has been read
+				0 : EOF has been reached
+				-1 : An error happened
+
+External functs. 	read, malloc, free
+
+Description 	Write a function which returns a line read from a
+				file descriptor, without the newline.
+
+• Calling your function get_next_line in a loop will then allow you to read the text
+available on a file descriptor one line at a time until the EOF.
+
+• Make sure that your function behaves well when it reads from a file and when it
+reads from the standard input.
+
+• libft is not allowed for this project. You must add a get_next_line_utils.c file
+which will contain the functions that are needed for your get_next_line to work.
+
+• Your program must compile with the flag -D BUFFER_SIZE=xx. which will be used
+as the buffer size for the read calls in your get_next_line. This value will be
+modified by your evaluators and by moulinette.
+
+• Compilation will be done this way : gcc -Wall -Wextra -Werror -D BUFFER_SIZE=32
+get_next_line.c get_next_line_utils.c
+
+• Your read must use the BUFFER_SIZE defined during compilation to read from
+a file or from stdin.
+
+• In the header file get_next_line.h you must have at least the prototype of the
+function get_next_line.
+
+Описание		Напишите функцию, которая возвращает строку, считанную из
+				файлового дескриптора, без новой строки.
+
+• Вызов функции get_next_line в цикле позволит вам прочитать текст
+доступный из файлового дескриптора по одной строке за раз до EOF.
+
+• Убедитесь, что ваша функция ведет себя хорошо при чтении из файла и при
+чтении из стандартного ввода.
+
+• libft не допускается для этого проекта. Вы должны добавить файл
+get_next_line_utils.c, который будет содержать функции, необходимые для работы
+вашей get_next_line.
+
+• Ваша программа должна компилироваться с флагом -D BUFFER_SIZE=xx, который
+будет использоваться в качестве размера буфера для вызовов чтения в вашей
+get_next_line. Это значение будет изменено вашими оценщиками и компанией moulinette.
+
+• Компиляция будет выполнена следующим образом : gcc -Wall -Wextra -Werror -D BUFFER_SIZE=32
+get_next_line.c get_next_line_utils.c
+
+• Для чтения из файла или из стандартного потока ввода  необходимо использовать размер
+БУФЕРА, определенный во время компиляции.
+
+• В заголовочном файле get_next_line.h у вас должен быть хотя бы прототип
+функции get_next_line.
+
+
+
+
+
+
+Does your function still work if the BUFFER_SIZE value is 9999? And
+if the BUFFER_SIZE value is 1? And 10000000? Do you know why?
+
+You should try to read as little as possible each time get_next_line
+is called. If you encounter a newline, you have to return the
+current line. Don’t read the whole file and then process each line.
+
+Don’t turn in your project without testing. There are many tests to
+run, cover your bases. Try to read from a file, from a redirection,
+from standard input. How does your program behave when you send a
+newline to the standard output? And CTRL-D?
+
+• We consider that get_next_line has an undefined behavior if, between two calls,
+the same file descriptor switches to a different file before EOF has been reached on
+the first fd.
+
+• lseek is not an allowed function. File reading must be done only once.
+
+• Finally we consider that get_next_line has an undefined behavior when reading
+from a binary file. However, if you wish, you can make this behavior coherent.
+
+• Global variables are forbidden.
+A good start would be to know what a static variable is:
+https://en.wikipedia.org/wiki/Static_variable
+
+
+Ваша функция все еще работает, если значение BUFFER_SIZE равно 9999? А
+если значение BUFFER_SIZE равно 1? А 10000000? Вы знаете, почему?
+
+Вы должны стараться читать как можно меньше каждый раз, когда
+вызывается get_next_line. Если вы столкнулись с новой строкой, вы должны вернуть
+текущую строку. Не читайте весь файл, а затем обрабатывайте каждую строку.
+
+Не сдавайте свой проект без тестирования. Есть много тестов для
+запуска, охватывающих ваши базы. Попробуйте прочитать из файла, из перенаправления,
+из стандартного ввода. Как ведет себя ваша программа, когда вы отправляете новую
+строку в стандартный вывод? А CTRL-D?
+
+• Мы считаем, что get_next_line имеет неопределенное поведение, если между двумя вызовами один и
+тот же файловый дескриптор переключается в другой файл до того, как EOF будет достигнут на
+первом fd.
+
+• lseek не является разрешенной функцией. Чтение файлов должно выполняться только один раз.
+
+• Наконец, мы считаем, что get_next_line имеет неопределенное поведение при чтении
+из двоичного файла. Однако, если вы хотите, вы можете сделать это поведение последовательным.
+
+• Глобальные переменные запрещены.
+
+Хорошим началом было бы узнать, что такое статическая переменная:
+https://en.wikipedia.org/wiki/Static_variable
+
+
+__________________________________________________________________________________________
+
+
+Chapter IV
+Bonus part
+
+The project get_next_line is straightforward and leaves very little room for bonuses,
+but I am sure that you have a lot of imagination. If you aced perfectly the mandatory
+part, then by all means complete this bonus part to go further. I repeat, no bonus will
+be taken into consideration if the mandatory part isn’t perfect.
+Turn-in all 3 initial files with _bonus for this part.
+
+• To succeed get_next_line with a single static variable.
+
+• To be able to manage multiple file descriptor with your get_next_line.
+For example, if the file descriptors 3, 4 and 5 are accessible for reading,
+then you can call get_next_line once on 3, once on 4, once again on 3
+then once on 5 etc. without losing the reading thread on each of the descriptors.
+
+
+Глава IV
+Бонусная часть
+
+Проект get_next_line прост и оставляет очень мало места для бонусов,
+но я уверен, что у вас много воображения. Если вы отлично выполнили обязательную
+часть, то непременно завершите эту бонусную часть, чтобы идти дальше.
+Повторяю, никакой бонус не будет принят во внимание, если обязательная часть не идеальна.
+Включите все 3 исходных файла с _bonus для этой части.
+
+• Для достижения успеха get_next_line с одной статической переменной.
+
+• Чтобы иметь возможность управлять несколькими файловыми дескрипторами с помощью get_next_line.
+Например, если файловые дескрипторы 3, 4 и 5 доступны для чтения, то вы можете вызвать
+get_next_line один раз на 3, один раз на 4, еще раз на 3, затем один раз на 5 и т. Д.
+без потери потока чтения для каждого из дескрипторов.
