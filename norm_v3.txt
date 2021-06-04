@@ -1,0 +1,535 @@
+The Norm
+
+Version 3
+
+Summary: This document describes the applicable standard (Norm) at 42. A
+programming standard defines a set of rules to follow when writing code. The Norm
+applies to all C projects within the Inner Circle by default, and to any project where it’s
+specified.
+
+Норма
+
+Версия 3
+
+Резюме: В этом документе описывается применимый стандарт (норма) на уровне 42.
+Стандарт программирования определяет набор правил, которым следует следовать при написании кода. Норма
+применяется ко всем проектам C в пределах Внутреннего круга по умолчанию, а также к любому проекту, в котором она
+указана.
+
+_____________________________________________
+
+
+Contents
+I Foreword 2
+II The Norm 3
+II.1 Denomination . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+II.2 Formatting . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+II.3 Functions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+II.4 Typedef, struct, enum and union . . . . . . . . . . . . . . . . . . 
+II.5 Headers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+II.6 Macros and Pre-processors . . . . . . . . . . . . . . . . . . . . .
+II.7 Forbidden stuff! . . . . . . . . . . . . . . . . . . . . . . . . . 
+II.8 Comments . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+II.9 Files . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+II.10 Makefile . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+II.11 Why ? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+
+
+___________________________________________________
+
+
+Chapter I
+Foreword
+The Norm is in python and open source.
+Its repository is available at https://github.com/42School/norminette.
+Pull requests, suggestions and issues are welcome!
+
+Глава I
+Предисловие
+Норма в python и с открытым исходным кодом.
+Его репозиторий доступен по адресу https://github.com/42School/norminette.
+Ваши запросы, предложения и вопросы приветствуются!
+
+_________________________________________________
+
+
+Chapter II
+
+The Norm
+
+II.1 Denomination
+
+
+• A structure’s name must start by s_.
+• Имя структуры должно начинаться с s_.
+
+• A typedef’s name must start by t_.
+• Имя typedef должно начинаться с t_.
+
+• A union’s name must start by u_.
+• Имя объединения должно начинаться с u_.
+
+• An enum’s name must start by e_.
+• Имя перечисления должно начинаться с e_.
+
+• A global’s name must start by g_.
+• Имя глобала должно начинаться с g_.
+
+• Variables and functions names can only contain lowercases, digits and ’_’ (Unix
+Case).
+• Имена переменных и функций могут содержать только строчные буквы, цифры и " _ " (Unix
+Случай).
+
+• Files and directories names can only contain lowercases, digits and ’_’ (Unix Case).
+• Имена файлов и каталогов могут содержать только строчные буквы, цифры и " _ " (случай Unix).
+
+• Characters that aren’t part of the standard ASCII table are forbidden.
+• Символы, не входящие в стандартную таблицу ASCII, запрещены.
+
+• Variables, functions, and any other identifier must use snake case. No capital letters,
+and each word separated by an underscore.
+• Переменные, функции и любой другой идентификатор должны быть написаны в змеином виде. Без заглавных букв,
+и каждое слово разделено подчеркиванием.
+
+• All identifiers (functions, macros, types, variables, etc.) must be in English.
+• Все идентификаторы (функции, макросы, типы, переменные и т.д.) должны быть на английском языке.
+
+• Objects (variables, functions, macros, types, files or directories) must have the most
+explicit or most mnemonic names as possible.
+• Объекты (переменные, функции, макросы, типы, файлы или каталоги) должны иметь
+как можно более явные или наиболее мнемонические имена.
+
+• Using global variables that are not marked const and static is forbidden and is
+considered a norm error, unless the project explicitly allows them.
+• Использование глобальных переменных, которые не помечены как const и static, запрещено и
+считается ошибкой нормы, если только проект явно не разрешает их.
+
+• The file must compile. A file that doesn’t compile isn’t expected to pass the Norm.
+• Файл должен быть скомпилирован. Файл, который не компилируется, не должен проходить норму.
+
+
+II.2 Formatting
+
+
+• You must indent your code with 4-space tabulations. This is not the same as 4
+average spaces, we’re talking about real tabulations here.
+• Вы должны сделать отступ в коде с помощью таба в 4 пробела. Это не то же самое, что 4
+средних пространства, здесь мы говорим о реальной табуляции.
+
+• Each function must be maximum 25 lines, not counting the function’s own curly
+brackets.
+• Каждая функция должна содержать не более 25 строк, не считая собственных фигурных
+скобок функции.
+
+• Each line must be at most 80 columns wide, comments included. Warning: a
+tabulation doesn’t count as a column, but as the number of spaces it represents.
+• Каждая строка должна иметь ширину не более 80 столбцов, включая комментарии. Предупреждение:
+таб учитывается не как столбец, а как количество пробелов, которые она представляет.
+
+• Each function must be separated by a newline. Any comment or preprocessor
+instruction can be right above the function. The newline is after the previous
+function.
+• Каждая функция должна быть разделена новой строкой. Любой комментарий или
+инструкция препроцессора могут находиться прямо над функцией. Новая строка находится после предыдущей
+функции.
+
+• One instruction per line.
+• Одна инструкция на строку.
+
+• An empty line must be empty: no spaces or tabulations.
+• Пустая строка должна быть пустой: никаких пробелов или таблиц.
+
+• A line can never end with spaces or tabulations.
+• Строка никогда не может заканчиваться пробелами или таблицами.
+
+• You can never have two consecutive spaces.
+• У вас никогда не может быть двух последовательных пробелов.
+
+• You need to start a new line after each curly bracket or end of control structure.
+• Вам нужно начинать новую строку после каждой фигурной скобки или конца структуры управления.
+
+• Unless it’s the end of a line, each comma or semi-colon must be followed by a space.
+• Если это не конец строки, за каждой запятой или точкой с запятой должен следовать пробел.
+
+• Each operator or operand must be separated by one - and only one - space.
+• Каждый оператор или операнд должен быть разделен одним - и только одним - пробелом.
+
+• Each C keyword must be followed by a space, except for keywords for types (such
+as int, char, float, etc.), as well as sizeof.
+• За каждым ключевым словом C должен следовать пробел, за исключением ключевых слов для типов (таких
+как int, char, float и т. Д.), А также sizeof.
+
+• Each variable declaration must be indented on the same column for its scope.
+• Каждое объявление переменной должно иметь отступ в одном столбце для своей области видимости.
+
+• The asterisks that go with pointers must be stuck to variable names.
+• Звездочки, которые идут с указателями, должны быть прикреплены к именам переменных.
+
+• One single variable declaration per line.
+• Одно объявление переменной в строке.
+
+• Declaration and an initialisation cannot be on the same line, except for global
+variables (when allowed), static variables, and constants.
+• Объявление и инициализация не могут находиться в одной строке, за исключением глобальных
+переменных (если это разрешено), статических переменных и констант.
+
+• Declarations must be at the beginning of a function.
+• Объявления должны быть в начале функции.
+
+• In a function, you must place an empty line between variable declarations and the
+remaining of the function. No other empty lines are allowed in a function.
+• В функции необходимо поместить пустую строку между объявлениями переменных и
+остальной частью функции. Никакие другие пустые строки в функции не допускаются.
+
+• Multiple assignments are strictly forbidden.
+• Несколько заданий строго запрещены.
+
+• You may add a new line after an instruction or control structure, but you’ll have
+to add an indentation with brackets or assignment operator. Operators must be at
+the beginning of a line.
+• Вы можете добавить новую строку после инструкции или структуры управления, но вам придется
+добавить отступ с помощью скобок или оператора присваивания. Операторы должны находиться в
+начале строки.
+
+• Control structures (if, while..) must have braces, unless they contain a single line
+or a single condition.
+• Структуры управления (if, while..) должны иметь фигурные скобки, если только они не содержат одной строки
+или одного условия.
+
+General example:
+
+int				g_global;
+typedef struct	s_struct
+{
+	char	*my_string;
+	int		i;
+}				t_struct;
+struct			s_other_struct;
+
+int		main(void)
+{
+	int		i;
+	char	c;
+
+	return (i);
+}
+
+___________________________________________________
+
+
+II.3 Functions
+
+• A function can take 4 named parameters maximum.
+• Функция может принимать максимум 4 именованных параметра.
+
+• A function that doesn’t take arguments must be explicitly prototyped with the
+word "void" as the argument.
+• Функция, которая не принимает аргументы, должна быть явно прототипирована со
+словом "void" в качестве аргумента.
+
+• Parameters in functions’ prototypes must be named.
+• Параметры в прототипах функций должны быть названы.
+
+• Each function must be separated from the next by an empty line.
+• Каждая функция должна быть отделена от следующей пустой строкой.
+
+• You can’t declare more than 5 variables per function.
+• Вы не можете объявить более 5 переменных для каждой функции.
+
+• Return of a function has to be between parenthesis.
+• Возврат функции должен быть заключен в скобки.
+
+• Each function must have a single tabulation between its return type and its name.
+• Каждая функция должна иметь одну таблицу между типом возвращаемого значения и именем.
+
+int	my_func(int arg1, char arg2, char *arg3)
+{
+	return (my_val);
+}
+int	func2(void)
+{
+	return ;
+}
+________________________________________________
+
+
+II.4 Typedef, struct, enum and union
+
+• Add a tabulation when declaring a struct, enum or union.
+• Добавьте таблицу при объявлении структуры, перечисления или объединения.
+
+• When declaring a variable of type struct, enum or union, add a single space in the
+type.
+• При объявлении переменной типа struct, enum или union добавьте в
+тип один пробел.
+
+• When declaring a struct, union or enum with a typedef, all indentation rules apply.
+You must align the typedef’s name with the struct/union/enum’s name.
+• При объявлении структуры, объединения или перечисления с помощью typedef применяются все правила отступов.
+Вы должны выровнять имя typedef с именем структуры/объединения/перечисления.
+
+• You must indent all structures’ names on the same column for their scope.
+• Вы должны отступить от имен всех структур в одном столбце для их области действия.
+
+• You cannot declare a structure in a .c file.
+• Вы не можете объявить структуру в файле .c.
+
+
+________________________________________________
+
+
+II.5 Headers
+
+
+• The things allowed in header files are: header inclusions (system or not), declarations,
+ defines, prototypes and macros.
+• В заголовочных файлах разрешены следующие вещи: включения заголовков (системные или нет),
+объявления, определения, прототипы и макросы.
+
+• All includes must be at the beginning of the file.
+• Все includes должны быть в начале файла.
+
+• You cannot include a C file.
+• Вы не можете включить файл C.
+
+• Header files must be protected from double inclusions. If the file is ft_foo.h, its
+bystander macro is FT_FOO_H.
+• Заголовочные файлы должны быть защищены от двойных включений. Если файл ft_foo.h, то его
+макрос наблюдателя-FT_FOO_H.
+
+• Unused header inclusions (.h) are forbidden.
+• Неиспользуемые включения заголовка (.h) запрещены.
+
+• All header inclusions must be justified in a .c file as well as in a .h file.
+• Все включения заголовков должны быть обоснованы как в файле .c, так и в файле .h.
+
+#ifndef FT_HEADER_H
+# define FT_HEADER_H
+# include <stdlib.h>
+# include <stdio.h>
+# define FOO "bar"
+
+int			g_variable;
+struct	s_struct;
+
+#endif
+
+__________________________________________________
+
+
+II.6 Macros and Pre-processors
+
+
+• Preprocessor constants (or #define) you create must be used only for literal and
+constant values.
+• Созданные вами константы препроцессора (или #define) должны использоваться только для литеральных и
+постоянных значений.
+
+• All #define created to bypass the norm and/or obfuscate code are forbidden. This
+part must be checked by a human.
+• Все #define, созданные для обхода нормы и/или запутывания кода, запрещены. Эта
+часть должна быть проверена человеком.
+
+• You can use macros available in standard libraries, only if those ones are allowed
+in the scope of the given project.
+• Вы можете использовать макросы, доступные в стандартных библиотеках, только если они разрешены
+в рамках данного проекта.
+
+• Multiline macros are forbidden.
+• Многострочные макросы запрещены.
+
+• Macro names must be all uppercase.
+• Имена макросов должны быть прописными.
+
+• You must indent characters following #if, #ifdef or #ifndef.
+• Вы должны отступать от символов, следующих за #if, #ifdef или #ifndef.
+
+
+__________________________________________________
+
+
+II.7 Forbidden stuff!
+
+
+• You’re not allowed to use:
+• Вам не разрешается использовать:
+
+	◦ for
+	◦ do...while
+	◦ switch
+	◦ case
+	◦ gotoa
+
+• Ternary operators such as ‘?’.
+
+• VLAs - Variable Length Arrays.
+
+• Implicit type in variable declarations
+
+int	main(int argc, char **argv)
+{
+	int i;
+	char string[argc]; // This is a VLA
+
+	i = argc > 5 ? 0 : 1 // Ternary
+}
+
+
+__________________________________________________
+
+
+II.8 Comments
+
+
+• Comments cannot be inside functions’ bodies. Comments must be at the end of a
+line, or on their own line.
+• Комментарии не могут находиться внутри тел функций. Комментарии должны быть в конце
+строки или в отдельной строке
+
+• Your comments must be in English. And they must be useful.
+• Ваши комментарии должны быть на английском языке. И они должны быть полезны.
+
+• A comment cannot justify a "bastard" function.
+• Комментарий не может оправдать функцию "ублюдок".
+
+__________________________________________________
+
+
+II.9 Files
+
+
+• You cannot include a .c file.
+• Вы не можете включить файл .c.
+
+• You cannot have more than 5 function-definitions in a .c file.
+• В файле .c не может быть более 5 определений функций.
+
+_________________________________________________
+
+
+II.10 Makefile
+
+
+Makefiles aren’t checked by the Norm, and must be checked during evaluation by the
+student.
+Файлы Makefile не проверяются по норме и должны быть проверены во время оценки
+студентом.
+
+• The $(NAME), clean, fclean, re and all rules are mandatory.
+• $(ИМЯ), clean, fclean, re и все правила являются обязательными.
+
+• If the makefile relinks, the project will be considered non-functional.
+• Если файл makefile повторно ссылается, проект будет считаться нефункциональным.
+
+• In the case of a multibinary project, in addition to the above rules, you must have a
+rule that compiles both binaries as well as a specific rule for each binary compiled.
+• В случае многобинарного проекта, в дополнение к вышеуказанным правилам, у вас должно быть
+правило, которое компилирует оба двоичных файла, а также конкретное правило для каждого
+скомпилированного двоичного файла.
+
+• In the case of a project that calls a function from a non-system library (e.g.: libft),
+your makefile must compile this library automatically.
+• В случае проекта, который вызывает функцию из несистемной библиотеки (например: lift),
+ваш файл makefile должен автоматически компилировать эту библиотеку.
+
+• All source files you need to compile your project must be explicitly named in your
+Makefile.
+• Все исходные файлы, необходимые для компиляции проекта, должны быть явно названы в
+Make-файл.
+
+
+__________________________________________________
+
+
+II.11 Why ?
+
+
+The Norm has been carefully crafted to fulfill many pedagogical needs. Here are the most
+important reasons for all the choices above:
+
+Норма была тщательно разработана для удовлетворения многих педагогических потребностей. Вот наиболее
+важные причины для всех вышеперечисленных вариантов:
+
+• Sequencing: coding implies splitting a big and complex task in a long series of
+elementary instructions. All these instructions will be executed in sequence: one
+after another. A beginner that starts creating software needs a simple and clear
+architecture for their project, with a full understanding of all individual instructions
+and the precise order of execution. Cryptic language syntaxes that do multiple
+instructions apparently at the same time are confusing, functions that try to address
+multiple tasks mixed in the same portion of code are source of errors.
+The Norm asks you to create simple pieces of code, where the unique task of each
+piece can be clearly understood and verified, and where the sequence of all the
+executed instructions leaves no doubt. That’s why we ask for 25 lines maximum in
+functions, also why for, do .. while, or ternaries are forbidden.
+
+• Последовательность: кодирование подразумевает разделение большой и сложной задачи на длинный ряд
+элементарных инструкций. Все эти инструкции будут выполняться последовательно: одна
+за другой. Новичку, который начинает создавать программное обеспечение, нужна простая и понятная
+архитектура для своего проекта, с полным пониманием всех отдельных инструкций
+и точным порядком выполнения. Загадочные синтаксисы языка, которые делают несколько
+инструкции, по-видимому, в то же время сбивают с толку, функции, которые пытаются решить
+несколько задач, смешанных в одной и той же части кода, являются источником ошибок.
+Норма просит вас создать простые фрагменты кода, где уникальная задача каждого
+фрагмента может быть четко понята и проверена, и где последовательность всех
+выполняемых инструкций не оставляет сомнений. Вот почему мы просим максимум 25 строк в
+функциях, а также почему for, do .. while, или троичные запрещены.
+
+
+
+• Look and Feel: while exchanging with your friends and workmates during the normal
+peer-learning process, and also during the peer-evaluations, you do not want
+to spend time to decrypt their code, but directly talk about the logic of the piece
+of code.
+The Norm asks you to use a specific look and feel, providing instructions for the
+naming of the functions and variables, indentation, brace rules, tab and spaces at
+many places... . This will allow you to smoothly have a look at other’s codes that
+will look familiar, and get directly to the point instead of spending time to read the
+code before understanding it. The Norm also comes as a trademark. As part of the
+42 community, you will be able to recognize code written by another 42 student or
+alumni when you’ll be in the labor market.
+
+• Внешний вид: во время обмена мнениями с друзьями и коллегами во время обычного
+процесса обучения коллег, а также во время экспертных оценок вы не хотите
+тратить время на расшифровку их кода, а прямо говорите о логике фрагмента
+кода.
+Норма просит вас использовать определенный внешний вид, предоставляя инструкции по
+именованию функций и переменных, отступам, правилам скобок, вкладкам и пробелам во
+многих местах... Это позволит вам плавно взглянуть на чужие коды, которые
+будут выглядеть знакомыми, и перейти непосредственно к делу, вместо того чтобы тратить время на чтение
+код, прежде чем понять его. Норма также является товарным знаком. Как часть
+сообщества 42, вы сможете распознать код, написанный другим студентом или
+выпускником 42, когда вы будете на рынке труда.
+
+
+
+• Long-term vision: making the effort to write understandable code is the best way
+to maintain it. Each time that someone else, including you, has to fix a bug or
+add a new feature they won’t have to lose their precious time trying to figure out
+what it does if previously you did things in the right way. This will avoid situations
+where pieces of code stop being maintained just because it is time-consuming, and
+that can make the difference when we talk about having a successful product in the
+market. The sooner you learn to do so, the better.
+
+• Долгосрочное видение: усилия по написанию понятного кода-лучший способ
+его поддержания. Каждый раз, когда кто-то другой, включая вас, должен исправить ошибку или
+добавить новую функцию, им не придется терять свое драгоценное время, пытаясь выяснить
+, что она делает, если раньше вы делали все правильно. Это позволит избежать ситуаций
+где фрагменты кода перестают поддерживаться только потому, что это отнимает много времени, и
+это может иметь значение, когда мы говорим о наличии успешного продукта на
+рынке. Чем скорее вы научитесь этому, тем лучше.
+
+
+
+• References: you may think that some, or all, the rules included on the Norm are
+arbitrary, but we actually thought and read about what to do and how to do it.
+We highly encourage you to Google why the functions should be short and just do
+one thing, why the name of the variables should make sense, why lines shouldn’t
+be longer than 80 columns wide, why a function should not take many parameters,
+why comments should be useful, etc, etc, etc...
+
+• Ссылки: вы можете подумать, что некоторые или все правила, включенные в Норму, являются
+произвольными, но мы на самом деле думали и читали о том, что делать и как это делать.
+Мы настоятельно рекомендуем вам погуглить, почему функции должны быть короткими и делать только
+одно, почему имена переменных должны иметь смысл, почему строки не должны
+быть длиннее 80 столбцов в ширину, почему функция не должна принимать много параметров,
+почему комментарии должны быть полезны и т. Д., и т. Д., и т. Д...
