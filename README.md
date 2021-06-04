@@ -2,6 +2,8 @@ ecole 42 projects
 
 Projects:
 
-0) libft
+0. libft
 
-1) get_next_line
+1. get_next_line
+
+2. printf in progress
