@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 16:38:28 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/05 14:58:54 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/05 15:29:04 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft.h"
+# include <stdio.h>
 
 int		ft_is_conversion_type(char c);
 

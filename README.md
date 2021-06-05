@@ -1,6 +1,6 @@
 ecole 42 projects
 
-Projects:
+42cursus:
 
 0. libft
 
