@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 17:41:02 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/05 14:58:50 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/05 15:34:48 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_list	*ft_split_str_by_percentage(const char *fmt)
 	t_list		*lst;
 
 	lst = NULL;
+	if (!*fmt)
+		return (ft_lstnew(ft_strndup(ptr, 0)));
 	ptr = fmt;
 	while (*fmt)
 	{
@@ -38,7 +40,8 @@ t_list	*ft_split_str_by_percentage(const char *fmt)
 	return (lst);
 }
 
-/* test split
+/*
+test split
 
 void ft_lstitte(t_list *lst)
 {
