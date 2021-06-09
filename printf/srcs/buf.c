@@ -92,7 +92,65 @@ char    *buf_add_fmt(const char *fmt, va_list *ap)
         p = buf_add(s, strlen(s));
         free(s);
         return (p);
+    }
+    else if (*fmt == 'u')
+    {
+        char        *s;
+        unsigned    n;
+        char        *p;
+
+        n = va_arg(*ap, unsigned);
+        s = ft_utoa_base(n, 10);
+        p = buf_add(s, strlen(s));
+        free(s);
+        return (p);
     }   
+    else if (*fmt == 'x')
+    {
+        char        *s;
+        unsigned    n;
+        char        *p;
+
+        n = va_arg(*ap, unsigned);
+        s = ft_utoa_base(n, 16);
+        p = buf_add(s, strlen(s));
+        free(s);
+        return (p);
+    }
+    else if (*fmt == 'X')
+    {
+        char        *s;
+        unsigned    n;
+        char        *p;
+
+        n = va_arg(*ap, unsigned);
+        s = ft_utoa_base(n, 16);
+        p = s;
+        while (*p)
+        {
+            *p = ft_toupper(*p);
+            ++p;
+        }
+        p = buf_add(s, strlen(s));
+        free(s);
+        return (p);
+    }
+    else if (*fmt == 'p')
+    {
+        char            *s;
+        unsigned long    n;
+        char            *p;
+
+        n = va_arg(*ap, unsigned long);
+        s = ft_ultoa_base(n, 16);
+        p = buf_add("0x", 2);
+        if (!p)
+            return (NULL);
+        p = buf_add(s, strlen(s));
+        free(s);
+        return (p);
+    }
+
     else
         return (NULL);
 }
@@ -101,7 +159,6 @@ char    *buf_add_fmt(const char *fmt, va_list *ap)
 
 int ft_printf(const char *fmt, ...)
 {
-    char    *str;
     va_list ap;
 
     if (!fmt)
@@ -109,24 +166,19 @@ int ft_printf(const char *fmt, ...)
         ft_printf("null\n");
         return (-1);
     }
-    str = buf_init();
-    if (!str)
+    if (buf_init() == NULL)
         return (-1);
     va_start(ap, fmt);
     while (*fmt)
     {
         if (*fmt != '%')
         {
-            str = buf_add(fmt, 1);
-            if (!str)
-                return(-1);
-        }
-        else
-        {
-            str = buf_add_fmt(++fmt, &ap);
-            if (!str)
+            if (buf_add(fmt, 1) == NULL)
                 return (-1);
         }
+        else
+            if (buf_add_fmt(++fmt, &ap) == NULL)
+                return (-1);
         ++fmt;
     }
     va_end(ap);
@@ -140,12 +192,23 @@ int main(int argc, char **argv)
     if (argc == 2)
     {
         ft_printf(argv[1]);
+        ft_printf("\n");
     }
     else if (argc == 1)
     {
         ft_printf("hello %c 123\n", 'D');
         ft_printf("hello %s 123\n", "BOB");
         ft_printf("hello %c 1 %s 2 %d 3 %i 4\n", 'D', "BOB", 192, -1212);
+        ft_printf("hell %u gg\n", 221232323);
+        ft_printf("hel %x ooo %X ooo\n", 4877, 3478347);
+        printf("hel %x ooo %X ooo\n", 4877, 3478347);
+        printf("%lu\n", sizeof(void *));
+
+        char *s;
+        s = malloc(1);
+        ft_printf("%p\n", s);
+        printf("%p\n", s);
+        free (s);
     }
     else
         ft_printf(NULL);

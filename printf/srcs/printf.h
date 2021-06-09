@@ -25,4 +25,9 @@ t_list	*ft_split_str_by_percentage(const char *fmt);
 
 char	*ft_strndup(const char *str, size_t n);
 
+char    *ft_utoa_base(unsigned n, unsigned base);
+
+char    *ft_ultoa_base(unsigned long n, unsigned base);
+
+
 #endif
