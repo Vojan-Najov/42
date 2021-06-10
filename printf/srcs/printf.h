@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 16:38:28 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/05 15:29:04 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/10 18:37:29 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,29 @@
 # include <unistd.h>
 # include "libft.h"
 # include <stdio.h>
+
+typedef struct	s_fws
+{
+	unsigned char	zero;
+	unsigned char	dash;
+	unsigned char	dot;
+	int				width;
+	int				prec;
+}				t_fws;
+
+void	*ft_realloc(void *mptr, size_t size, size_t memsize);
+
+char	*buf_init();
+
+char	*buf_add(const char *str, unsigned k);
+
+int		buf_output();
+
+int		buf_error();
+
+char	*ft_parse(t_fws *fws, const char *fmt, va_list *ap);
+
+char	*ft_fmt_handle(t_fws *fws, const char *fmt, va_list *ap);
 
 int		ft_is_conversion_type(char c);
 
