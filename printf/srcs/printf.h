@@ -6,20 +6,20 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 16:38:28 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/10 18:37:29 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:30:23 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PRINTF_H
 # define PRINTF_H
+# define BUFFER_SIZE 1024
 
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft.h"
-# include <stdio.h>
 
-typedef struct	s_fws
+typedef struct s_fws
 {
 	unsigned char	zero;
 	unsigned char	dash;
@@ -28,29 +28,36 @@ typedef struct	s_fws
 	int				prec;
 }				t_fws;
 
+int		ft_max(int a, int b);
+
 void	*ft_realloc(void *mptr, size_t size, size_t memsize);
 
-char	*buf_init();
+int		ft_is_conversion_type(char c);
 
-char	*buf_add(const char *str, unsigned k);
+char	*buf_init(void);
 
-int		buf_output();
+char	*buf_add(const char *str, int k);
 
-int		buf_error();
+int		buf_output(void);
+
+int		buf_error(void);
 
 char	*ft_parse(t_fws *fws, const char *fmt, va_list *ap);
 
 char	*ft_fmt_handle(t_fws *fws, const char *fmt, va_list *ap);
 
-int		ft_is_conversion_type(char c);
+char	*ft_d_handle(t_fws *fws, const char *fmt, va_list *ap);
 
-t_list	*ft_split_str_by_percentage(const char *fmt);
+char	*ft_u_handle(t_fws *fws, const char *fmt, va_list *ap);
 
-char	*ft_strndup(const char *str, size_t n);
+char	*ft_x_handle(t_fws *fws, const char *fmt, va_list *ap);
 
-char    *ft_utoa_base(unsigned n, unsigned base);
+char	*ft_xx_handle(t_fws *fws, const char *fmt, va_list *ap);
 
-char    *ft_ultoa_base(unsigned long n, unsigned base);
+char	*ft_p_handle(t_fws *fws, const char *fmt, va_list *ap);
 
+char	*ft_utoa_base(unsigned int n, unsigned int base);
+
+char	*ft_ultoa_base(unsigned long n, unsigned int base);
 
 #endif

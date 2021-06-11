@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_max.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/05 13:20:01 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/05 14:58:47 by ccartman         ###   ########.fr       */
+/*   Created: 2021/06/11 19:12:03 by ccartman          #+#    #+#             */
+/*   Updated: 2021/06/11 19:13:24 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-char	*ft_strndup(const char *str, size_t n)
+int	ft_max(int a, int b)
 {
-	char	*copy;
-
-	copy = (char *) malloc(sizeof(*copy) * (n + 1));
-	if (copy)
-	{
-		ft_memcpy(copy, str, n);
-		copy[n] = '\0';
-	}
-	return (copy);
+	if (b > a)
+		return (b);
+	else
+		return (a);
 }
