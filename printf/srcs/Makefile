@@ -6,7 +6,7 @@
 #    By: ccartman <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/05 17:39:46 by ccartman          #+#    #+#              #
-#    Updated: 2021/06/11 22:50:45 by ccartman         ###   ########.fr        #
+#    Updated: 2021/06/12 00:04:09 by ccartman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ re		:	fclean all
 .PHONY	:	all clean fclean re
 
 m		:
-				gcc -g -Wall -Wextra -Werror main.c \
+				gcc -fsanitize=address -Wall -Wextra -Werror main.c \
 			   	ft_printf.c ft_buf.c ft_parse.c ft_handle.c ft_realloc.c \
 				ft_is_conversion_type.c libft/ft_isdigit.c \
 				libft/ft_memcpy.c libft/ft_strlen.c libft/ft_itoa.c \

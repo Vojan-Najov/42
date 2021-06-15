@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 16:38:28 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/11 19:30:23 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/12 16:26:42 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct s_fws
 	int				width;
 	int				prec;
 }				t_fws;
+
+int		ft_printf(const char *fmt, ...);
 
 int		ft_max(int a, int b);
 
