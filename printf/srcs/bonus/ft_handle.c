@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 18:30:59 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/15 14:21:23 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/16 20:53:01 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,8 @@ char	*ft_handle_fmt(t_fws *fws, const char *fmt, va_list *ap)
 		return (ft_handle_xx(fws, fmt, ap));
 	else if (*fmt == 'd' || *fmt == 'i')
 		return (ft_handle_d(fws, fmt, ap));
-	return ((char *) fmt);
+	else if (*fmt == 'n')
+		return (ft_handle_n(fws, fmt, ap));	
+	else
+		return (NULL);
 }

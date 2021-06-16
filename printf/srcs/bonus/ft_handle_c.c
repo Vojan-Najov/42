@@ -6,13 +6,15 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/12 19:49:46 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/15 20:28:29 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/16 20:22:16 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-//static void	ft_handle_lc(t_fws *fws, va_list *ap);
+static void	ft_handle_wchar(t_fws *fws, int n);
+
+static int	ft_count_bytes(int n);
 
 static void	ft_encode_utf8(wint_t n);
 
@@ -30,8 +32,7 @@ char	*ft_handle_c(t_fws *fws, const char *fmt, va_list *ap)
 	if (fws->size == L_SIZE)
 	{
 		n = (int) va_arg(*ap, wint_t);
-		ft_encode_utf8(n);
-		return (NULL);
+		ft_handle_wchar(fws, n);
 	}
 	else if (!fws->size)
 	{
@@ -60,11 +61,57 @@ static void	ft_handle_char(t_fws *fws, char c)
 	}
 }
 
+static void	ft_handle_wchar(t_fws *fws, int n)
+{
+	int	k;
+   
+	k = fws->width - 1;
+	if (fws->dash)
+	{
+		ft_encode_utf8(n);
+		while (k-- > 0)
+			buf_add(" ", 1);
+	}
+	else 
+	{
+		while (k-- > 0)
+			buf_add(" ", 1);
+		ft_encode_utf8(n);
+	}
+}
 
 static void	ft_encode_utf8(int n)
 {
 	int		k;
 	char	code[4];
+
+	k = ft_count_bytes(n);
+	if (k == 1)
+		code[0] = 0b00000000 | n;
+	else if (k == 2)
+	{
+		code[1] = 0b10000000 | (n & 0b00111111);
+		code[0] = 0b11000000 | ((n >> 6) & 0b00011111);
+	}
+	else if (k == 3)
+	{
+		code[2] = 0b10000000 | (n & 0b00111111);
+		code[1] = 0b10000000 | ((n >> 6) & 0b00111111);
+		code[0] = 0b11100000 | ((n >> 12) & 0b00001111);
+	}
+	else if (k == 4)
+	{
+		code[3] = 0b10000000 | (n & 0b00111111);
+		code[2] = 0b10000000 | ((n >> 6) & 0b00111111);
+		code[1] = 0b10000000 | ((n >> 12) & 0b00111111);
+		code[0] = 0b11110000 | ((n >> 18) & 0b00000111);
+	}
+	buf_add(code, k);
+}
+
+static int	ft_count_bytes(int n)
+{
+	int k;
 
 	if (0x00 <= n && n <= 0x7F)
 		k = 1;
@@ -76,25 +123,5 @@ static void	ft_encode_utf8(int n)
 		k = 4;
 	else
 		k = 0;
-	if (k == 1)
-		code[0] = 0b00000000 | n;
-	else if (k == 2)
-	{
-		code[1] = 0b10000000 | (n & 0b00111111);
-		code[0] = 0b11000000 | ((n >> 8) & 0b00011111);
-	}
-	else if (k == 3)
-	{
-		code[2] = 0b10000000 | (n & 0b00111111);
-		code[1] = 0b10000000 | ((n >> 8) & 0b00111111);
-		code[0] = 0b11100000 | ((n >> 16) & 0b00001111);
-	}
-	else if (k == 4)
-	{
-		code[3] = 0b10000000 | (n & 0b00111111);
-		code[2] = 0b10000000 | ((n >> 8) & 0b00111111);
-		code[1] = 0b10000000 | ((n >> 16) & 0b00111111);
-		code[0] = 0b11110000 | ((n >> 24) & 0b00000111);
-	}
-	buf_add(code, k);
+	return (k);
 }

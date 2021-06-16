@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:11:30 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/15 13:17:26 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/16 20:11:54 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,17 @@ static void	ft_handle_xx_without_dash(t_fws *fws, char *s, unsigned long long n)
 	k = fws->width - ft_max(fws->prec, len);
 	if (fws->hash && n)
 		k -= 2;
-	if (fws->zero && !fws->dot)
+	if (fws->zero && !fws->dot && !fws->hash)
 		while (k-- > 0)
 			buf_add("0", 1);
-	else
+	else if (!fws->zero || fws->dot)
 		while (k-- > 0)
 			buf_add(" ", 1);
 	if (fws->hash && n)
 		buf_add("0X", 2);
+	if (fws->hash && fws->zero && !fws->dot)
+		while (k-- > 0)
+			buf_add("0", 1);
 	k = fws->prec - len;
 	if (fws->dot)
 		while (k-- > 0)

@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:22:47 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/15 13:00:17 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/16 17:52:06 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 static void	ft_handle_d_total(t_fws *fws, char *s, long long n);
 
-static void	ft_handle_d_with_dash(t_fws *fws, char *s, int n);
+static void	ft_handle_d_with_dash(t_fws *fws, char *s, long long n);
 
-static void	ft_handle_d_without_dash(t_fws *fws, char *s, int n, size_t len);
+static void	ft_handle_d_without_dash(t_fws *fws, char *s, long long n, \
+									size_t len);
 
 char	*ft_handle_d(t_fws *fws, const char *fmt, va_list *ap)
 {
@@ -67,7 +68,7 @@ static void	ft_handle_d_total(t_fws *fws, char *s, long long n)
 		ft_handle_d_without_dash(fws, s, n, len);
 }
 
-static void	ft_handle_d_with_dash(t_fws *fws, char *s, int n)
+static void	ft_handle_d_with_dash(t_fws *fws, char *s, long long n)
 {
 	int		k;
 	size_t	len;
@@ -94,10 +95,11 @@ static void	ft_handle_d_with_dash(t_fws *fws, char *s, int n)
 		buf_add(" ", 1);
 }
 
-static void	ft_handle_d_without_dash(t_fws *fws, char *s, int n, size_t len)
+static void	ft_handle_d_without_dash(t_fws *fws, char *s, long long n, \
+									size_t len)
 {
 	int	k;
-
+	
 	if (n < 0 || (fws->dot && !fws->prec && !n))
 		--len;
 	k = fws->width - ft_max(fws->prec, len);

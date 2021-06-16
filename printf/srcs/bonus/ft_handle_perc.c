@@ -6,13 +6,13 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/12 18:07:48 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/12 18:13:36 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:27:48 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-char *ft_handle_perc(t_fws *fws, const char *fmt)
+char	*ft_handle_perc(t_fws *fws, const char *fmt)
 {
 	int	k;
 

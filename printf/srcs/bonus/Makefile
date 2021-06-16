@@ -6,7 +6,7 @@
 #    By: ccartman <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/05 17:39:46 by ccartman          #+#    #+#              #
-#    Updated: 2021/06/15 13:19:39 by ccartman         ###   ########.fr        #
+#    Updated: 2021/06/16 21:01:49 by ccartman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS	=	ft_printf.c \
 			ft_handle_o.c \
 			ft_handle_xx.c \
 			ft_handle_d.c \
+			ft_handle_n.c \
 			ft_realloc.c \
 			ft_is_conversion_type.c \
 			ft_max.c \
@@ -83,6 +84,7 @@ m		:
 				ft_handle_x.c \
 				ft_handle_xx.c \
 				ft_handle_d.c \
+				ft_handle_n.c \
 				ft_realloc.c \
 				ft_is_conversion_type.c \
 				ft_max.c \

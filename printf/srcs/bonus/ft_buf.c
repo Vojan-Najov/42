@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 23:03:13 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/15 20:17:16 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/16 21:26:39 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 static char	*g_buf;
 static char	*g_ptr;
 static int	g_bufsize;
+static int	g_count;
 
 char	*buf_init(void)
 {
 	g_bufsize = BUFFER_SIZE;
+	g_count = 0;
 	g_buf = (char *)malloc(sizeof(*g_buf) * g_bufsize);
 	g_ptr = g_buf;
 	return (g_buf);
@@ -44,6 +46,10 @@ char	*buf_add(const char *str, int k)
 		buf_realloc();
 	if (!g_buf)
 		return (NULL);
+	if (k > 1 && ((*str & 0b11000000) == 0b11000000))
+		++g_count;
+	else
+		g_count += k;
 	while (k-- > 0)
 	{
 		memset(g_ptr, *str, 1);
@@ -53,7 +59,7 @@ char	*buf_add(const char *str, int k)
 	return (g_ptr);
 }
 
-int	buf_output(void)
+int	buf_output(int flag)
 {
 	size_t	n;
 
@@ -63,11 +69,12 @@ int	buf_output(void)
 	write(1, g_buf, n);
 	free(g_buf);
 	g_buf = NULL;
-	return ((int) n);
+	if (flag == F_ERROR)
+		return (-1);
+	return (g_count);
 }
 
-int	buf_error(void)
+int	buf_count(void)
 {
-	buf_output();
-	return (-1);
+	return (g_count);
 }

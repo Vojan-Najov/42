@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:15:25 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/15 14:29:19 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/16 21:24:53 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define F_HASH 0b00001000
 # define F_PLUS 0b00010000
 # define F_SPACE 0b00100000
+# define F_ERROR -1
+# define F_OK 1
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -49,9 +51,9 @@ char	*buf_init(void);
 
 char	*buf_add(const char *str, int k);
 
-int		buf_output(void);
+int		buf_output(int flag);
 
-int		buf_error(void);
+int		buf_count(void);
 
 char	*ft_parse(t_fws *fws, const char *fmt, va_list *ap);
 
@@ -74,6 +76,8 @@ char	*ft_handle_x(t_fws *fws, const char *fmt, va_list *ap);
 char	*ft_handle_xx(t_fws *fws, const char *fmt, va_list *ap);
 
 char	*ft_handle_d(t_fws *fws, const char *fmt, va_list *ap);
+
+char	*ft_handle_n(t_fws *fws, const char *fmt, va_list *ap);
 
 char	*ft_utoa_base(unsigned int n, unsigned int base);
 
