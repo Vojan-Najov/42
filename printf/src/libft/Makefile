@@ -6,11 +6,13 @@
 #    By: ccartman <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/26 18:59:23 by ccartman          #+#    #+#              #
-#    Updated: 2021/05/03 20:14:21 by ccartman         ###   ########.fr        #
+#    Updated: 2021/06/23 18:25:14 by ccartman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= libft.a
+
+HEADERS	= ../headers/
 
 SRCS	= ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 		ft_memchr.c ft_memcmp.c ft_strlen.c ft_strlcpy.c ft_strlcat.c \
@@ -28,7 +30,7 @@ OBJS	= $(SRCS:.c=.o)
 
 OBJS_B	= $(SRCS_B:.c=.o)
 
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror -I $(HEADERS)
 
 $(NAME) : $(OBJS)
 	ar rcs $(NAME) $?
@@ -39,7 +41,7 @@ $(NAME) : $(OBJS)
 all : $(NAME)
 
 clean :
-	rm -f *.o
+	rm -f $(OBJS) $(OBJS_B)
 
 fclean : clean
 	rm -f $(NAME)
