@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:15:25 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/16 21:24:53 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/23 12:12:39 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,18 @@
 # include <unistd.h>
 # include "libft.h"
 #include <stdio.h>    //
-#include <wchar.h>		//
+# include <wchar.h>
+# define BI_BASE 1000000000L
+# define BI_SIZE 36
+# define BI_DIGIT 9
+# define EXP_OFFSET 1023
+# define MANT_SIZE 52
+# define MANT_REM 12
+# define ADD_IMPLICIT_UNIT(mant) ((mant) |= 0x10000000000000L)
+# define GET_SIGN(a) ((a) >> 63)
+# define GET_EXP(a) (((a) >> MANT_SIZE) & 0x7FF)
+# define GET_MANT(a) ((a) & 0xFFFFFFFFFFFFF)
+# define BI_ZERO "000000000"
 
 typedef struct s_fws
 {
@@ -77,6 +88,10 @@ char	*ft_handle_xx(t_fws *fws, const char *fmt, va_list *ap);
 
 char	*ft_handle_d(t_fws *fws, const char *fmt, va_list *ap);
 
+char	*ft_handle_f(t_fws *fws, const char *fmt, va_list *ap);
+
+void	ft_handle_f_without_dash(t_fws *fws, char *ip, char *fp);
+
 char	*ft_handle_n(t_fws *fws, const char *fmt, va_list *ap);
 
 char	*ft_utoa_base(unsigned int n, unsigned int base);
@@ -90,5 +105,16 @@ int		ft_max(int a, int b);
 void	*ft_realloc(void *mptr, size_t size, size_t memsize);
 
 int		ft_is_conversion_type(char c);
+
+unsigned long	ft_degree_of_two(int exp);
+
+//
+
+int		ft_dftoa(double d, int prec, char **ip, char **fp);
+
+char	*ft_intpart_to_ascii(int sign, int exp, unsigned long mant);
+
+char	*ft_factpart_to_ascii(int exp, unsigned long mant, \
+								int prec, int *carry);
 
 #endif
