@@ -30,7 +30,12 @@ SRCS_F		=	ft_printf.c \
 				ft_handle_x.c \
 				ft_handle_o.c \
 				ft_handle_xx.c \
-				ft_handle_d.c
+				ft_handle_d.c \
+                ft_max.c \
+                ft_realloc.c \
+                ft_is_conversion_type.c \
+                ft_lltoa.c \
+                ft_ultoa.c
 
 SRCS_B_F    =   ft_handle_n.c \
 				ft_handle_f.c \

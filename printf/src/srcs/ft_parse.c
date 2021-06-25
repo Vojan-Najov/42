@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "printf.h"
-#include <stdio.h>
 
 static char	*ft_parse_flags(t_fws *fws, const char *fmt);
 
