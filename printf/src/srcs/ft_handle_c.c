@@ -16,7 +16,7 @@ static void	ft_handle_wchar(t_fws *fws, wchar_t n);
 
 static int	ft_count_bytes(wchar_t n);
 
-static void	ft_encode_utf8(wint_t n);
+static void	ft_encode_utf8(wchar_t n);
 
 static void	ft_handle_char(t_fws *fws, char c);
 

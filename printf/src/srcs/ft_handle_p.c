@@ -25,7 +25,10 @@ char	*ft_handle_p(t_fws *fws, const char *fmt, va_list *ap)
 		(fws->dot && fws->prec))
 		return (NULL);
 	n = va_arg(*ap, unsigned long);
-	s = ft_ultoa_base(n, 16);
+    if (n == 0 && !fws->prec && fws->dot)
+        s = ft_strdup("");
+    else
+	    s = ft_ultoa_base(n, 16);
 	if (!s)
 		return (NULL);
 	if (fws->dash)

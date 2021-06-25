@@ -36,7 +36,7 @@ char	*ft_parse(t_fws *fws, const char *fmt, va_list *ap)
 	if (fws->width < 0)
 	{
 		fws->width = -fws->width;
-		fws->dash = 1;
+		fws->dash = F_DASH;
 	}
 	if (*fmt == '.')
 		fmt = ft_parse_after_dot(fws, ++fmt, ap);
@@ -92,7 +92,7 @@ static char	*ft_parse_flags(t_fws *fws, const char *fmt)
 
 static char	*ft_parse_after_dot(t_fws *fws, const char *fmt, va_list *ap)
 {
-	fws->dot = 1;
+	fws->dot = F_DOT;
 	if (*fmt == '-')
 		return (NULL);
 	else if (*fmt == '*')

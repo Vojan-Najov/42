@@ -5,13 +5,12 @@
 int	main(void)
 {
 	
-	//printf("\\!/%2lc\\!/", (char)207);
+	printf("\\!/%2lc\\!/", (char)207);
 
-	//ft_printf("\\!/%2lc\\!/\n", (char)207);
-//	ft_printf("%19lc\n", '1');
-//	printf("\\!/%2lc\\!/\n", (char)207);
-//	printf("%19lc\n", '1');
-/*
+	ft_printf("\\!/%2lc\\!/\n", (char)207);
+	ft_printf("%19lc\n", '1');
+	printf("\\!/%2lc\\!/\n", (char)207);
+	printf("%19lc\n", '1');
 	printf("_ %.s %.s_", "123", "4567");
 
 	printf("\n----\n");
@@ -22,14 +21,14 @@ int	main(void)
 
 	printf("\n\n-------------------------\n\n");
 
-	printf("%012.10x\n", 3);
+	//printf("%012.10x\n", 3);
 	ft_printf("%012.10x\n", 3);
 
 	printf("_%#10.x_\n", 0);
 	
 	printf("\n\n-------------------------\n\n");
 
-	printf("_%012.10d_\n", 3);
+	//printf("_%012.10d_\n", 3);
 	ft_printf("_%012.10d_\n", 3);
 	printf("_%+1.10d_\n", 3);
 	ft_printf("_%+1.10d_\n", 3);
@@ -58,7 +57,7 @@ int	main(void)
 
 	printf("%lu\n%lu\n", sizeof(wint_t), sizeof(wchar_t));
 
-	printf("%s%s\n", NULL, NULL);
+	//printf("%s%s\n", NULL, NULL);
 	ft_printf("%s%s\n", NULL, NULL);
 
 	wint_t lc = 903030;
@@ -71,15 +70,47 @@ int	main(void)
 	{
 		int n = printf("%lc\n", i);
 		printf("%d\n", n);
-		//ft_printf("o%do\n", (int) i);
+		ft_printf("o%do\n", (int) i);
 	}
-*/
+
 	int n = printf("_\n\n_");
 	int k = ft_printf("0\n\n0");
 	printf("%d_%d\n", n, k);
 
 	printf("%lc\n", 100);
 	ft_printf("%lc\n", 100);
+    
+    ft_printf("%s\n", "dklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklbdklsffklsdklklsdklsfdkldksdfsjfsdkljklsdjfklsdjfklfjksldjfklsjdkfjsdklfjksdljfklsdjklfjlsdjflsjfklsdjfklsdjfklsdjfskldjfklsdjfklb");
+
+    ft_printf("%10c\n", 'z');
+    ft_printf("%10.3%s\n", "12345");
+    void    *f;
+    f = malloc(1);
+    ft_printf("%p\n", f); 
+    free(f);
+
+    ft_printf("%-19u\n", 12010);
+
+    ft_printf("%012.9x\n", 393);
+
+    ft_printf("%+X\n", 0101);
+
+    ft_printf("% o\n", 9339);
+
+    ft_printf("%- 4.20d\n", 3939);
+
+    ft_printf("%+*.*i\n", 100000, 500, -2929);
+
+    ft_printf("%*%\n", -10);
+
+    ft_printf("%0#1000.90f\n", 182189289.03030321);
+    
+    unsigned long long e;
+
+    ft_printf("930903290239023902390%lln293939\n", &e);
+
+    ft_printf("%lld\n", e);
+
 	//sleep(1000);
 	return (0);
 }

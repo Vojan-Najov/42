@@ -88,6 +88,7 @@ static int	ft_fptoa(char *a, int size, int prec)
 	char	carry;
 	int		i;
 
+    carry = 0;
 	if (prec < size)
 	{
 		carry = (a[prec] / 5);
