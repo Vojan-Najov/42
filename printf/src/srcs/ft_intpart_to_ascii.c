@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 12:15:14 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/23 21:33:41 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/26 12:29:06 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*ft_bigint_to_ascii(int exp, unsigned long mant)
 	bi[0] = mant % BI_BASE;
 	bi[1] = mant / BI_BASE;
 	i = 1;
-	while (++i < 36)
+	while (++i < BI_SIZE)
 		bi[i] = 0;
 	while (exp >= 20)
 	{
@@ -70,9 +70,13 @@ static char	*ft_bitoa(unsigned long *bi)
 	char			*tmp2;
 
 	ptr = bi + BI_SIZE;
+	tmp1 = NULL;
+	tmp2 = NULL;
 	while (*--ptr == 0)
 		;
 	s = ft_ultoa_base(*ptr, 10);
+	if (!s)
+		return (NULL);
 	while (--ptr >= bi)
 	{
 		tmp1 = s;
