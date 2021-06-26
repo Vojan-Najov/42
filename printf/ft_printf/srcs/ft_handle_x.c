@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 23:06:25 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/17 21:03:20 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/26 15:26:14 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ char	*ft_handle_x(t_fws *fws, const char *fmt, va_list *ap)
 	char					*s;
 	unsigned long long		n;
 
-	if (fws->space | fws->plus)
-		return (NULL);
-	else if (fws->size == HH_SIZE)
+	if (fws->size == HH_SIZE)
 		n = (unsigned char) va_arg(*ap, unsigned int);
 	else if (fws->size == H_SIZE)
 		n = (unsigned short) va_arg(*ap, unsigned int);

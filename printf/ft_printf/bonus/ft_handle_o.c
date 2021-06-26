@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handle_xx.c                                     :+:      :+:    :+:   */
+/*   ft_x_handle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/14 21:11:30 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/17 21:04:19 by ccartman         ###   ########.fr       */
+/*   Created: 2021/06/11 23:06:25 by ccartman          #+#    #+#             */
+/*   Updated: 2021/06/26 15:27:27 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-static void	ft_handle_xx_total(t_fws *fws, char *s, unsigned long long n);
+static void	ft_handle_o_total(t_fws *fws, char *s, unsigned long long n);
 
-static void	ft_handle_xx_with_dash(t_fws *fws, char *s, unsigned long long n);
+static void	ft_handle_o_with_dash(t_fws *fws, char *s, unsigned long long n);
 
-static void	ft_handle_xx_without_dash(t_fws *fws, char *s, \
-										unsigned long long n);
+static void	ft_handle_o_without_dash(t_fws *fws, char *s, unsigned long long n);
 
-char	*ft_handle_xx(t_fws *fws, const char *fmt, va_list *ap)
+char	*ft_handle_o(t_fws *fws, const char *fmt, va_list *ap)
 {
 	char					*s;
 	unsigned long long		n;
 
-	if (fws->space | fws->plus)
-		return (NULL);
-	else if (fws->size == HH_SIZE)
+	if (fws->size == HH_SIZE)
 		n = (unsigned char) va_arg(*ap, unsigned int);
 	else if (fws->size == H_SIZE)
 		n = (unsigned short) va_arg(*ap, unsigned int);
@@ -36,25 +33,18 @@ char	*ft_handle_xx(t_fws *fws, const char *fmt, va_list *ap)
 		n = (unsigned long) va_arg(*ap, unsigned long long);
 	else
 		n = (unsigned int) va_arg(*ap, unsigned int);
-	s = ft_ultoa_base(n, 16);
+	s = ft_ultoa_base(n, 8);
 	if (!s)
 		return (NULL);
-	ft_handle_xx_total(fws, s, n);
+	ft_handle_o_total(fws, s, n);
 	free(s);
 	return ((char *) fmt);
 }
 
-static void	ft_handle_xx_total(t_fws *fws, char *s, unsigned long long n)
+static void	ft_handle_o_total(t_fws *fws, char *s, unsigned long long n)
 {
-	int		k;
-	char	*ptr;
+	int	k;
 
-	ptr = s;
-	while (*ptr)
-	{
-		*ptr = ft_toupper(*ptr);
-		++ptr;
-	}
 	if (fws->dot && !fws->prec && !n)
 	{
 		k = fws->width;
@@ -62,12 +52,12 @@ static void	ft_handle_xx_total(t_fws *fws, char *s, unsigned long long n)
 			buf_add(" ", 1);
 	}
 	else if (fws->dash)
-		ft_handle_xx_with_dash(fws, s, n);
+		ft_handle_o_with_dash(fws, s, n);
 	else
-		ft_handle_xx_without_dash(fws, s, n);
+		ft_handle_o_without_dash(fws, s, n);
 }
 
-static void	ft_handle_xx_with_dash(t_fws *fws, char *s, unsigned long long n)
+static void	ft_handle_o_with_dash(t_fws *fws, char *s, unsigned long long n)
 {
 	int	k;
 	int	p;
@@ -77,8 +67,8 @@ static void	ft_handle_xx_with_dash(t_fws *fws, char *s, unsigned long long n)
 	k = fws->width - ft_max(fws->prec, len);
 	if (fws->hash && n)
 	{
-		buf_add("0X", 2);
-		k -= 2;
+		buf_add("0", 1);
+		--k;
 	}
 	if (fws->dot)
 	{
@@ -91,7 +81,7 @@ static void	ft_handle_xx_with_dash(t_fws *fws, char *s, unsigned long long n)
 		buf_add(" ", 1);
 }
 
-static void	ft_handle_xx_without_dash(t_fws *fws, char *s, unsigned long long n)
+static void	ft_handle_o_without_dash(t_fws *fws, char *s, unsigned long long n)
 {
 	int	k;
 	int	len;
@@ -99,18 +89,15 @@ static void	ft_handle_xx_without_dash(t_fws *fws, char *s, unsigned long long n)
 	len = ft_strlen(s);
 	k = fws->width - ft_max(fws->prec, len);
 	if (fws->hash && n)
-		k -= 2;
-	if (fws->zero && !fws->dot && !fws->hash)
+		--k;
+	if (fws->zero && !fws->dot)
 		while (k-- > 0)
 			buf_add("0", 1);
-	else if (!fws->zero || fws->dot)
+	else
 		while (k-- > 0)
 			buf_add(" ", 1);
 	if (fws->hash && n)
-		buf_add("0X", 2);
-	if (fws->hash && fws->zero && !fws->dot)
-		while (k-- > 0)
-			buf_add("0", 1);
+		buf_add("0", 1);
 	k = fws->prec - len;
 	if (fws->dot)
 		while (k-- > 0)

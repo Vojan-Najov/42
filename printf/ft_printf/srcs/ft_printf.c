@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 17:41:37 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/16 21:26:15 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/26 16:00:51 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ int	ft_printf(const char *fmt, ...)
 		{
 			fmt = buf_add_fmt(++fmt, &ap);
 			if (!fmt)
-				return (buf_output(F_ERROR));
+				return (buf_output(FTP_ERROR));
 		}
 		++fmt;
 	}
 	va_end(ap);
-	return (buf_output(F_OK));
+	return (buf_output(FTP_OK));
 }
 
 static char	*buf_add_fmt(const char *fmt, va_list *ap)

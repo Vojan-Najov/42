@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 11:42:06 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/23 20:57:28 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/26 15:37:25 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ char	*ft_handle_f(t_fws *fws, const char *fmt, va_list *ap)
 	char	*fp;
 	int		ret;
 
-	if (fws->size & (HH_SIZE | H_SIZE | LL_SIZE))
-		return (NULL);
 	d = va_arg(*ap, double);
 	if (!fws->dot)
 		fws->prec = 6;

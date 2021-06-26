@@ -4,7 +4,6 @@
 
 int	main(void)
 {
-	
 	printf("\\!/%2lc\\!/", (char)207);
 
 	ft_printf("\\!/%2lc\\!/\n", (char)207);
@@ -129,9 +128,51 @@ int	main(void)
 	ft_printf("%10.2s\n", "123");
 	printf("%10.2s\n", "123");
 
-	fmt = "_%010.2s_\n";
+	fmt = "_%010.2sajjasjsaksa_\n";
 	a1 = ft_printf(fmt, "123");
 	a2 = printf(fmt , "123");
 	printf("ft = %d\n p = %d\n", a1, a2);
+
+	fmt = "_%hh%_\n";
+	a1 = ft_printf(fmt, "123");
+	a2 = printf(fmt , "123");
+	printf("ft = %d\n p = %d\n", a1, a2);
+
+	fmt = "_%.c_\n";
+	a1 = ft_printf(fmt, 'z');
+	a2 = printf(fmt , 'z');
+	printf("ft = %d\n p = %d\n", a1, a2);
+
+
+
+	void *x;
+	x = malloc(1);
+	fmt = "_%0p_\n";
+	a1 = ft_printf(fmt, x);
+	a2 = printf(fmt , x);
+	printf("ft = %d\n p = %d\n", a1, a2);
+	free(x);
+
+	fmt = "_%010c_\n";
+	a1 = ft_printf(fmt, 'z');
+	a2 = printf(fmt, 'z');
+	printf("ft = %d\n p = %d\n", a1, a2);
+
+	fmt = "_%+10u_\n";
+	a1 = ft_printf(fmt, 122);
+	a2 = printf(fmt, 122);
+	printf("ft = %d\n p = %d\n", a1, a2);
+
+	fmt = "_%123";
+	a1 = ft_printf(fmt, 122.);
+	a2 = printf(fmt, 122.);
+	printf("ft = %d\n p = %d\n", a1, a2);
+
+	fmt = "_%000++00--.d123";
+	a1 = ft_printf(fmt, 122);
+	a2 = printf(fmt, 122);
+	printf("ft = %d\n p = %d\n", a1, a2);
+
+
 	return (0);
 }

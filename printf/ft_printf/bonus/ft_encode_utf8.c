@@ -1,86 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handle_c.c                                      :+:      :+:    :+:   */
+/*   ft_encode_utf8.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/12 19:49:46 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/26 13:08:08 by ccartman         ###   ########.fr       */
+/*   Created: 2021/06/26 13:44:44 by ccartman          #+#    #+#             */
+/*   Updated: 2021/06/26 15:34:55 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-static void	ft_handle_wchar(t_fws *fws, wchar_t n);
+static int	ft_count_bytes(int n);
 
-static int	ft_count_bytes(wchar_t n);
-
-static void	ft_encode_utf8(wchar_t n);
-
-static void	ft_handle_char(t_fws *fws, char c);
-
-char	*ft_handle_c(t_fws *fws, const char *fmt, va_list *ap)
-{
-	char	c;
-	wchar_t	n;
-
-	if ((fws->zero | fws->hash | fws->plus | fws->space) || \
-	(fws->dot && fws->prec) || \
-	(fws->size & H_SIZE || fws->size & HH_SIZE || fws->size & LL_SIZE))
-		return (NULL);
-	if (fws->size == L_SIZE)
-	{
-		n = (wchar_t) va_arg(*ap, wint_t);
-		ft_handle_wchar(fws, n);
-	}
-	else if (!fws->size)
-	{
-		c = (unsigned char) va_arg(*ap, int);
-		ft_handle_char(fws, c);
-	}
-	return ((char *) fmt);
-}
-
-static void	ft_handle_char(t_fws *fws, char c)
-{
-	int	k;
-
-	k = fws->width - 1;
-	if (fws->dash)
-	{
-		buf_add(&c, 1);
-		while (k-- > 0)
-			buf_add(" ", 1);
-	}
-	else
-	{
-		while (k-- > 0)
-			buf_add(" ", 1);
-		buf_add(&c, 1);
-	}
-}
-
-static void	ft_handle_wchar(t_fws *fws, wchar_t n)
-{
-	int	k;
-
-	k = fws->width - 1;
-	if (fws->dash)
-	{
-		ft_encode_utf8(n);
-		while (k-- > 0)
-			buf_add(" ", 1);
-	}
-	else
-	{
-		while (k-- > 0)
-			buf_add(" ", 1);
-		ft_encode_utf8(n);
-	}
-}
-
-static void	ft_encode_utf8(wchar_t n)
+void	ft_encode_utf8(int n)
 {
 	int		k;
 	char	code[4];

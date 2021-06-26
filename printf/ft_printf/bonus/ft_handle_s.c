@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 18:30:59 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/17 21:02:48 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/26 16:36:26 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,15 @@ static void	ft_handle_s_char(t_fws *fws, char *s);
 
 static void	ft_handle_s_wchar(t_fws *fws, wchar_t *ws);
 
-static int	ft_count_bytes(int n);
+static void	ft_handle_s_char_without_dash(t_fws *fws, char *s, int len);
 
-static void	ft_encode_utf8(int n);
+static void	ft_handle_s_wchar_without_dash(t_fws *fws, wchar_t *ws, int len);
 
 char	*ft_handle_s(t_fws *fws, const char *fmt, va_list *ap)
 {
 	char	*s;
 	wchar_t	*ws;
 
-	if ((fws->zero | fws->hash | fws->plus | fws->space) || \
-	(fws->size & (H_SIZE | HH_SIZE | LL_SIZE)))
-		return (NULL);
 	if (fws->size == L_SIZE)
 	{
 		ws = va_arg(*ap, wchar_t *);
@@ -58,11 +55,20 @@ static void	ft_handle_s_char(t_fws *fws, char *s)
 			buf_add(" ", 1);
 	}
 	else
-	{
-		while (fws->width-- > 0)
-			buf_add(" ", 1);
-		buf_add(s, len);
-	}
+		ft_handle_s_char_without_dash(fws, s, len);
+}
+
+static void	ft_handle_s_char_without_dash(t_fws *fws, char *s, int len)
+{
+	char	*c;
+
+	if (fws->zero)
+		c = "0";
+	else
+		c = " ";
+	while (fws->width-- > 0)
+		buf_add(c, 1);
+	buf_add(s, len);
 }
 
 static void	ft_handle_s_wchar(t_fws *fws, wchar_t *ws)
@@ -85,56 +91,19 @@ static void	ft_handle_s_wchar(t_fws *fws, wchar_t *ws)
 			buf_add(" ", 1);
 	}
 	else
-	{
-		while (fws->width-- > 0)
-			buf_add(" ", 1);
-		while (len--)
-			ft_encode_utf8((int) *ws++);
-	}
+		ft_handle_s_wchar_without_dash(fws, ws, len);
 }
 
-static void	ft_encode_utf8(int n)
+static void	ft_handle_s_wchar_without_dash(t_fws *fws, wchar_t *ws, int len)
 {
-	int		k;
-	char	code[4];
+	char	*c;
 
-	k = ft_count_bytes(n);
-	if (k == 1)
-		code[0] = 0b00000000 | n;
-	else if (k == 2)
-	{
-		code[1] = 0b10000000 | (n & 0b00111111);
-		code[0] = 0b11000000 | ((n >> 6) & 0b00011111);
-	}
-	else if (k == 3)
-	{
-		code[2] = 0b10000000 | (n & 0b00111111);
-		code[1] = 0b10000000 | ((n >> 6) & 0b00111111);
-		code[0] = 0b11100000 | ((n >> 12) & 0b00001111);
-	}
-	else if (k == 4)
-	{
-		code[3] = 0b10000000 | (n & 0b00111111);
-		code[2] = 0b10000000 | ((n >> 6) & 0b00111111);
-		code[1] = 0b10000000 | ((n >> 12) & 0b00111111);
-		code[0] = 0b11110000 | ((n >> 18) & 0b00000111);
-	}
-	buf_add(code, k);
-}
-
-static int	ft_count_bytes(int n)
-{
-	int	k;
-
-	if (0x00 <= n && n <= 0x7F)
-		k = 1;
-	else if (0x080 <= n && n <= 0x7FF)
-		k = 2;
-	else if (0x0800 <= n && n <= 0xFFFF)
-		k = 3;
-	else if (0x010000 <= n && n <= 0x10FFFF)
-		k = 4;
+	if (fws->zero)
+		c = "0";
 	else
-		k = 0;
-	return (k);
+		c = " ";
+	while (fws->width-- > 0)
+		buf_add(c, 1);
+	while (len--)
+		ft_encode_utf8((int) *ws++);
 }

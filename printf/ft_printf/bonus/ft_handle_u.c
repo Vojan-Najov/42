@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 13:23:11 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/14 19:38:00 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/26 15:23:53 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,16 @@ char	*ft_handle_u(t_fws *fws, const char *fmt, va_list *ap)
 	char					*s;
 	unsigned long long		n;
 
-	if (fws->hash | fws->space | fws->plus)
-		return (NULL);
 	if (fws->size == H_SIZE)
 		n = (unsigned short) va_arg(*ap, unsigned int);
-	if (fws->size == HH_SIZE)
+	else if (fws->size == HH_SIZE)
 		n = (unsigned char) va_arg(*ap, unsigned int);
-	if (!fws->size)
-		n = (unsigned int) va_arg(*ap, unsigned int);
-	if (fws->size == L_SIZE)
+	else if (fws->size == L_SIZE)
 		n = (unsigned long) va_arg(*ap, unsigned long);
-	if (fws->size == LL_SIZE)
+	else if (fws->size == LL_SIZE)
 		n = va_arg(*ap, unsigned long long);
+	else
+		n = (unsigned int) va_arg(*ap, unsigned int);
 	s = ft_ultoa_base(n, 10);
 	if (!s)
 		return (NULL);

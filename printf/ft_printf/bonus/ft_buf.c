@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 23:03:13 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/26 12:00:32 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/26 15:46:22 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	buf_output(int flag)
 	write(1, g_buf, n);
 	free(g_buf);
 	g_buf = NULL;
-	if (flag == F_ERROR)
+	if (flag == FTP_ERROR)
 		return (-1);
 	return (g_count);
 }

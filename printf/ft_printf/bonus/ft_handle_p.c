@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 13:09:13 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/26 12:02:34 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/26 15:06:58 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ char	*ft_handle_p(t_fws *fws, const char *fmt, va_list *ap)
 	char			*s;
 	unsigned long	n;
 
-	if ((fws->zero | fws->hash | fws->plus | fws->space | fws->size) || \
-		(fws->dot && fws->prec))
-		return (NULL);
 	n = va_arg(*ap, unsigned long);
 	if (n == 0 && !fws->prec && fws->dot)
 		s = ft_strdup("");

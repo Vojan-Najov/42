@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:15:25 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/26 12:03:33 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/26 16:35:12 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # define F_HASH 0b00001000
 # define F_PLUS 0b00010000
 # define F_SPACE 0b00100000
-# define F_ERROR -1
-# define F_OK 1
+# define FTP_ERROR -1
+# define FTP_OK 1
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -112,5 +112,7 @@ char			*ft_intpart_to_ascii(int exp, unsigned long mant);
 
 char			*ft_factpart_to_ascii(int exp, unsigned long mant, \
 								int prec, int *carry);
+
+void			ft_encode_utf8(int n);
 
 #endif
