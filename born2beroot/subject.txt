@@ -1,0 +1,219 @@
+
+Born2beRoot
+
+Summary: This document is a System Administration related exercise.
+Резюме: Этот документ представляет собой упражнение, связанное с
+системным администрированием.
+
+Contents
+I Preamble
+II Introduction
+III General guidelines
+IV Mandatory part
+V Bonus part
+VI Submission and peer-evaluation
+
+Содержание
+I Преамбула
+II Введение
+III Общие руководящие принципы
+IV Обязательная часть
+V Бонусная часть
+VI Представление и экспертная оценка
+
+______________________________________________________________________
+
+Chapter II
+Introduction
+This project aims to introduce you to the wonderful world of virtualization.
+You will create your first machine in VirtualBox (or UTM if you can’t use VirtualBox)
+under specific instructions. Then, at the end of this project, you will be able to set up
+your own operating system while implementing strict rules.
+
+Глава II
+Вступление
+Этот проект направлен на то, чтобы познакомить вас с удивительным миром виртуализации.
+Вы создадите свою первую машину в VirtualBox (или UTM, если вы не можете
+использовать VirtualBox).
+в соответствии с конкретными инструкциями. Затем, в конце этого проекта, вы сможете настроить
+свою собственную операционную систему, соблюдая строгие правила.
+
+______________________________________________________________________
+
+Chapter III
+General guidelines
+• The use of VirtualBox (or UTM if you can’t use VirtualBox) is mandatory.
+• You only have to turn in a signature.txt file at the root of your repository. You
+must paste in it the signature of your machine’s virtual disk. Go to Submission and
+peer-evaluation for more information.
+
+Глава III
+Общие руководящие принципы
+• Использование VirtualBox (или UTM, если вы не можете использовать VirtualBox)
+является обязательным.
+• Вам нужно только сдать signature.txt файл в корневом каталоге вашего репозитория.
+Вы должны вставить в него подпись виртуального диска вашей машины. Для получения
+дополнительной информации перейдите к разделу Отправка и экспертная оценка.
+
+_________________________________________________________________________
+
+Chapter IV
+Mandatory part
+This project consists of having you set up your first server by following specific rules.
+
+Глава IV
+Обязательная часть
+Этот проект состоит в том, чтобы вы настроили свой первый сервер, следуя определенным правилам.
+
+Since it is a matter of setting up a server, you will install the
+minimum of services. For this reason, a graphical interface is of no
+use here. It is therefore forbidden to install X.org or any other
+equivalent graphics server. Otherwise, your grade will be 0.
+
+Поскольку речь идет о настройке сервера, вы установите
+минимум сервисов. По этой причине графический интерфейс
+здесь бесполезен. Поэтому запрещается устанавливать X.org или любой другой
+эквивалентный графический сервер. В противном случае ваша оценка будет равна 0.
+
+You must choose as an operating system either the latest stable version of Debian (no
+testing/unstable), or the latest stable version of CentOS. Debian is highly recommended
+if you are new to system administration.
+
+Вы должны выбрать в качестве операционной системы либо последнюю стабильную версию Debian (не
+тестовую/нестабильную), либо последнюю стабильную версию CentOS.
+Debian настоятельно рекомендуется, если вы новичок в системном администрировании.
+
+Setting up CentOS is quite complex. Therefore, you don’t have to
+set up KDump. However, SELinux must be running at startup and its
+configuration has to be adapted for the project’s needs. AppArmor
+for Debian must be running at startup too.
+
+Настройка CentOS довольно сложна. Поэтому вам не нужно
+настраивать KDump. Однако SELinux должен быть запущен при запуске, и его
+конфигурация должна быть адаптирована к потребностям проекта.
+AppArmor для Debian также должно быть запущено при запуске.
+
+You must create at least 2 encrypted partitions using LVM. Below is an example of the
+expected partitioning:
+
+Вы должны создать по крайней мере 2 зашифрованных раздела с помощью LVM. Ниже приведен пример
+ожидаемого разделения:
+
+During the defense, you will be asked a few questions about the
+operating system you chose. For instance, you should know the
+differences between aptitude and apt, or what SELinux or AppArmor
+is. In short, understand what you use!
+
+Во время защиты вам будет задано несколько вопросов о
+выбранной вами операционной системе. Например, вы должны знать
+различия между aptitude и apt, или что такое SELinux или AppArmor
+. Короче говоря, поймите, что вы используете!
+
+A SSH service will be running on port 4242 only. For security reasons, it must not be
+possible to connect using SSH as root.
+
+Служба SSH будет работать только на порту 4242. По соображениям безопасности должно быть
+невозможно подключиться с помощью SSH в качестве root.
+
+The use of SSH will be tested during the defense by setting up a new
+account. You must therefore understand how it works.
+
+Использование SSH будет проверено во время защиты путем создания новой
+учетной записи. Поэтому вы должны понять, как это работает.
+
+You have to configure your operating system with the UFW firewall and thus leave only
+port 4242 open.
+
+Вы должны настроить свою операционную систему с помощью брандмауэра UFW и, таким образом,
+оставить открытым только порт 4242.
+
+Your firewall must be active when you launch your virtual machine.
+For CentOS, you have to use UFW instead of the default firewall. To
+install it, you will probably need DNF.
+
+Ваш брандмауэр должен быть активен при запуске виртуальной машины.
+Для CentOS вы должны использовать UFW вместо брандмауэра по умолчанию. Чтобы
+установить его, вам, вероятно, понадобится DNF.
+
+• The hostname of your virtual machine must be your login ending with 42 (e.g.,
+wil42). You will have to modify this hostname during your evaluation.
+• You have to implement a strong password policy.
+• You have to install and configure sudo following strict rules.
+• In addition to the root user, a user with your login as username has to be present.
+• This user has to belong to the user42 and sudo groups.
+
+• Имя хоста вашей виртуальной машины должно быть вашим логином, заканчивающимся на 42
+(например, wil 42). Вам придется изменить это имя хоста во время оценки.
+• Вы должны внедрить надежную политику паролей.
+• Вы должны установить и настроить sudo в соответствии со строгими правилами.
+• В дополнение к корневому пользователю должен присутствовать пользователь
+с вашим логином в качестве имени пользователя.
+• *Этот пользователь должен принадлежать к группам пользователя 42 и sudo.
+
+During the defense, you will have to create a new user and assign it
+to a group.
+
+Во время защиты вам придется создать нового пользователя и назначить его
+в группу.
+
+To set up a strong password policy, you have to comply with the following requirements:
+• Your password has to expire every 30 days.
+• The minimum number of days allowed before the modification of a password will
+be set to 2.
+• The user has to receive a warning message 7 days before their password expires.
+• Your password must be at least 10 characters long. It must contain an uppercase
+letter and a number. Also, it must not contain more than 3 consecutive identical
+characters.
+• The password must not include the name of the user.
+• The following rule does not apply to the root password: The password must have
+at least 7 characters that are not part of the former password.
+• Of course, your root password has to comply with this policy
+
+Чтобы настроить надежную политику паролей, вы должны выполнить следующие требования:
+• Срок действия вашего пароля должен истекать каждые 30 дней.
+• Минимальное количество дней, разрешенных до изменения пароля
+, будет равно 2.
+• Пользователь должен получить предупреждающее сообщение за 7 дней
+до истечения срока действия пароля.
+• Ваш пароль должен содержать не менее 10 символов. Он должен содержать заглавную
+букву и цифру. Кроме того, он не должен содержать более 3 последовательных одинаковых
+символов.
+• Пароль не должен содержать имя пользователя.
+• К паролю root не применяется следующее правило: пароль должен содержать
+не менее 7 символов, которые не являются частью предыдущего пароля.
+• Конечно, ваш пароль root должен соответствовать этой политике
+
+After setting up your configuration files, you will have to change
+all the passwords of the accounts present on the virtual machine,
+including the root account.
+
+После настройки файлов конфигурации вам придется изменить
+все пароли учетных записей, присутствующих на виртуальной машине,
+включая учетную запись root.
+
+To set up a strong configuration for your sudo group, you have to comply with the
+following requirements:
+• Authentication using sudo has to be limited to 3 attempts in the event of
+an incorrect password.
+• A custom message of your choice has to be displayed if an error due to a wrong
+password occurs when using sudo.
+• Each action using sudo has to be archived, both inputs and outputs. The log file
+has to be saved in the /var/log/sudo/ folder.
+• The TTY mode has to be enabled for security reasons.
+• For security reasons too, the paths that can be used by sudo must be restricted.
+Example:
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+
+Чтобы настроить надежную конфигурацию для вашей группы sudo, вы должны выполнить
+следующие требования:
+• Аутентификация с помощью sudo должна быть ограничена 3 попытками в случае
+неправильного пароля.
+• Пользовательское сообщение по вашему выбору должно отображаться, если
+при использовании sudo возникает ошибка из-за неправильного пароля.
+• Каждое действие с использованием sudo должно быть заархивировано, как входы, так и выходы. Файл журнала
+должен быть сохранен в папке /var/log/sudo/.
+• Режим TTY должен быть включен по соображениям безопасности.
+• Также по соображениям безопасности пути, которые могут использоваться sudo,
+должны быть ограничены.
+Пример:
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
