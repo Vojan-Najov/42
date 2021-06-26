@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 16:14:44 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/23 21:34:12 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/26 12:00:55 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	ft_fptoa(char *a, int size, int prec)
 	char	carry;
 	int		i;
 
-    carry = 0;
+	carry = 0;
 	if (prec < size)
 	{
 		carry = (a[prec] / 5);

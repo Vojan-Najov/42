@@ -6,7 +6,7 @@
 #    By: ccartman <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/05 17:39:46 by ccartman          #+#    #+#              #
-#    Updated: 2021/06/23 20:54:43 by ccartman         ###   ########.fr        #
+#    Updated: 2021/06/26 11:58:18 by ccartman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,9 +35,8 @@ SRCS_F		=	ft_printf.c \
                 ft_realloc.c \
                 ft_is_conversion_type.c \
                 ft_lltoa.c \
-                ft_ultoa.c
-
-SRCS_B_F    =   ft_handle_n.c \
+                ft_ultoa.c \
+				 ft_handle_n.c \
 				ft_handle_f.c \
 				ft_handle_f_part2.c \
 				ft_dftoa.c \
@@ -86,14 +85,11 @@ LIB_SRCS_F	= 	ft_memset.c \
 				ft_putnbr_fd.c
 
 SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_F))
-SRCS_B		= $(addprefix $(SRCS_DIR), $(SRCS_B_F))
 LIB_SRCS	= $(addprefix $(LIB_DIR), $(LIB_SRCS_F))
 
 SRCS_D		= $(SRCS:.c=.d)
-SRCS_B_D	= $(SRCS_B:.c=.d)
 
 OBJS		= $(SRCS:.c=.o)
-OBJS_B		= $(SRCS_B:.c=.o)
 LIB_OBJS	= $(LIB_SRCS:.c=.o)
 
 CC			= gcc
@@ -123,8 +119,8 @@ fclean:		clean
 
 re:			fclean all
 
-bonus:      $(NAME) $(OBJS_B)
-			$(AR) $(AR_FLAGS) $(NAME) $?
+bonus:      all
+
 
 
 .PHONY:		all bonus clean fclean re

@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 23:03:13 by ccartman          #+#    #+#             */
-/*   Updated: 2021/06/19 23:13:05 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/06/26 12:00:32 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static char	*buf_realloc(int b)
 
 	n = g_ptr - g_buf;
 	g_bufsize += b;
-    g_ptr = NULL;
 	g_buf = (char *) ft_realloc(g_buf, g_bufsize, n);
 	g_ptr = g_buf + n;
 	return (g_buf);
@@ -43,12 +42,12 @@ char	*buf_add(const char *str, int k)
 	if (!g_buf)
 		return (NULL);
 	if (g_ptr + k >= g_buf + g_bufsize + 1)
-    {
-        if (k > BUFFER_SIZE)
-		    buf_realloc(k + BUFFER_SIZE);
-        else
-            buf_realloc(BUFFER_SIZE);
-    }
+	{
+		if (k > BUFFER_SIZE)
+			buf_realloc(k + BUFFER_SIZE);
+		else
+			buf_realloc(BUFFER_SIZE);
+	}
 	if (!g_buf)
 		return (NULL);
 	if (k > 1 && ((*str & 0b11000000) == 0b11000000))
