@@ -6,4 +6,4 @@ ecole 42 projects
 
 1. get_next_line
 
-2. printf in progress
+2. printf

@@ -1,0 +1,135 @@
+Netwhat
+
+Summary: This project is an introduction to network problematics
+
+Резюме: Этот проект представляет собой введение в сетевую проблематику
+
+
+Contents
+
+I Introduction
+II General instructions
+III Mandatory part
+IV Turn-in and peer-evaluation
+
+Содержание
+
+I Введение
+II Общие инструкции
+III Обязательная часть
+IV Регистрация и экспертная оценка
+
+___________________________________
+
+Chapter I
+
+Introduction
+Netwhat will allow you to discover the network and to learn about
+its inner workings.
+This will allow you to understand how some things work that you
+already use in your everyday life.
+
+Глава I
+
+Введение
+Проукт, который позволит вам открыть для себя сеть и узнать о ее
+внутренней работе.
+Это позволит вам понять, как работают некоторые вещи, которые вы 
+же используете в своей повседневной жизни.
+
+______________________________________
+
+
+Chapter II
+General instructions
+Netwhat is a multiple choice project. This project will evaluate
+your network knowledge.
+You can start by reading network lessons on the internet. After that
+you can use online quizes to test your knowledge.
+Once you’ve done that and you feel that you are ready topass our quiz,
+you can go to: netwhat.42.fr.
+
+Глава II
+Общие инструкции
+Netwhat это проект с множественным выбором. Этот проект позволит
+оценить ваши знания о сети.
+Вы можете начать с чтения сетевых уроков в Интернете.
+После этого вы можете использовать онлайн викторины для проверки
+ваших знаний. Как только вы это сделаете и почувствуете, что готовы
+пройти наш тест, вы можете перейти по адресу: netwhat.42.fr.
+
+_________________________________________
+
+Chapter III
+Mandatory part
+• first of all, you should know a few things:
+	◦ What is an IP address
+	◦ What is a Netmask
+	◦ What is the subnet of an IP with Netmask
+	◦ What is the broadcast address of a subnet
+	◦ What are the different ways to represent an ip address with the Netmask
+	◦ What are the differences between public and private IPs
+	◦ What is a class of IP addresses
+	◦ What is TCP
+	◦ What is UDP
+	◦ What are the network layers
+	◦ What is the OSI model
+	◦ What is a DHCP server and the DHCP protocol
+	◦ What is a DNS server and the DNS protocol
+	◦ What are the rules to make 2 devices communicate using IP addresses
+	◦ How does routing work with IP
+	◦ What is a default gateway for routing
+	◦ What is a port from an IP point of view and what is it used
+	for when connecting to another device
+• Go to the website: netwhat.42.fr. This site will provide access
+to the network quiz.
+• Once connected, you will have access to the quiz interface.
+You can only pass it once per try, and you will have to retry the project
+to be able to retry the quiz.
+At the end an encrypted key will be generated. This key will
+be used during your evaluation (see Turn-in and peer-evaluation).
+
+Глава III
+Обязательная часть
+• прежде всего, вы должны знать несколько вещей:
+	◦ Что такое IP-адрес
+	◦ Что такое Сетевая маска
+	◦ Что такое подсеть IP-адреса с маской сети
+	◦ Каков широковещательный адрес подсети
+	◦ Каковы различные способы представления ip-адреса с помощью маски сети
+	◦ В чем разница между публичными и частными IP-адресами
+	◦ Что такое класс IP-адресов
+	◦ Что такое TCP
+	◦ Что такое UDP
+	◦ Каковы сетевые уровни
+	◦ Что такое модель OSI
+	◦ Что такое DHCP - сервер и протокол DHCP
+	◦ Что такое DNS - сервер и протокол DNS
+	◦ Каковы правила взаимодействия 2 устройств с использованием IP - адресов
+	◦ Как маршрутизация работает с IP
+	◦ Что такое шлюз по умолчанию для маршрутизации
+	◦ Что такое порт с точки зрения IP и для чего он используется
+	при подключении к другому устройству
+• Перейдите на веб-сайт: netwhat.42.fr.
+Этот сайт предоставит доступ к сетевой викторине.
+• После подключения у вас будет доступ к интерфейсу викторины.
+Вы можете пройти его только один раз за попытку,
+и вам придется повторить проект, чтобы повторить тест.
+В конце будет сгенерирован зашифрованный ключ.
+Этот ключ будет использоваться во время вашего оценка
+(см. раздел Регистрация и экспертная оценка).
+
+______________________________________________
+
+Chapter IV
+Turn-in and peer-evaluation
+To submit your work, paste the key, without modifying it,
+in a file answer.txt in the root of your git repo.
+Your evaluator will use that key to verify your answers during defence.
+
+Глава IV
+Регистрация и экспертная оценка
+Чтобы отправить свою работу, вставьте ключ, не изменяя его,
+в файл answer.txt в корне вашего репо git.
+Ваш оценщик будет использовать этот ключ для проверки ваших ответов во
+время защиты.
