@@ -210,10 +210,207 @@ Example:
 неправильного пароля.
 • Пользовательское сообщение по вашему выбору должно отображаться, если
 при использовании sudo возникает ошибка из-за неправильного пароля.
-• Каждое действие с использованием sudo должно быть заархивировано, как входы, так и выходы. Файл журнала
-должен быть сохранен в папке /var/log/sudo/.
+• Каждое действие с использованием sudo должно быть заархивировано,
+как входы, так и выходы. Файл журнала должен быть сохранен в папке /var/log/sudo/.
 • Режим TTY должен быть включен по соображениям безопасности.
 • Также по соображениям безопасности пути, которые могут использоваться sudo,
 должны быть ограничены.
 Пример:
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+
+
+Finally, you have to create a simple script called monitoring.sh.
+It must be developed in bash.
+
+Наконец, вам нужно создать простой скрипт под названием monitoring.sh.
+Он должен быть написан на bash. 
+
+
+At server startup, the script will display some information (listed below)
+on all terminals every 10 minutes (take a look at wall).
+The banner is optional. No error must be visible.
+
+При запуске сервера скрипт будет отображать некоторую информацию (перечисленную ниже)
+на всех терминалах каждые 10 минут (посмотрите на предупреждения).
+Баннер является необязательным. Ошибки не должна быть видны.
+
+
+Your script must always be able to display the following information:
+• The architecture of your operating system and its kernel version.
+• The number of physical processors.
+• The number of virtual processors.
+• The current available RAM on your server and its utilization rate as a percentage.
+• The current available memory on your server and its utilization rate as a percentage.
+• The current utilization rate of your processors as a percentage.
+• The date and time of the last reboot.
+• Whether LVM is active or not.
+• The number of active connections.
+• The number of users using the server.
+• The IPv4 address of your server and its MAC (Media Access Control) address.
+• The number of commands executed with the sudo program.
+
+Ваш скрипт всегда должен иметь возможность отображать следующую информацию:
+• Архитектура вашей операционной системы и ее версия ядра.
+• Количество физических процессоров.
+• Количество виртуальных процессоров.
+• Текущая доступная оперативная память на вашем сервере
+	и коэффициент ее использования в процентах.
+• Текущая доступная память на вашем сервере
+	и коэффициент ее использования в процентах.
+• Текущий коэффициент использования ваших процессоров в процентах.
+• Дата и время последней перезагрузки.
+• Независимо от того, активен LVM или нет.
+• Количество активных подключений.
+• Количество пользователей, использующих сервер.
+• IPv4-адрес вашего сервера и его MAC-адрес (управление доступом к МУЛЬТИМЕДИА).
+• Количество команд, выполняемых с помощью программы sudo.
+
+
+During the defense, you will be asked to explain how this script
+works. You will also have to interrupt it without modifying it.
+Take a look at cron.
+
+Во время защиты вас попросят объяснить, как
+работает этот скрипт. Вам также придется прервать его, не изменяя его.
+Посмотрите cron.
+
+
+This is an example of how the script is expected to work:
+
+Это пример того, как должен работать скрипт:
+
+Broadcast message from root@wil (tty1) (Sun Apr 25 15:45:00 2021):
+#Architecture: Linux wil 4.19.0-16-amd64 #1 SMP Debian 4.19.181-1 (2021-03-19) x86_64 GNU/Linux
+#CPU physical : 1
+#vCPU : 1
+#Memory Usage: 74/987MB (7.50%)
+#Disk Usage: 1009/2Gb (39%)
+#CPU load: 6.7%
+#Last boot: 2021-04-25 14:45
+#LVM use: yes
+#Connexions TCP : 1 ESTABLISHED
+#User log: 1
+#Network: IP 10.
+
+
+Below are two commands you can use to check some of the subject’s requirements:
+
+Ниже приведены две команды, которые вы можете использовать для проверки
+некоторых требований субъекта:
+
+
+_______________________________
+
+Chapter V
+Bonus part
+
+Глава V
+Бонусная часть
+
+
+Bonus list:
+Список бонусов:
+
+• Set up partitions correctly so you get a structure similar to the one below:
+
+• Правильно настройте разделы, чтобы получить структуру, аналогичную приведенной ниже:
+
+
+• Set up a functional WordPress website with the following services: lighttpd, MariaDB, and PHP.
+
+• Создайте функциональный веб-сайт WordPress со следующими сервисами: lighttpd, MariaDB и PHP.
+
+
+• Set up a service of your choice that you think is useful (NGINX / Apache2 excluded!).
+During the defense, you will have to justify your choice.
+
+• Настройте услугу по вашему выбору, которая, по вашему мнению, полезна (исключая NGINX / Apache2!).
+Во время защиты вам придется обосновать свой выбор.
+
+
+To complete the bonus part, you have the possibility to set up extra
+services. In this case, you may open more ports to suit your needs.
+Of course, the UFW rules has to be adapted accordingly.
+
+Чтобы завершить бонусную часть, у вас есть возможность настроить дополнительные
+услуги. В этом случае вы можете открыть больше портов в соответствии с вашими потребностями.
+Конечно, правила UFW должны быть соответствующим образом адаптированы.
+
+
+The bonus part will only be assessed if the mandatory part is
+PERFECT. Perfect means the mandatory part has been integrally done
+and works without malfunctioning. If you have not passed ALL the
+mandatory requirements, your bonus part will not be evaluated at all.
+
+Бонусная часть будет начисляться только в том случае, если обязательная часть
+ИДЕАЛЬНЫЙ. Идеально означает, что обязательная часть была выполнена полностью
+и работает без сбоев. Если вы не прошли ВСЕ
+обязательные требования, ваша бонусная часть вообще не будет оценена.
+
+________________________________________
+
+Chapter VI
+Submission and peer-evaluation
+
+Глава VI
+Представление и экспертная оценка
+
+
+You only have to turn in a signature.txt file at the root of your Git repository. You
+must paste in it the signature of your machine’s virtual disk. To get this signature, you
+first have to open the default installation folder (it is the folder where your VMs are
+saved):
+• Windows: %HOMEDRIVE%%HOMEPATH%\VirtualBox VMs\
+• Linux: ~/VirtualBox VMs/
+• MacM1: ~/Library/Containers/com.utmapp.UTM/Data/Documents/
+• MacOS: ~/VirtualBox VMs/
+
+Вам нужно только сдать signature.txt файл в корневом каталоге вашего репозитория Git. Вы
+должны вставить в него подпись виртуального диска вашей машины. Чтобы получить эту подпись, вам
+сначала нужно открыть папку установки по умолчанию (это папка, в которой
+сохраняются ваши виртуальные машины).:
+• Windows: %ДОМАШНИЙ ДИСК%%ДОМАШНИЙ ПУТЬ%\виртуальные машины VirtualBox\
+• Linux: ~/виртуальные машины VirtualBox/
+• MacM1: ~/Библиотека/Контейнеры/com.utmapp.UTM/Данные/Документы/
+• macOS: ~/виртуальные машины VirtualBox/
+
+
+Then, retrieve the signature from the ".vdi" file (or ".qcow2 for UTM’users) of your
+virtual machine in sha1 format.
+Below are 4 command examples for a centos_serv.vdi file:
+• Windows: certUtil -hashfile centos_serv.vdi sha1
+• Linux: sha1sum centos_serv.vdi
+• For Mac M1: shasum Centos.utm/Images/disk-0.qcow2
+• MacOS: shasum centos_serv.vdi
+This is an example of what kind of output you will get:
+• 6e657c4619944be17df3c31faa030c25e43e40af
+
+Затем извлеките подпись из файла ".vdi" (или ".qcow2 для пользователей UTM") вашей
+виртуальной машины в формате sha1.
+Ниже приведены 4 примера команд для файла centos_server.vdi:
+• Windows: certUtil -хэш-файл centos_serv.vdi sha1
+• * Linux: sha1sum centos_server.vdi
+• Для Mac M1: shasum Centos.utm/Изображения/диск-0.qcow2
+• * macOS: shasum centos_server.vdi
+Это пример того, какой результат вы получите:
+• 6e657c4619944be17df3c31faa030c25e43e40af
+
+
+Please note that your virtual machine’s signature may be altered
+after your first evaluation. To solve this problem, you can
+duplicate your virtual machine or use save state.
+
+Пожалуйста, обратите внимание, что подпись вашей виртуальной машины может быть изменена
+после вашей первой оценки. Чтобы решить эту проблему, вы можете
+дублировать свою виртуальную машину или использовать режим сохранения.
+
+
+It is of course FORBIDDEN to turn in your virtual machine in your Git
+repository. During the defense, the signature of the signature.txt
+file will be compared with the one of your virtual machine. If the
+two of them are not identical, your grade will be 0.
+
+Конечно, ЗАПРЕЩЕНО включать вашу виртуальную машину в репозиторий Git.
+Во время защиты подпись signature.txt
+файл будет сравниваться с файлом вашей виртуальной машины. Если
+они оба не идентичны, ваша оценка будет равна 0.
