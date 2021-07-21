@@ -96,8 +96,8 @@ AppArmor для Debian также должно быть запущено при 
 You must create at least 2 encrypted partitions using LVM. Below is an example of the
 expected partitioning:
 
-Вы должны создать по крайней мере 2 зашифрованных раздела с помощью LVM. Ниже приведен пример
-ожидаемого разделения:
+Вы должны создать по крайней мере 2 зашифрованных раздела с помощью LVM.
+Ниже приведен примерожидаемого разделения:
 
 During the defense, you will be asked a few questions about the
 operating system you chose. For instance, you should know the
@@ -112,8 +112,8 @@ is. In short, understand what you use!
 A SSH service will be running on port 4242 only. For security reasons, it must not be
 possible to connect using SSH as root.
 
-Служба SSH будет работать только на порту 4242. По соображениям безопасности должно быть
-невозможно подключиться с помощью SSH в качестве root.
+Служба SSH будет работать только на порту 4242. По соображениям безопасности
+должно быть невозможно подключиться с помощью SSH в качестве root.
 
 The use of SSH will be tested during the defense by setting up a new
 account. You must therefore understand how it works.
@@ -124,8 +124,8 @@ account. You must therefore understand how it works.
 You have to configure your operating system with the UFW firewall and thus leave only
 port 4242 open.
 
-Вы должны настроить свою операционную систему с помощью брандмауэра UFW и, таким образом,
-оставить открытым только порт 4242.
+Вы должны настроить свою операционную систему с помощью брандмауэра UFW и,
+таким образом, оставить открытым только порт 4242.
 
 Your firewall must be active when you launch your virtual machine.
 For CentOS, you have to use UFW instead of the default firewall. To
