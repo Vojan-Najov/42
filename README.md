@@ -1,5 +1,9 @@
 ecole 42 projects
 
+c piscine:
+
++  C12 (linked list)
+
 42cursus:
 
 0. libft
