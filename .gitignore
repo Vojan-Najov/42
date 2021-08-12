@@ -1,7 +1,14 @@
 *.out
 *.o
+*.d
 *.swp
 printf/src/libft/libft.a
 printf/src/main.c
 printf/src/libftprintf.a
 .gitignore
+
+push_swap/100.sh
+push_swap/pr
+push_swap/stack_sort.c
+push_swap/test.txt
+
