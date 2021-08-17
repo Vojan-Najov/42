@@ -56,7 +56,7 @@ int	list_middle_data(t_list *list, size_t size)
 		++i;
 	}
 	heap_sort(array, i);
-	mid = array[i / 2];
+	mid = array[i / 2] + 1; // -1
 	free(array);
 	return (mid);
 }

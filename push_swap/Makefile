@@ -16,7 +16,7 @@ SRCS_F		= check_args.c \
 		  	  stack_rev_rotate.c \
 		  	  stack_sort_utils1.c \
 		  	  stack_b3_sort.c \
-		  	  stack_a3_sort.c \
+		  	  stack_a3_sort2.c \
 			  frame_split.c \
 		  	  stack_sort.c \
 		  	  main.c

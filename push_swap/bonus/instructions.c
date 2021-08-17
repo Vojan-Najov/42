@@ -4,6 +4,8 @@ static void	instruction_apply(t_stacks *stacks, char *line);
 
 static int	is_not_instruction(char *line);
 
+static void	result_print(t_stacks *stacks, char *line);
+
 void	instructions_read(t_stacks *stacks)
 {
 	char	*line;
@@ -17,13 +19,24 @@ void	instructions_read(t_stacks *stacks)
 			exit(EXIT_FAILURE);
 		if (is_not_instruction(line))
 		{
-			write(STDOUT_FILENO, ERRMES, ERRMESLEN);
+			write(STDERR_FILENO, ERRMES, ERRMESLEN);
 			free(line);
 			return ;
 		}
 		instruction_apply(stacks, line);
 		free(line);
 		ret = get_next_line(STDIN_FILENO, &line);
+	}
+	result_print(stacks, line);
+}
+
+static void	result_print(t_stacks *stacks, char *line)
+{
+	if (ft_strcmp(line, ""))
+	{
+		write(STDERR_FILENO, ERRMES, ERRMESLEN);
+		free(line);
+		return ;
 	}
 	free(line);
 	if (ft_list_issorted(stacks->a_top) && !stacks->b_top)

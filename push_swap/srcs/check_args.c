@@ -4,6 +4,10 @@ static int	check_duplicates(char **args);
 
 static int	check_limits(char **args);
 
+static int	check_minlimit(char *arg);
+
+static int	check_maxlimit(char *arg);
+
 int	check_args(char **args)
 {
 	int	i;
@@ -12,10 +16,12 @@ int	check_args(char **args)
 	i = -1;
 	while (args[++i])
 	{
-		if (args[i][0] == '-')
+		if (args[i][0] == '-' || args[i][0] == '+')
 			j = 0;
 		else
 			j = -1;
+		if (!args[i][j + 1])
+			return (0);
 		while (args[i][++j])
 			if (!ft_isdigit(args[i][j]))
 				return (0);
@@ -29,28 +35,46 @@ int	check_args(char **args)
 
 static int	check_limits(char **args)
 {
-	int	i;
+	int		i;
+	int 	ret;
 
 	i = -1;
+	ret = 1;
 	while (args[++i])
 	{
-		if (args[i][0] != '-')
-		{
-			if (ft_strlen(args[i]) > MAX_INT_STRLEN)
-				return (0);
-			else if (ft_strlen(args[i]) == MAX_INT_STRLEN \
-				&& ft_strcmp(args[i], MAX_INT_STR) > 0)
-				return (0);
-		}
+		if (args[i][0] == '+')
+			ret = check_maxlimit(args[i] + 1);
+		else if (ft_isdigit(args[i][0]))
+			ret = check_maxlimit(args[i]);
 		else if (args[i][0] == '-')
-		{
-			if (ft_strlen(args[i]) > MIN_INT_STRLEN)
-				return (0);
-			else if (ft_strlen(args[i]) == MIN_INT_STRLEN && \
-				ft_strcmp(args[i], MIN_INT_STR) > 0)
-				return (0);
-		}
+			ret = check_minlimit(args[i] + 1);
+		if (ret == 0)
+			return (0);
 	}
+	return (1);
+}
+
+static int	check_maxlimit(char *arg)
+{
+	while (*arg == '0')
+		++arg;
+	if (ft_strlen(arg) > MAX_INT_STRLEN)
+		return (0);
+	else if (ft_strlen(arg) == MAX_INT_STRLEN \
+			&& ft_strcmp(arg, MAX_INT_STR) > 0)
+		return (0);
+	return (1);
+}
+
+static int	check_minlimit(char *arg)
+{
+	while (*arg == '0')
+		++arg;
+	if (ft_strlen(arg) > MIN_INT_STRLEN)
+		return (0);
+	else if (ft_strlen(arg) == MIN_INT_STRLEN \
+			&& ft_strcmp(arg, MIN_INT_STR) > 0)
+		return (0);
 	return (1);
 }
 
@@ -65,7 +89,7 @@ static int	check_duplicates(char **args)
 		j = i;
 		while (args[++j])
 		{
-			if (ft_strcmp(args[i], args[j]) == 0)
+			if (ft_atoi(args[i]) == ft_atoi(args[j]))
 				return (0);
 		}
 	}
