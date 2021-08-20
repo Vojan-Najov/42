@@ -24,6 +24,7 @@ int	get_next_line(int fd, char **line)
 	char		*ptr_nl;
 	int			n_read;
 
+	n_read = 0;
 	if (!buf)
 	{
 		buf = (char *) malloc(sizeof(*buf) * (BUFFER_SIZE + 1));
