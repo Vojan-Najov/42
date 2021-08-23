@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/17 13:21:15 by ccartman          #+#    #+#             */
+/*   Updated: 2021/08/18 16:54:19 by ccartman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 static void	stacks_init(t_stacks **stacks, char **args, int flag);
@@ -5,8 +17,6 @@ static void	stacks_init(t_stacks **stacks, char **args, int flag);
 static void	stacks_free(t_stacks *stacks, char **args, int flag);
 
 static void	instructions_print(t_stacks *stacks);
-
-//static void	print_stack(t_list *a);
 
 int	main(int argc, char **argv)
 {
@@ -93,142 +103,3 @@ static void	stacks_free(t_stacks *stacks, char **args, int flag)
 		free(args);
 	}
 }
-
-/*
-int	main(int argc, char **argv)
-{
-	t_stacks	*stacks;
-	char		**args;
-
-	args = NULL;
-	stacks = (t_stacks *) malloc(sizeof(t_stacks));
-	if (!stacks)
-		exit(EXIT_FAILURE);
-	if (check_args(argv + 1) == -1)
-		write(STDOUT_FILENO, "Error\n", 6);
-	else if (check_args(argv + 1) == 0)
-	{
-		free(stacks);
-		return (0);
-	}
-	else
-	{
-		if (argc == 2)
-		{
-			args = ft_split(argv[1], ' ');
-			init_stacks(stacks, args);
-		}
-		else
-			init_stacks(stacks, argv + 1);
-	}
-	stack_sort(stacks);
-	printf("%s", stacks->instructions);
-	free_stacks(stacks);
-	char **tmp = args;
-	if (tmp)
-	{
-		while (*tmp)
-		{
-			free(*tmp);
-			++tmp;
-		}
-		free(args);
-	}
-}
-
-static void	init_stacks(t_stacks *stacks, char **args)
-{
-	int	num;
-
-	stacks->a_top = NULL;
-	stacks->a_end = NULL;
-	stacks->b_top = NULL;
-	stacks->b_end = NULL;
-	stacks->frame = NULL;
-	stacks->instructions = (char *) malloc(1);
-	if (!stacks->instructions)
-	{
-		free_stacks(stacks);
-		exit(EXIT_FAILURE);
-	}
-	*stacks->instructions = '\0';
-	while (*args)
-	{
-		num = ft_atoi(*args);
-		ft_list_push_back(&stacks->a_top, num);
-		++args;
-	}
-	stacks->a_end = ft_list_last(stacks->a_top);
-}
-//	printf("before\n");
-//	printf("stack_a:\n");
-//	print_stack(stacks->a_top);
-//	printf("stack_b:\n");
-//	print_stack(stacks->b_top);
-
-//	printf("\nafter\n");
-//	printf("stack_a:\n");
-//	print_stack(stacks->a_top);
-//	printf("stack_b:\n");
-//	print_stack(stacks->b_top);
-
-static void	print_stack(t_list *a)
-{
-	t_list	*tmp;
-
-	tmp = a;
-	while (tmp)
-	{
-		printf("%d\n", tmp->data);
-		tmp = tmp->next;
-	}
-}
-
-	printf("before\n");
-	print_stack(stacks->a_top);
-	stack_rotate(stacks, STACK_A);
-	printf("after\n");
-	print_stack(stacks->a_top);
-
-	printf("before\n");
-	print_stack(stacks->a_top);
-	stack_rev_rotate(stacks, STACK_A);
-	printf("after\n");
-	print_stack(stacks->a_top);
-
-	stack_swap(stacks, STACK_A);
-	print_stack(stacks->a_top);
-
-	stack_push(stacks, STACK_B);
-	printf("stack a:\n");
-	print_stack(stacks->a_top);
-	printf("stack b:\n");
-	print_stack(stacks->b_top);
-
-	stack_push(stacks, STACK_B);
-	printf("stack a:\n");
-	print_stack(stacks->a_top);
-	printf("stack b:\n");
-	print_stack(stacks->b_top);
-
-	stack_swap(stacks, STACKS_AB);
-	printf("stack a:\n");
-	print_stack(stacks->a_top);
-	printf("stack b:\n");
-	print_stack(stacks->b_top);
-
-	stack_push(stacks, STACK_A);
-	printf("stack a:\n");
-	print_stack(stacks->a_top);
-	printf("stack b:\n");
-	print_stack(stacks->b_top);
-
-	stack_push(stacks, STACK_A);
-	printf("stack a:\n");
-	print_stack(stacks->a_top);
-	printf("stack b:\n");
-	print_stack(stacks->b_top);
-
-	printf("\n\n%s\n", stacks->instructions);
-	(ft_list_issorted(stacks->a_top)) ? printf("YES\n") : printf("NO\n");
-*/

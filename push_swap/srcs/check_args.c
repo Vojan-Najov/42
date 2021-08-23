@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_args.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/17 13:17:19 by ccartman          #+#    #+#             */
+/*   Updated: 2021/08/17 13:17:22 by ccartman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 static int	check_duplicates(char **args);
@@ -35,8 +47,8 @@ int	check_args(char **args)
 
 static int	check_limits(char **args)
 {
-	int		i;
-	int 	ret;
+	int	i;
+	int	ret;
 
 	i = -1;
 	ret = 1;
