@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_list2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/17 13:18:40 by ccartman          #+#    #+#             */
+/*   Updated: 2021/08/17 13:32:06 by ccartman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	ft_list_issorted(t_list *list)
@@ -56,7 +68,7 @@ int	list_middle_data(t_list *list, size_t size)
 		++i;
 	}
 	heap_sort(array, i);
-	mid = array[i / 2] + 1; // -1
+	mid = array[i / 2];
 	free(array);
 	return (mid);
 }

@@ -1,6 +1,16 @@
-#include "push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_sort.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/17 13:38:58 by ccartman          #+#    #+#             */
+/*   Updated: 2021/08/18 16:53:35 by ccartman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-////////////////////////////////////////////////////////////////////////////////
+#include "push_swap.h"
 
 static int	stack_a_split(t_stacks *stacks, int size, int middle, int count);
 
@@ -19,9 +29,7 @@ void	stack_sort(t_stacks *stacks)
 		count = list_count_lessmid(stacks->a_top, size, middle);
 		ft_list_push_front(&stacks->frame, count);
 		size = stack_a_split(stacks, size, middle, count);
-		/*ft_strjoin_and_free_src(&stacks->instructions, "__________\n");*/
 	}
-	//ft_strjoin_and_free_src(&stacks->instructions, "sort stack_a\n"); //
 	if (size == 3)
 		stack_a3only_sort(stacks);
 	else if (size == 2)
@@ -59,37 +67,6 @@ static void	frame_sort(t_stacks *stacks)
 {
 	while (stacks->frame)
 	{
-/*
-		ft_strjoin_and_free_src(&stacks->instructions, "__________\n");
-		char fs[100];
-		sprintf(fs, "frame = %d\n", stacks->frame->data);
-		ft_strjoin_and_free_src(&stacks->instructions, fs);
-	t_list *a = stacks->frame; //
-		printf("frames: ");
-		while (a)
-		{
-			printf("%d ", a->data);
-			a = a->next;
-		}
-		printf("\n");
-
-	a = stacks->a_top; //
-	printf("\na:\n");
-	while (a)
-	{
-		printf("%d\n", a->data);
-		a = a->next;
-	}
-	printf("\n");
-	t_list *b = stacks->b_top; //
-	printf("\nb:\n");
-	while (b)
-	{
-		printf("%d\n", b->data);
-		b = b->next;
-	}
-	printf("\n");
-*/
 		if (stacks->frame->data == 1)
 			stack_push(stacks, STACK_A);
 		else if (stacks->frame->data == 2)

@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/17 15:53:54 by ccartman          #+#    #+#             */
+/*   Updated: 2021/08/18 16:47:35 by ccartman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
-# include <stdio.h>	//////////////////////
 # define MAX_INT_STR "2147483647"
 # define MAX_INT_STRLEN 10
 # define MIN_INT_STR "2147483648"

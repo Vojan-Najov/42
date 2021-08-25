@@ -14,9 +14,9 @@ SRCS_F		= check_args.c \
 		  	  stack_push.c \
 		  	  stack_rotate.c \
 		  	  stack_rev_rotate.c \
-		  	  stack_sort_utils1.c \
+		  	  stack_sort_utils.c \
 		  	  stack_b3_sort.c \
-		  	  stack_a3_sort2.c \
+		  	  stack_a3_sort.c \
 			  frame_split.c \
 		  	  stack_sort.c \
 		  	  main.c
@@ -43,7 +43,7 @@ BONUS_D		= $(BONUS:.c=.d)
 
 CC			= gcc
 
-CC_FLAGS	= -g -Wall -Wextra -Werror -I $(INCLUDES)
+CC_FLAGS	= -Wall -Wextra -Werror -I $(INCLUDES)
 
 RM			= rm -f
 
