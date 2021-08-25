@@ -4,6 +4,8 @@ c piscine:
 
 +  C12 (linked list)
 
++  BSQ
+
 42cursus:
 
 0. libft
@@ -17,3 +19,7 @@ c piscine:
 4. born2beroot
 
 5. push_swap
+
+6. exam02
+
+7. pipex
