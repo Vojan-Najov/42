@@ -1,18 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/17 13:17:19 by ccartman          #+#    #+#             */
+/*   Updated: 2021/08/17 13:17:22 by ccartman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
 static const char		g_server_msg[] = "Server's PID: ";
 
 volatile sig_atomic_t	g_alfa;
 
-void	print_pid();
+void	print_pid(void);
 
 void	usrhdl(int sig);
 
 void	redefine_signals(sigset_t *set, struct sigaction *act);
 
-void	print_client_msg();
+void	print_client_msg(void);
 
-int	main()
+int	main(void)
 {
 	sigset_t			set;
 	struct sigaction	act;
@@ -24,26 +36,9 @@ int	main()
 	return (0);
 }
 
-/*
-	while (1)
-	{
-		pause();
-		++n;
-		if (n == 8 && g_alfa)
-		{
-			c = (char) g_alfa;
-			write(STDOUT_FILENO, &c, 1);
-			n = 0;
-			g_alfa = 0;
-		}
-		else if (n == 8 && !g_alfa)
-			n = 0;
-	}
-*/
-
-void	print_client_msg()
+void	print_client_msg(void)
 {
-	char	buf[1];
+	char	buf[BUFSIZE];
 	int		count;
 	int		bits;
 
@@ -55,17 +50,15 @@ void	print_client_msg()
 		++bits;
 		if (bits == 8)
 		{
-			if (count == 1 || !g_alfa)
+			if (count == BUFSIZE - 1 || !g_alfa)
 			{
 				write(STDIN_FILENO, buf, count);
 				count = 0;
 			}
 			if (g_alfa)
-			{
-				buf[count] = (char) g_alfa;
-				++count;
-			}
+				buf[count++] = (char) g_alfa;
 			bits = 0;
+			g_alfa = 0;
 		}
 	}
 }
@@ -86,18 +79,16 @@ void	usrhdl(int sig)
 {
 	if (sig == SIGUSR1)
 	{
-		//write(1, "1", 1);
 		g_alfa <<= 1;
 	}
 	else if (sig == SIGUSR2)
 	{
-		//write(1, "2", 1);
 		g_alfa <<= 1;
 		g_alfa |= 1;
 	}
 }
 
-void	print_pid()
+void	print_pid(void)
 {
 	pid_t	pid;
 	char	s[20];

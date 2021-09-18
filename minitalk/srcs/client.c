@@ -1,18 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/17 13:17:19 by ccartman          #+#    #+#             */
+/*   Updated: 2021/08/17 13:17:22 by ccartman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
-static const char	g_args_error[] = "Usage: ./client [server's pid] [\"message string\"]\n";
-
-static const char	g_pid_error[] = "Server's PID incorrect.\n";
-
-static const char	g_sig_error[] = "Signal ERROR!\n";
-
-int	print_args_error();
-
-int	print_pid_error();
-
-void	print_signal_error();
-
-int	ft_getpid(char *str);
+int		ft_getpid(char *str);
 
 void	contact_server(pid_t spid, char *msg);
 
@@ -49,7 +49,7 @@ void	contact_server(pid_t spid, char *msg)
 				exit(EXIT_FAILURE);
 			}
 			b >>= 1;
-			usleep(1000);
+			usleep(500);
 		}
 		if (!*msg)
 			break ;
@@ -59,8 +59,8 @@ void	contact_server(pid_t spid, char *msg)
 
 int	ft_getpid(char *str)
 {
-	int	n;
-	char *s;
+	int		n;
+	char	*s;
 
 	s = str - 1;
 	while (*++s)
@@ -78,21 +78,4 @@ int	ft_getpid(char *str)
 	if (kill(n, 0) == -1)
 		return (-1);
 	return (n);
-}
-
-int	print_args_error()
-{
-	write(STDERR_FILENO, g_args_error, sizeof(g_args_error));
-	return (1);
-}
-
-int	print_pid_error()
-{
-	write(STDERR_FILENO, g_pid_error, sizeof(g_pid_error));
-	return (2);
-}
-
-void	print_signal_error()
-{
-	write(STDERR_FILENO, g_sig_error, sizeof(g_sig_error));
 }
