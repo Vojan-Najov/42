@@ -14,11 +14,11 @@
 
 static const char				g_server_msg[] = "Server's PID: ";
 
-static volatile sig_atomic_t	alfa;
+static volatile sig_atomic_t	g_alfa;
 
 void	print_pid(void);
 
-void	usrhdl(int sig);
+void	usraction(int sig, siginfo_t *info, void *ucontext);
 
 void	redefine_signals(sigset_t *set, struct sigaction *act);
 
@@ -69,14 +69,16 @@ void	redefine_signals(sigset_t *set, struct sigaction *act)
 	sigaddset(set, SIGUSR1);
 	sigaddset(set, SIGUSR2);
 	act->sa_mask = *set;
-	act->sa_flags = SA_RESTART;
-	act->sa_handler = usrhdl;
+	act->sa_flags = SA_RESTART | SA_SIGINFO;
+	act->sa_sigaction = usraction;
 	sigaction(SIGUSR1, act, NULL);
 	sigaction(SIGUSR2, act, NULL);
 }
 
-void	usrhdl(int sig)
+void	usraction(int sig, siginfo_t *info, void *ucontext)
 {
+	(void) ucontext;
+
 	if (sig == SIGUSR1)
 	{
 		g_alfa <<= 1;
@@ -86,6 +88,11 @@ void	usrhdl(int sig)
 		g_alfa <<= 1;
 		g_alfa |= 1;
 	}
+	if (kill(info->si_pid, SIGUSR1) == -1)
+	{
+		print_signal_error();
+		exit(EXIT_FAILURE);
+	}	
 }
 
 void	print_pid(void)
