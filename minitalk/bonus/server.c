@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 13:17:19 by ccartman          #+#    #+#             */
-/*   Updated: 2021/08/17 13:17:22 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:16:46 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@ static const char				g_server_msg[] = "Server's PID: ";
 
 static volatile sig_atomic_t	g_alfa;
 
-void	print_pid(void);
+static volatile pid_t			g_cpid;
 
-void	usraction(int sig, siginfo_t *info, void *ucontext);
+static void	print_pid(void);
 
-void	redefine_signals(sigset_t *set, struct sigaction *act);
+static void	usraction(int sig, siginfo_t *info, void *ucontext);
 
-void	print_client_msg(void);
+static void	redefine_signals(sigset_t *set, struct sigaction *act);
+
+static void	print_client_msg(void);
 
 int	main(void)
 {
@@ -36,7 +38,7 @@ int	main(void)
 	return (0);
 }
 
-void	print_client_msg(void)
+static void	print_client_msg(void)
 {
 	char	buf[BUFSIZE];
 	int		count;
@@ -46,7 +48,9 @@ void	print_client_msg(void)
 	bits = 0;
 	while (1)
 	{
+		printf("serv before pause\n");
 		pause();
+		printf("serv after pause\n");
 		++bits;
 		if (bits == 8)
 		{
@@ -60,10 +64,16 @@ void	print_client_msg(void)
 			bits = 0;
 			g_alfa = 0;
 		}
+		usleep(1000);
+		if (kill(g_cpid, SIGUSR1) == -1)
+		{
+			print_signal_error();
+			exit(EXIT_FAILURE);
+		}
 	}
 }
 
-void	redefine_signals(sigset_t *set, struct sigaction *act)
+static void	redefine_signals(sigset_t *set, struct sigaction *act)
 {
 	sigemptyset(set);
 	sigaddset(set, SIGUSR1);
@@ -75,7 +85,7 @@ void	redefine_signals(sigset_t *set, struct sigaction *act)
 	sigaction(SIGUSR2, act, NULL);
 }
 
-void	usraction(int sig, siginfo_t *info, void *ucontext)
+static void	usraction(int sig, siginfo_t *info, void *ucontext)
 {
 	(void) ucontext;
 
@@ -88,14 +98,10 @@ void	usraction(int sig, siginfo_t *info, void *ucontext)
 		g_alfa <<= 1;
 		g_alfa |= 1;
 	}
-	if (kill(info->si_pid, SIGUSR1) == -1)
-	{
-		print_signal_error();
-		exit(EXIT_FAILURE);
-	}	
+	g_cpid = info->si_pid;
 }
 
-void	print_pid(void)
+static void	print_pid(void)
 {
 	pid_t	pid;
 	char	s[20];

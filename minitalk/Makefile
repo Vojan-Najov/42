@@ -27,13 +27,19 @@ RM			= rm -f
 .c.o:
 			$(CC) $(CC_FLAGS) -c $< -o $(<:.c=.o) -MD
 
-$(NAME_S):	$(OBJS_S)
-			$(CC) $(CC_FLAGS) $(OBJS_S) -o $(NAME_S)
 
 $(NAME_C):	$(OBJS_C)
 			$(CC) $(CC_FLAGS) $(OBJS_C) -o $(NAME_C)
 
-all:		$(NAME_S) $(NAME_C)
+$(NAME_S):	$(OBJS_S)
+			$(CC) $(CC_FLAGS) $(OBJS_S) -o $(NAME_S)
+
+#all:		$(NAME_C) $(NAME_S)
+
+all:		$(OBJS_C) $(OBJS_S)
+			$(CC) $(CC_FLAGS) $(OBJS_C) -o $(NAME_C)
+			$(CC) $(CC_FLAGS) $(OBJS_S) -o $(NAME_S)
+			
 
 include $(wildcard $(SRCS_DC))
 include $(wildcard $(SRCS_DS))

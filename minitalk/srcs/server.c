@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 13:17:19 by ccartman          #+#    #+#             */
-/*   Updated: 2021/08/17 13:17:22 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/09/22 16:08:05 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static const char				g_server_msg[] = "Server's PID: ";
 
-static volatile sig_atomic_t	alfa;
+static volatile sig_atomic_t	g_alfa;
 
 void	print_pid(void);
 
