@@ -1,67 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   pid_utills.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/23 14:39:25 by ccartman          #+#    #+#             */
-/*   Updated: 2021/09/23 14:39:27 by ccartman         ###   ########.fr       */
+/*   Created: 2021/09/23 13:10:49 by ccartman          #+#    #+#             */
+/*   Updated: 2021/09/23 15:59:21 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include <unistd.h>
+#include <signal.h>
 
-int		ft_getpid(char *str);
+static const char				g_server_msg[] = "Server's PID: ";
 
-void	contact_server(pid_t spid, char *msg);
-
-int	main(int argc, char **argv)
+pid_t	client_pid(pid_t pid)
 {
-	pid_t	spid;
+	static pid_t	cpid;
 
-	if (argc != 3)
-		return (print_args_error());
-	spid = ft_getpid(argv[1]);
-	if (spid <= 0)
-		return (print_pid_error());
-	contact_server(spid, argv[2]);
-	return (0);
+	if (pid)
+		cpid = pid;
+	return (cpid);
 }
 
-void	contact_server(pid_t spid, char *msg)
+void	print_pid(void)
 {
-	int	b;
-	int	ret;
+	pid_t	pid;
+	char	s[20];
+	int		i;
+	int		n;
 
-	while (1)
+	pid = getpid();
+	n = (int) pid;
+	i = 0;
+	while (n)
 	{
-		b = 0x80;
-		while (b)
-		{
-			if (*msg & b)
-				ret = kill(spid, SIGUSR2);
-			else
-				ret = kill(spid, SIGUSR1);
-			if (ret == -1)
-			{
-				print_signal_error();
-				exit(EXIT_FAILURE);
-			}
-			b >>= 1;
-			usleep(500);
-		}
-		if (!*msg)
-			break ;
-		++msg;
+		n /= 10;
+		++i;
 	}
+	n = i + 1;
+	s[i] = '\n';
+	while (pid)
+	{
+		s[--i] = pid % 10 + '0';
+		pid /= 10;
+	}
+	write(STDIN_FILENO, g_server_msg, sizeof(g_server_msg));
+	write(STDIN_FILENO, s, n);
 }
 
 int	ft_getpid(char *str)
 {
-	int		n;
-	char	*s;
+	static int	n;
+	char		*s;
 
+	if (str == NULL)
+		return (n);
 	s = str - 1;
 	while (*++s)
 		if (*s < '0' || *s > '9')

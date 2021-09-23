@@ -6,33 +6,28 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 13:17:19 by ccartman          #+#    #+#             */
-/*   Updated: 2021/09/22 19:16:46 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:03:48 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
-
-static const char				g_server_msg[] = "Server's PID: ";
+#include "minitalk_bonus.h"
 
 static volatile sig_atomic_t	g_alfa;
 
-static volatile pid_t			g_cpid;
-
-static void	print_pid(void);
-
 static void	usraction(int sig, siginfo_t *info, void *ucontext);
 
-static void	redefine_signals(sigset_t *set, struct sigaction *act);
+static void	redefine_signals(struct sigaction *act);
 
 static void	print_client_msg(void);
 
+static void	send_sigusr1(void);
+
 int	main(void)
 {
-	sigset_t			set;
 	struct sigaction	act;
 
 	g_alfa = 0;
-	redefine_signals(&set, &act);
+	redefine_signals(&act);
 	print_pid();
 	print_client_msg();
 	return (0);
@@ -48,9 +43,7 @@ static void	print_client_msg(void)
 	bits = 0;
 	while (1)
 	{
-		printf("serv before pause\n");
 		pause();
-		printf("serv after pause\n");
 		++bits;
 		if (bits == 8)
 		{
@@ -64,21 +57,25 @@ static void	print_client_msg(void)
 			bits = 0;
 			g_alfa = 0;
 		}
-		usleep(1000);
-		if (kill(g_cpid, SIGUSR1) == -1)
-		{
-			print_signal_error();
-			exit(EXIT_FAILURE);
-		}
+		send_sigusr1();
 	}
 }
 
-static void	redefine_signals(sigset_t *set, struct sigaction *act)
+static void	send_sigusr1(void)
 {
-	sigemptyset(set);
-	sigaddset(set, SIGUSR1);
-	sigaddset(set, SIGUSR2);
-	act->sa_mask = *set;
+	usleep(100);
+	if (kill(client_pid(0), SIGUSR1) == -1)
+	{
+		print_signal_error();
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void	redefine_signals(struct sigaction *act)
+{
+	sigemptyset(&act->sa_mask);
+	sigaddset(&act->sa_mask, SIGUSR1);
+	sigaddset(&act->sa_mask, SIGUSR2);
 	act->sa_flags = SA_RESTART | SA_SIGINFO;
 	act->sa_sigaction = usraction;
 	sigaction(SIGUSR1, act, NULL);
@@ -88,7 +85,6 @@ static void	redefine_signals(sigset_t *set, struct sigaction *act)
 static void	usraction(int sig, siginfo_t *info, void *ucontext)
 {
 	(void) ucontext;
-
 	if (sig == SIGUSR1)
 	{
 		g_alfa <<= 1;
@@ -98,31 +94,5 @@ static void	usraction(int sig, siginfo_t *info, void *ucontext)
 		g_alfa <<= 1;
 		g_alfa |= 1;
 	}
-	g_cpid = info->si_pid;
-}
-
-static void	print_pid(void)
-{
-	pid_t	pid;
-	char	s[20];
-	int		i;
-	int		n;
-
-	pid = getpid();
-	n = (int) pid;
-	i = 0;
-	while (n)
-	{
-		n /= 10;
-		++i;
-	}
-	n = i + 1;
-	s[i] = '\n';
-	while (pid)
-	{
-		s[--i] = pid % 10 + '0';
-		pid /= 10;
-	}
-	write(STDIN_FILENO, g_server_msg, sizeof(g_server_msg));
-	write(STDIN_FILENO, s, n);
+	client_pid(info->si_pid);
 }

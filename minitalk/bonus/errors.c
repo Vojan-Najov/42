@@ -6,11 +6,11 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 13:17:19 by ccartman          #+#    #+#             */
-/*   Updated: 2021/08/17 13:17:22 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/09/23 15:41:08 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "unistd.h"
 
 static const char	g_args_error[] = "Usage: ./client [server's pid]"
 											"[\"message string\"]\n";

@@ -6,15 +6,11 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 13:17:19 by ccartman          #+#    #+#             */
-/*   Updated: 2021/09/22 19:02:54 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/09/23 15:58:46 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
-
-static volatile sig_atomic_t	g_count = 0;;
-
-int		ft_getpid(char *str);
+#include "minitalk_bonus.h"
 
 void	contact_server(pid_t spid, char *msg);
 
@@ -44,7 +40,7 @@ void	redefine_signals(sigset_t *set, struct sigaction *act)
 	sigaddset(set, SIGUSR1);
 	act->sa_mask = *set;
 	act->sa_flags = SA_RESTART | SA_SIGINFO;
-	act->sa_sigaction = usr1action; 
+	act->sa_sigaction = usr1action;
 	sigaction(SIGUSR1, act, NULL);
 }
 
@@ -58,13 +54,12 @@ void	contact_server(pid_t spid, char *msg)
 		b = 0x80;
 		while (b)
 		{
+			usleep(100);
 			if (*msg & b)
 				ret = kill(spid, SIGUSR2);
 			else
 				ret = kill(spid, SIGUSR1);
-			printf("client before pause:\n");
 			pause();
-			printf("client after pause\n");
 			if (ret == -1)
 			{
 				print_signal_error();
@@ -76,32 +71,6 @@ void	contact_server(pid_t spid, char *msg)
 			break ;
 		++msg;
 	}
-	printf("bits = %d (%d bytes)\n", g_count, g_count / 8);
-}
-
-int	ft_getpid(char *str)
-{
-	static int	n;
-	char		*s;
-
-	if (str == NULL)
-		return(n);
-	s = str - 1;
-	while (*++s)
-		if (*s < '0' || *s > '9')
-			return (-1);
-	while (*str == '0')
-		++str;
-	n = 0;
-	while (*str)
-	{
-		n *= 10;
-		n += *str - '0';
-		++str;
-	}
-	if (kill(n, 0) == -1)
-		return (-1);
-	return (n);
 }
 
 void	usr1action(int sig, siginfo_t *info, void *ucontext)
@@ -112,7 +81,7 @@ void	usr1action(int sig, siginfo_t *info, void *ucontext)
 	(void) sig;
 	spid = ft_getpid(NULL);
 	if (info->si_pid == spid)
-		++g_count;
+		return ;
 	else
 		exit(0);
 }

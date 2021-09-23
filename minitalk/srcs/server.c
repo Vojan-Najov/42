@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/17 13:17:19 by ccartman          #+#    #+#             */
-/*   Updated: 2021/09/22 16:08:05 by ccartman         ###   ########.fr       */
+/*   Created: 2021/09/23 14:37:15 by ccartman          #+#    #+#             */
+/*   Updated: 2021/09/23 14:37:37 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ static const char				g_server_msg[] = "Server's PID: ";
 
 static volatile sig_atomic_t	g_alfa;
 
-void	print_pid(void);
+static void	print_pid(void);
 
-void	usrhdl(int sig);
+static void	usrhdl(int sig);
 
-void	redefine_signals(sigset_t *set, struct sigaction *act);
+static void	redefine_signals(sigset_t *set, struct sigaction *act);
 
-void	print_client_msg(void);
+static void	print_client_msg(void);
 
 int	main(void)
 {
@@ -36,7 +36,7 @@ int	main(void)
 	return (0);
 }
 
-void	print_client_msg(void)
+static void	print_client_msg(void)
 {
 	char	buf[BUFSIZE];
 	int		count;
@@ -63,7 +63,7 @@ void	print_client_msg(void)
 	}
 }
 
-void	redefine_signals(sigset_t *set, struct sigaction *act)
+static void	redefine_signals(sigset_t *set, struct sigaction *act)
 {
 	sigemptyset(set);
 	sigaddset(set, SIGUSR1);
@@ -75,7 +75,7 @@ void	redefine_signals(sigset_t *set, struct sigaction *act)
 	sigaction(SIGUSR2, act, NULL);
 }
 
-void	usrhdl(int sig)
+static void	usrhdl(int sig)
 {
 	if (sig == SIGUSR1)
 	{
@@ -88,7 +88,7 @@ void	usrhdl(int sig)
 	}
 }
 
-void	print_pid(void)
+static void	print_pid(void)
 {
 	pid_t	pid;
 	char	s[20];
