@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 14:37:15 by ccartman          #+#    #+#             */
-/*   Updated: 2021/09/23 14:37:37 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/09/23 17:05:25 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,18 @@ static void	print_pid(void);
 
 static void	usrhdl(int sig);
 
-static void	redefine_signals(sigset_t *set, struct sigaction *act);
+static void	redefine_signals(struct sigaction *act);
 
 static void	print_client_msg(void);
 
 int	main(void)
 {
-	sigset_t			set;
 	struct sigaction	act;
 
 	g_alfa = 0;
-	redefine_signals(&set, &act);
+	redefine_signals(&act);
 	print_pid();
 	print_client_msg();
-	return (0);
 }
 
 static void	print_client_msg(void)
@@ -52,7 +50,8 @@ static void	print_client_msg(void)
 		{
 			if (count == BUFSIZE - 1 || !g_alfa)
 			{
-				write(STDIN_FILENO, buf, count);
+				if (write(STDIN_FILENO, buf, count) != count)
+					print_write_error();
 				count = 0;
 			}
 			if (g_alfa)
@@ -63,16 +62,17 @@ static void	print_client_msg(void)
 	}
 }
 
-static void	redefine_signals(sigset_t *set, struct sigaction *act)
+static void	redefine_signals(struct sigaction *act)
 {
-	sigemptyset(set);
-	sigaddset(set, SIGUSR1);
-	sigaddset(set, SIGUSR2);
-	act->sa_mask = *set;
+	sigemptyset(&act->sa_mask);
+	sigaddset(&act->sa_mask, SIGUSR1);
+	sigaddset(&act->sa_mask, SIGUSR2);
 	act->sa_flags = SA_RESTART;
 	act->sa_handler = usrhdl;
-	sigaction(SIGUSR1, act, NULL);
-	sigaction(SIGUSR2, act, NULL);
+	if (sigaction(SIGUSR1, act, NULL) == -1)
+		print_sigact_error();
+	if (sigaction(SIGUSR2, act, NULL) == -1)
+		print_sigact_error();
 }
 
 static void	usrhdl(int sig)
@@ -110,6 +110,8 @@ static void	print_pid(void)
 		s[--i] = pid % 10 + '0';
 		pid /= 10;
 	}
-	write(STDIN_FILENO, g_server_msg, sizeof(g_server_msg));
-	write(STDIN_FILENO, s, n);
+	i = write(STDIN_FILENO, g_server_msg, sizeof(g_server_msg));
+	i += write(STDIN_FILENO, s, n);
+	if (i != n + sizeof(g_server_msg))
+		print_write_error();
 }

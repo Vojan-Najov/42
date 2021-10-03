@@ -6,7 +6,8 @@ BNS_DIR		= ./bonus/
 
 INCLUDES	= ./includes/
 
-SRCS_FS		= server.c
+SRCS_FS		= server.c \
+			  errors.c
 SRCS_FC		= client.c \
 			  errors.c
 BNS_FS		= errors.c \
@@ -33,7 +34,7 @@ BNS_DC		= $(BNS_C:.c=.d)
 
 CC			= gcc
 
-CC_FLAGS	= -Wall -Wextra -Werror -I $(INCLUDES)
+CC_FLAGS		= -fsanitize=address -Wall -Wextra -Werror -I $(INCLUDES)
 
 RM			= rm -f
 
@@ -63,7 +64,7 @@ include $(wildcard $(SRCS_DS))
 
 clean:
 			$(RM) $(OBJS_S) $(OBJS_C) $(SRCS_DS) $(SRCS_DC) \
-					$(OBJS_BS) $(OBJS_BC) $(BNS_DS) $(BNS_FC)
+					$(OBJS_BS) $(OBJS_BC) $(BNS_DS) $(BNS_DC)
 
 fclean:		clean
 			$(RM) $(NAME_S) $(NAME_C)

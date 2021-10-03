@@ -6,12 +6,11 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 13:10:49 by ccartman          #+#    #+#             */
-/*   Updated: 2021/09/23 15:59:21 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/09/23 17:12:20 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <signal.h>
+#include "minitalk_bonus.h"
 
 static const char				g_server_msg[] = "Server's PID: ";
 
@@ -46,8 +45,10 @@ void	print_pid(void)
 		s[--i] = pid % 10 + '0';
 		pid /= 10;
 	}
-	write(STDIN_FILENO, g_server_msg, sizeof(g_server_msg));
-	write(STDIN_FILENO, s, n);
+	i = write(STDIN_FILENO, g_server_msg, sizeof(g_server_msg));
+	i += write(STDIN_FILENO, s, n);
+	if (i != sizeof(g_server_msg) + n)
+		print_write_error();
 }
 
 int	ft_getpid(char *str)

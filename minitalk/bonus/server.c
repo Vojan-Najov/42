@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 13:17:19 by ccartman          #+#    #+#             */
-/*   Updated: 2021/09/23 16:03:48 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/09/23 17:12:10 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(void)
 	redefine_signals(&act);
 	print_pid();
 	print_client_msg();
-	return (0);
 }
 
 static void	print_client_msg(void)
@@ -49,7 +48,8 @@ static void	print_client_msg(void)
 		{
 			if (count == BUFSIZE - 1 || !g_alfa)
 			{
-				write(STDIN_FILENO, buf, count);
+				if (write(STDIN_FILENO, buf, count) != count)
+					print_write_error();
 				count = 0;
 			}
 			if (g_alfa)
@@ -65,10 +65,7 @@ static void	send_sigusr1(void)
 {
 	usleep(100);
 	if (kill(client_pid(0), SIGUSR1) == -1)
-	{
 		print_signal_error();
-		exit(EXIT_FAILURE);
-	}
 }
 
 static void	redefine_signals(struct sigaction *act)
@@ -78,8 +75,10 @@ static void	redefine_signals(struct sigaction *act)
 	sigaddset(&act->sa_mask, SIGUSR2);
 	act->sa_flags = SA_RESTART | SA_SIGINFO;
 	act->sa_sigaction = usraction;
-	sigaction(SIGUSR1, act, NULL);
-	sigaction(SIGUSR2, act, NULL);
+	if (sigaction(SIGUSR1, act, NULL) == -1)
+		print_sigact_error();
+	if (sigaction(SIGUSR2, act, NULL) == -1)
+		print_sigact_error();
 }
 
 static void	usraction(int sig, siginfo_t *info, void *ucontext)

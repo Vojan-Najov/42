@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 14:36:16 by ccartman          #+#    #+#             */
-/*   Updated: 2021/09/23 14:36:43 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:55:07 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int		print_args_error(void);
 int		print_pid_error(void);
 
 void	print_signal_error(void);
+
+void	print_sigact_error(void);
+
+void	print_write_error(void);
 
 pid_t	client_pid(pid_t pid);
 

@@ -6,15 +6,15 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 14:39:25 by ccartman          #+#    #+#             */
-/*   Updated: 2021/09/23 14:39:27 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/09/23 17:11:05 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-int		ft_getpid(char *str);
+static int	ft_getpid(char *str);
 
-void	contact_server(pid_t spid, char *msg);
+static void	contact_server(pid_t spid, char *msg);
 
 int	main(int argc, char **argv)
 {
@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-void	contact_server(pid_t spid, char *msg)
+static void	contact_server(pid_t spid, char *msg)
 {
 	int	b;
 	int	ret;
@@ -44,12 +44,9 @@ void	contact_server(pid_t spid, char *msg)
 			else
 				ret = kill(spid, SIGUSR1);
 			if (ret == -1)
-			{
 				print_signal_error();
-				exit(EXIT_FAILURE);
-			}
 			b >>= 1;
-			usleep(500);
+			usleep(200);
 		}
 		if (!*msg)
 			break ;
@@ -57,7 +54,7 @@ void	contact_server(pid_t spid, char *msg)
 	}
 }
 
-int	ft_getpid(char *str)
+static int	ft_getpid(char *str)
 {
 	int		n;
 	char	*s;
