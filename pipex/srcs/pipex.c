@@ -50,7 +50,8 @@ static int	search_path(char *str)
 	return (0);
 }
 
-/*
+/* 	FORK
+
  * int	p;
  * p = fork();
  * if (p == -1)
@@ -66,3 +67,31 @@ static int	search_path(char *str)
  * 		// parent
  * 	}
  */
+/*	OPEN
+// < << input file
+fd = open(argv[1], O_RDONLY);
+if (fd == -1)
+{
+	perror("open");
+	exit(EXIT_FAILURE);
+}
+// > output file
+fd = open(argv[4], O_WRONLY | O_CREATE | O_TRUNK, S_IRUSR | S_IWUSR);
+if (fd == -1)
+{
+	perror("open");
+	exit(EXIT_FAILURE);
+}// >> output file
+fd = open(argv[4], O_WRONLY | O_APPEND | O_CREATE, S_IRUSR | S_IWUSR);
+if (fd == -1)
+{
+	perror("open");
+	exit(EXIT_FAILURE);
+}
+// CLOSE ERROR
+ret = close(fd);
+if (ret == -1)
+{
+	perror("close");
+	exit(EXIT_FAILURE);
+}

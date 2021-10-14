@@ -32,7 +32,7 @@ void	init_complex(t_complex *c_ptr, double re, double im)
 
 int		image_height = 1080;
 int		image_width = 1920;
-int		max_iteration = 200;
+int		max_iteration = 100;
 
 int main()
 {

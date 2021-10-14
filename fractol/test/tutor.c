@@ -37,17 +37,17 @@ int	main(void)
 	img.img_ptr = mlx_new_image(mlx_ptr, WIDTH, HEIGHT);
 	img.addr_ptr = mlx_get_data_addr(img.img_ptr, &img.bits_per_pixel, \
 									&img.size_line, &img.endian);
-	//ft_cyrcle(&img, 300, 0x000AA245);
-	//ft_square(&img, 100, 0x0000FF00);
-	//ft_mlx_pixel_put(&img, WIDTH / 2, HEIGHT / 2, 0x00FF0000);
+	ft_cyrcle(&img, 300, 0x000AA245);
+	ft_square(&img, 100, 0x0000FF00);
+	ft_mlx_pixel_put(&img, WIDTH / 2, HEIGHT / 2, 0x00FF0000);
 	mlx_put_image_to_window(mlx_ptr, win_ptr, img.img_ptr, 0, 0);
-	ft_rectangle(&img, 50, 40, 0x00FFFFFF);
+	ft_rectangle(&img, 50, 40, 0x00FF0000);
 	ft_rectangle(&img, 50, 40, 0x00FFA500);
-	ft_rectangle(&img, 50, 40, 0x00FF0000);
-	ft_rectangle(&img, 50, 40, 0x00FF0000);
-	ft_rectangle(&img, 50, 40, 0x00FF0000);
-	ft_rectangle(&img, 50, 40, 0x00FF0000);
-	ft_rectangle(&img, 50, 40, 0x00FFFFFF);
+	ft_rectangle(&img, 50, 40, 0x00FFFF00);
+	ft_rectangle(&img, 50, 40, 0x0000FF00);
+	ft_rectangle(&img, 50, 40, 0x0042AAFF);
+	ft_rectangle(&img, 50, 40, 0x000000FF);
+	ft_rectangle(&img, 50, 40, 0x008b00FF);
 	mlx_loop(mlx_ptr);
 }
 
@@ -70,7 +70,7 @@ void	ft_square(t_data *data, int length, int color)
 			++x;
 			++j;;
 		}
-		color += 0x00100000;
+		color += 0x00101000;
 		++y;
 		++i;
 	}
@@ -123,10 +123,10 @@ void	ft_cyrcle(t_data *data, int radius, int color)
 			{
 				ft_mlx_pixel_put(data, x, y, color);
 			}
-			++color;
+			color += 50;
 			++x;
 		}
-		color -= 1000;
+		color -= 2000;
 		++y;
 	}
 }
