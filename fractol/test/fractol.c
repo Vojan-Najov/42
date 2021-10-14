@@ -30,8 +30,8 @@ void	init_complex(t_complex *c_ptr, double re, double im)
 	c_ptr->im = im;
 }
 
-int		image_height = 900;
-int		image_width = 900;
+int		image_height = 1080;
+int		image_width = 1920;
 int		max_iteration = 200;
 
 int main()
@@ -59,7 +59,16 @@ int main()
 	double	max_im;
 	max_im = min_im + (max_re - min_re) * image_height / image_width; // max_im
 	
-	
+	min_re = -2.4;
+	max_re = 0.8;
+	min_im = -1.2;
+	max_im = 1.2;
+
+	min_re = -2.;
+	max_re = 1.;
+	min_im = -1.;
+	max_im = 1.;
+
 	init_complex(&factor, (max_re - min_re) / (image_width - 1), \
 				(max_im - min_im) / (image_height - 1));
 
