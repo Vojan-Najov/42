@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 23:00:18 by ccartman          #+#    #+#             */
-/*   Updated: 2021/10/15 23:19:43 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/10/15 22:45:40 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	color_pixel(t_mlx *data, int x, int y, int iter)
 	color <<= 8;
 	color += blue;
 
-	//color = (MAX_ITERATIONS - iter) * 0x030303;
+	color = (MAX_ITERATIONS - iter) * 0x030303;
 // gray
 //
 //	if (iter == MAX_ITERATIONS)
@@ -175,12 +175,12 @@ int		deal_key(int keycode, t_mlx *data)
 		fill_mandelbrot_set(data, 0., 0.05);
 	else if (keycode == 12)
 	{
-		change_area(data, 1.1, 1.1);
+		change_area(data, 0.01, 0.01);
 		fill_mandelbrot_set(data, 0, 0);
 	}
 	else if (keycode == 13)
 	{
-		change_area(data, 0.9, 0.9);
+		change_area(data, -0.02, -0.02);
 		fill_mandelbrot_set(data, 0, 0);
 	}
 	return (0);
@@ -198,10 +198,10 @@ void	change_area(t_mlx *data, double dx, double dy)
 	double	*a;
 
 	a = data->area;
-	a[RE_MIN] *= dx;
-	a[RE_MAX] *= dx;
-	a[IM_MIN] *= dy;
-	a[IM_MAX] *= dy;
+	a[RE_MIN] += dx;
+	a[RE_MAX] -= dx;
+	a[IM_MIN] += dy;
+	a[IM_MAX] -= dy;
     a[RE_FACTOR] = (a[RE_MAX] - a[RE_MIN]) / (WIDTH - 1);
 	a[IM_FACTOR] = (a[IM_MAX] - a[IM_MIN]) / (HEIGHT - 1);
 	

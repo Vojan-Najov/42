@@ -38,16 +38,25 @@ int	main(void)
 	img.addr_ptr = mlx_get_data_addr(img.img_ptr, &img.bits_per_pixel, \
 									&img.size_line, &img.endian);
 	ft_cyrcle(&img, 300, 0x000AA245);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, img.img_ptr, 0, 0);
 	ft_square(&img, 100, 0x0000FF00);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, img.img_ptr, 0, 0);
 	ft_mlx_pixel_put(&img, WIDTH / 2, HEIGHT / 2, 0x00FF0000);
 	mlx_put_image_to_window(mlx_ptr, win_ptr, img.img_ptr, 0, 0);
 	ft_rectangle(&img, 50, 40, 0x00FF0000);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, img.img_ptr, 0, 0);
 	ft_rectangle(&img, 50, 40, 0x00FFA500);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, img.img_ptr, 0, 0);
 	ft_rectangle(&img, 50, 40, 0x00FFFF00);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, img.img_ptr, 0, 0);
 	ft_rectangle(&img, 50, 40, 0x0000FF00);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, img.img_ptr, 0, 0);
 	ft_rectangle(&img, 50, 40, 0x0042AAFF);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, img.img_ptr, 0, 0);
 	ft_rectangle(&img, 50, 40, 0x000000FF);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, img.img_ptr, 0, 0);
 	ft_rectangle(&img, 50, 40, 0x008b00FF);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, img.img_ptr, 0, 0);
 	mlx_loop(mlx_ptr);
 }
 

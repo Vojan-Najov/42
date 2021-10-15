@@ -23,7 +23,10 @@ int	ft_close_win(int keycode, t_param *param)
 	return (keycode);
 }
 
-int	ft_focus_in(int
+int	deal_focus(int buttom, int x, int y, t_param *param)
+{
+	printf
+}
 
 int	main(void)
 {
@@ -33,5 +36,6 @@ int	main(void)
 	param.mlx_ptr = mlx_init();
 	param.win_ptr = mlx_new_window(param.mlx_ptr, 500, 500, "events");
 	mlx_hook(param.win_ptr, 2, 1L << 0, ft_close_win, &param);
+	mlx_hook(param.win_ptr, 9, 1L << 21, deal_focus, &param);
 	mlx_loop(param.mlx_ptr);
 }

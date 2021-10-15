@@ -35,7 +35,7 @@ void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
 	//*dst = get_color_value(data->mlx_ptr, color); // for other endian
 	*(unsigned int *)dst = (unsigned int) color;
 }
-/*
+
 int		render_next_frame(t_data *data)
 {
 	static unsigned int	count;
@@ -73,8 +73,8 @@ int		render_next_frame(t_data *data)
 	printf("%d\n", count);
 	return (1);
 }
-*/
 
+/*
 int		render_next_frame(t_data *data)
 {
 	static unsigned int	count;
@@ -93,7 +93,6 @@ int		render_next_frame(t_data *data)
 		}
 		++y;
 	}
-	/*
 	if (count > 255)
 		color += 0x100;
 	if ( count > 510)
@@ -107,13 +106,15 @@ int		render_next_frame(t_data *data)
 		color = 0xFF0000;
 	if (count > 765)
 		color = 0;
-	*/
 	color += 10;
 	++count;
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr, 0, 0);
 
 	return (1);
 }
+
+*/
+
 int	main(void)
 {
 	t_data	img;
