@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 23:00:18 by ccartman          #+#    #+#             */
-/*   Updated: 2021/10/15 23:19:43 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/10/16 17:50:24 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	change_area(t_mlx *data, double dx, double dy);
 
+//
 void	initialization(t_mlx *data)
 {
 	data->mlx_ptr = mlx_init();
@@ -37,6 +38,7 @@ void	initialization(t_mlx *data)
 	data->addr_ptr = mlx_get_data_addr(data->img_ptr, &data->bits_per_pixel, \
 									&data->size_line, &data->endian);
 }
+//
 
 void	init_complex(t_complex *c, double re, double im)
 {
@@ -105,7 +107,7 @@ void	color_pixel(t_mlx *data, int x, int y, int iter)
 	color <<= 8;
 	color += blue;
 
-	//color = (MAX_ITERATIONS - iter) * 0x030303;
+	color = (MAX_ITERATIONS - iter) * 0x030303;
 // gray
 //
 //	if (iter == MAX_ITERATIONS)
@@ -186,9 +188,28 @@ int		deal_key(int keycode, t_mlx *data)
 	return (0);
 }
 
+int		deal_mouse(int buttom, int x, int y, t_mlx *data)
+{
+	t_complex nc;
+
+
+	(void) data;
+	if (buttom == 1)
+	{
+		nc.re = data->area[RE_MIN] + x * data->area[RE_FACTOR];
+		nc.im = data->area[IM_MAX] - y * data->area[IM_FACTOR];
+		fill_mandelbrot_set(data, nc.re, nc.im);
+		
+	}
+	printf("%d\n", buttom);
+	printf("x = %d    y = %d\n", x, y);
+	return (1);
+}
+
 void	draw_mandelbrot(t_mlx *data)
 {
 	mlx_hook(data->win_ptr, 2, 1L << 0, deal_key, data);
+	mlx_mouse_hook(data->win_ptr, deal_mouse, data);
 	fill_mandelbrot_set(data, 0, 0);
 	mlx_loop(data->mlx_ptr);
 }
@@ -229,18 +250,3 @@ int	main(int argc, char **argv)
 	draw_mandelbrot(&data);
 	return (0);
 }
-
-
-
-	//(void) argv; //
-	//if (argc == 1)
-		// write availibale arguments
-	//	return (0);
-	//if (ft_strcmp(argv[1], MANDELBROT) == 0)
-		//mandelbrot
-	//else if (ft_strcmp(argv[1], JULIA) == 0)
-		// JULIA
-	//else
-		// write availibale arguments
-	//	return (3);
-
