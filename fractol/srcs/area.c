@@ -34,7 +34,7 @@ void	add_area(t_fractol *fr, double dx, double dy)
 	fr->area[IM_FACTOR] = (fr->area[IM_MAX] - fr->area[IM_MIN]) / (HEIGHT - 1);
 }
 
-void	mult_area(t_fractol *fr, double x_factor, double x_factor)
+void	mult_area(t_fractol *fr, double x_factor, double y_factor)
 {
 	fr->area[RE_MIN] *= x_factor;
 	fr->area[RE_MAX] *= x_factor;

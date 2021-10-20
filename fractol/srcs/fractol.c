@@ -16,18 +16,31 @@ static int	check_args(char *arg);
 
 static int	print_help(void);
 
-static char	ft_strcmp(const char *s1, const char *s2);
-
 static void	initialization(t_fractol *fr);
 
-int			main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_fractol	fr;
 
 	if (argc == 1 || !check_args(argv[1]))
 		return (print_help());
+	fr.colors = (int *) malloc(sizeof(int) * (MAX_ITERATIONS + 1));
+	if (!fr.colors)
+	{
+		perror("Can't allocate memory");
+		return (1);
+	}
 	fr.name = argv[1];
 	initialization(&fr);
+	if (ft_strcmp(argv[1], MANDELBROT) == 0)
+		fill_mandelbrot_set(&fr);
+	else if (ft_strcmp(argv[1], JULIA) == 0)
+	{
+		fr.julc.re = -0.74543;	
+		fr.julc.im = 0.11301;
+		fill_julia_set(&fr);	
+	}	
+	mlx_loop(fr.mlx_ptr);
 }
 
 static int	check_args(char *arg)
@@ -67,10 +80,12 @@ static void	initialization(t_fractol *fr)
 	}
 	fr->addr_ptr = mlx_get_data_addr(fr->img_ptr, &fr->bits_per_pixel, \
 									&fr->size_line, &fr->endian);
-	//define_hooks(fr);
+	define_area(fr);
+	define_colors(fr->colors, COLOR_DEFAULT);
+	define_hooks(fr);
 }
 
-static char	ft_strcmp(const char *s1, const char *s2)
+char	ft_strcmp(const char *s1, const char *s2)
 {
 	const char unsigned	*c1;
 	const char unsigned	*c2;
