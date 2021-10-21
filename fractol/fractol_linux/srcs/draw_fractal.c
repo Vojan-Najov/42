@@ -6,4 +6,6 @@ void	draw_fractal(t_fractol *fr)
 		fill_mandelbrot_set(fr);
 	else if (ft_strcmp(fr->name, JULIA) == 0)
 		fill_julia_set(fr);
+	else if (ft_strcmp(fr->name, BURNING_SHIP) == 0)
+		fill_burning_ship_set(fr);
 }

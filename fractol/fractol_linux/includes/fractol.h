@@ -19,11 +19,12 @@
 # include <math.h>
 # include "mlx.h"
 
-# define WIDTH 500//1350
-# define HEIGHT 500//1080
+# define WIDTH 1350
+# define HEIGHT 1080
 # define MAX_ITERATIONS 100
 # define MANDELBROT "Mandelbrot"
 # define JULIA "Julia"
+# define BURNING_SHIP "Burning ship"
 # define RE_MIN 0
 # define RE_MAX 1
 # define IM_MIN 2
@@ -142,6 +143,7 @@ void	pixel_put(t_fractol *fr, int x, int y, int iter);
 void	init_julia_set(t_fractol *fr, int argc, char **argv);
 void	draw_fractal(t_fractol *fr);
 void	fill_mandelbrot_set(t_fractol *fr);
+void	fill_burning_ship_set(t_fractol *fr);
 void	fill_julia_set(t_fractol *fr);
 
 /*

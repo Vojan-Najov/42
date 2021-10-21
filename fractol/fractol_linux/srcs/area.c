@@ -12,11 +12,18 @@
 
 #include "fractol.h"
 
+void	define_burning_ship_area(t_fractol *fr);
+
 void	define_area(t_fractol *fr)
 {
 	if (ft_strcmp(fr->name, JULIA) == 0)
 	{
 		define_julia_area(fr);
+		return ;
+	}
+	else if (ft_strcmp(fr->name, BURNING_SHIP) == 0)
+	{
+		define_burning_ship_area(fr);
 		return ;
 	}
 	fr->area[RE_MIN] = -2.0;
@@ -38,6 +45,17 @@ void	define_julia_area(t_fractol *fr)
 	fr->area[RE_MIN] = -r;
 	fr->area[RE_MAX] = r;
 	fr->area[IM_MIN] = -r;
+	fr->area[IM_MAX] = fr->area[IM_MIN] + \
+					   (fr->area[RE_MAX] - fr->area[RE_MIN]) * HEIGHT / WIDTH;
+	fr->area[RE_FACTOR] = (fr->area[RE_MAX] - fr->area[RE_MIN]) / (WIDTH - 1);
+	fr->area[IM_FACTOR] = (fr->area[IM_MAX] - fr->area[IM_MIN]) / (HEIGHT - 1);
+}
+
+void	define_burning_ship_area(t_fractol *fr)
+{
+	fr->area[RE_MIN] = -1.5;
+	fr->area[RE_MAX] = 2.0;
+	fr->area[IM_MIN] = -1.0;
 	fr->area[IM_MAX] = fr->area[IM_MIN] + \
 					   (fr->area[RE_MAX] - fr->area[RE_MIN]) * HEIGHT / WIDTH;
 	fr->area[RE_FACTOR] = (fr->area[RE_MAX] - fr->area[RE_MIN]) / (WIDTH - 1);

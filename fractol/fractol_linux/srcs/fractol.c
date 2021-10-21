@@ -42,6 +42,8 @@ static int	check_args(char *arg)
 		return (1);
 	else if (ft_strcmp(arg, JULIA) == 0)
 		return (1);
+	else if (ft_strcmp(arg, BURNING_SHIP) == 0)
+		return (1);
 	return (0);
 }
 

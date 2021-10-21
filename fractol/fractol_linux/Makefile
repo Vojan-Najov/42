@@ -17,6 +17,7 @@ SRCS_F			=	colors/colors.c \
 					complex.c \
 					draw_fractal.c \
 					draw_mandelbrot.c \
+					draw_burning_ship.c \
 					draw_julia.c \
 					hooks.c \
 					fractol.c

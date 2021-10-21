@@ -31,21 +31,18 @@ static int	deal_key(int keycode, t_fractol *fr)
 	if (keycode == ESC)
 		completion(fr);
 	else if (keycode == ARROW_LEFT)
-		add_area(fr, -0.05, 0.);
+		add_area(fr, -10 * fr->area[RE_FACTOR], 0.);
 	else if (keycode == ARROW_RIGHT)
-		add_area(fr, 0.05, 0.);
+		add_area(fr, 10 * fr->area[RE_FACTOR], 0.);
 	else if (keycode == ARROW_UP)
-		add_area(fr, 0., 0.05);
+		add_area(fr, 0., 10 * fr->area[IM_FACTOR]);
 	else if (keycode == ARROW_DOWN)
-		add_area(fr, 0., -0.05);
+		add_area(fr, 0., -10 * fr->area[IM_FACTOR]);
 	else if (keycode == Q_KEY)
 		define_area(fr);
 	else if (keycode == SPACE)
 		define_colors(fr->colors, COLOR_NEXT);
-	if (ft_strcmp(fr->name, MANDELBROT) == 0)
-		fill_mandelbrot_set(fr);
-	else
-		fill_julia_set(fr);
+	draw_fractal(fr);
 	return (1);
 }
 
