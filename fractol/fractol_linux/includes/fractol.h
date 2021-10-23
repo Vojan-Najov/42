@@ -70,6 +70,8 @@ static const char	g_help_mess[] = "\n" \
 									"Right mouse button pressed together with "\
 									"the movement changes the julia set.\n" \
 									"Arrows change the position of the image.\n" \
+									"Q to return for default scale.\n" \
+									"Space to change the color theme.\n" \
 									"Use ESC for exit.\n" \
 								  	"\n";
 

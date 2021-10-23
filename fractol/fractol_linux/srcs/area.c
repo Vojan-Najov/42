@@ -50,9 +50,9 @@ static void	init_julia_area(t_fractol *fr)
 	r = (1.0 + sqrt(1.0 + 4 * sqrt(pow(fr->julc.re, 2.0) + \
 									pow(fr->julc.im, 2.0)))) / 2.0;
 	fr->radius = r;
-	fr->area[RE_MIN] = -1.1 * r;
-	fr->area[RE_MAX] = 1.1 * r;
-	fr->area[IM_MIN] = -1.1 * r;
+	fr->area[RE_MIN] = -1.2 * r;
+	fr->area[RE_MAX] = 1.2 * r;
+	fr->area[IM_MIN] = -1. * r;
 	fr->area[IM_MAX] = fr->area[IM_MIN] + \
 					   (fr->area[RE_MAX] - fr->area[RE_MIN]) * HEIGHT / WIDTH;
 	fr->area[RE_FACTOR] = (fr->area[RE_MAX] - fr->area[RE_MIN]) / (WIDTH - 1);
@@ -66,8 +66,6 @@ void	add_area(t_fractol *fr, double dx, double dy)
 	fr->area[IM_MIN] += dy;
 	fr->area[IM_MAX] = fr->area[IM_MIN] + \
 					   (fr->area[RE_MAX] - fr->area[RE_MIN]) * HEIGHT / WIDTH;
-	fr->area[RE_FACTOR] = (fr->area[RE_MAX] - fr->area[RE_MIN]) / (WIDTH - 1);
-	fr->area[IM_FACTOR] = (fr->area[IM_MAX] - fr->area[IM_MIN]) / (HEIGHT - 1);
 }
 
 void	mult_area(t_fractol *fr, double x_factor, double y_factor)
