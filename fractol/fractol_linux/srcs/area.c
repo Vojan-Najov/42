@@ -12,50 +12,47 @@
 
 #include "fractol.h"
 
-void	define_burning_ship_area(t_fractol *fr);
+static void	init_area(t_fractol *fr, double re_min, double re_max, \
+													double im_min);
+
+static void	init_julia_area(t_fractol *fr);
 
 void	define_area(t_fractol *fr)
 {
-	if (ft_strcmp(fr->name, JULIA) == 0)
+	if (ft_strcmp(fr->name, MANDELBROT) == 0)
+		init_area(fr, -2.0, 1.0, -1.2);
+	else if (ft_strcmp(fr->name, JULIA) == 0)
 	{
-		define_julia_area(fr);
-		return ;
+		init_julia_area(fr);
 	}
 	else if (ft_strcmp(fr->name, BURNING_SHIP) == 0)
-	{
-		define_burning_ship_area(fr);
-		return ;
-	}
-	fr->area[RE_MIN] = -2.0;
-	fr->area[RE_MAX] = 1.0;
-	fr->area[IM_MIN] = -1.2;
+		init_area(fr, -1.5, 2.0, -1.0);
+	else if (ft_strcmp(fr->name, TRICORN) == 0)
+		init_area(fr, -2.5, 2., -2.0);
+}
+
+static void	init_area(t_fractol *fr, double re_min, double re_max, \
+													double im_min)
+{
+	fr->area[RE_MIN] = re_min;
+	fr->area[RE_MAX] = re_max;
+	fr->area[IM_MIN] = im_min;
 	fr->area[IM_MAX] = fr->area[IM_MIN] + \
 					   (fr->area[RE_MAX] - fr->area[RE_MIN]) * HEIGHT / WIDTH;
 	fr->area[RE_FACTOR] = (fr->area[RE_MAX] - fr->area[RE_MIN]) / (WIDTH - 1);
 	fr->area[IM_FACTOR] = (fr->area[IM_MAX] - fr->area[IM_MIN]) / (HEIGHT - 1);
 }
 
-void	define_julia_area(t_fractol *fr)
+static void	init_julia_area(t_fractol *fr)
 {
 	double	r;
 
 	r = (1.0 + sqrt(1.0 + 4 * sqrt(pow(fr->julc.re, 2.0) + \
 									pow(fr->julc.im, 2.0)))) / 2.0;
 	fr->radius = r;
-	fr->area[RE_MIN] = -r;
-	fr->area[RE_MAX] = r;
-	fr->area[IM_MIN] = -r;
-	fr->area[IM_MAX] = fr->area[IM_MIN] + \
-					   (fr->area[RE_MAX] - fr->area[RE_MIN]) * HEIGHT / WIDTH;
-	fr->area[RE_FACTOR] = (fr->area[RE_MAX] - fr->area[RE_MIN]) / (WIDTH - 1);
-	fr->area[IM_FACTOR] = (fr->area[IM_MAX] - fr->area[IM_MIN]) / (HEIGHT - 1);
-}
-
-void	define_burning_ship_area(t_fractol *fr)
-{
-	fr->area[RE_MIN] = -1.5;
-	fr->area[RE_MAX] = 2.0;
-	fr->area[IM_MIN] = -1.0;
+	fr->area[RE_MIN] = -1.1 * r;
+	fr->area[RE_MAX] = 1.1 * r;
+	fr->area[IM_MIN] = -1.1 * r;
 	fr->area[IM_MAX] = fr->area[IM_MIN] + \
 					   (fr->area[RE_MAX] - fr->area[RE_MIN]) * HEIGHT / WIDTH;
 	fr->area[RE_FACTOR] = (fr->area[RE_MAX] - fr->area[RE_MIN]) / (WIDTH - 1);

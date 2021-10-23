@@ -24,6 +24,7 @@ void	define_hooks(t_fractol *fr)
 	mlx_hook(fr->win_ptr, 4, 1L << 2, deal_button, fr);
 	mlx_hook(fr->win_ptr, MOTION_NOTIFY, 1L << 10, \
 								deal_motion_notify, fr);
+	mlx_hook(fr->win_ptr, DESTROY_NOTIFY, DEFAULT_MASK, completion, fr);
 }
 
 static int	deal_key(int keycode, t_fractol *fr)
@@ -73,15 +74,11 @@ static int	deal_button(int button, int x, int y, t_fractol *fr)
 
 static int	deal_motion_notify(int x, int y, t_fractol *fr)
 {
-	t_complex	cursor;
-
-	cursor.re = fr->area[RE_MIN] + x * fr->area[RE_FACTOR];
-	cursor.im = fr->area[IM_MAX] - y * fr->area[IM_FACTOR];
 	if (ft_strcmp(fr->name, JULIA) == 0)
 	{
 		fr->julc.re = fr->area[RE_MIN] + x * fr->area[RE_FACTOR];
 		fr->julc.re = fr->area[IM_MAX] - y * fr->area[IM_FACTOR];
-		define_julia_area(fr);
+		define_area(fr);
 		fill_julia_set(fr);
 	}
 	return (1);

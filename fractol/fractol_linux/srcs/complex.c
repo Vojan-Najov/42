@@ -22,3 +22,9 @@ void	add_complex(t_complex *c, t_complex *a)
 	c->re += a->re;
 	c->im += a->im;
 }
+
+void	subtract_complex(t_complex *c, t_complex *a)
+{
+	c->re -= a->re;
+	c->im -= a->im;
+}

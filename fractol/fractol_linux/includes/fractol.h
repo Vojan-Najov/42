@@ -25,6 +25,7 @@
 # define MANDELBROT "Mandelbrot"
 # define JULIA "Julia"
 # define BURNING_SHIP "Burning ship"
+# define TRICORN "Tricorn"
 # define RE_MIN 0
 # define RE_MAX 1
 # define IM_MIN 2
@@ -50,6 +51,7 @@
 # define COLOR_BLUE 2
 # define BUTTON_RELEASE 5
 # define MOTION_NOTIFY 6
+# define DESTROY_NOTIFY 17
 # define DEFAULT_MASK 0
 
 static const char	g_arg_err[] = "Incorrect arguments.\n";
@@ -97,8 +99,6 @@ typedef struct s_fractol
 
 void	define_area(t_fractol *fr);
 
-void	define_julia_area(t_fractol *fr);
-
 void	add_area(t_fractol *fr, double dx, double dy);
 
 void	mult_area(t_fractol *fr, double dx, double dy);
@@ -113,6 +113,7 @@ void	mult_area(t_fractol *fr, double dx, double dy);
 void	init_complex(t_complex *c, double re, double im);
 void	x2_complex(t_complex *c);
 void	add_complex(t_complex *c, t_complex *a);
+void	subtract_complex(t_complex *c, t_complex *a);
 
 /*	
 * install event handlers: mouse movement, keyboard keystroke,
@@ -143,15 +144,18 @@ void	pixel_put(t_fractol *fr, int x, int y, int iter);
 void	init_julia_set(t_fractol *fr, int argc, char **argv);
 void	draw_fractal(t_fractol *fr);
 void	fill_mandelbrot_set(t_fractol *fr);
-void	fill_burning_ship_set(t_fractol *fr);
 void	fill_julia_set(t_fractol *fr);
+void	fill_burning_ship_set(t_fractol *fr);
+void	fill_tricorn_set(t_fractol *fr);
+
+//void	fill_tricorn_set(t_fractol *fr);
 
 /*
 *  completion the program when pressing Esc
 *  or the cross of the graphic window.
 */
 
-void	completion(t_fractol *fr);
+int		completion(t_fractol *fr);
 
 /*
 *  utilitarian functions.

@@ -44,6 +44,8 @@ static int	check_args(char *arg)
 		return (1);
 	else if (ft_strcmp(arg, BURNING_SHIP) == 0)
 		return (1);
+	else if (ft_strcmp(arg, TRICORN) == 0)
+		return (1);
 	return (0);
 }
 

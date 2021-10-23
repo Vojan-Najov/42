@@ -1,8 +1,8 @@
 #include "fractol.h"
 
-int		burning_ship_recurent_cycle(t_complex *c);
+int		tricorn_recurent_cycle(t_complex *c);
 
-void	fill_burning_ship_set(t_fractol *fr)
+void	fill_tricorn_set(t_fractol *fr)
 {
 	t_complex	c;
 	int			y;
@@ -17,7 +17,7 @@ void	fill_burning_ship_set(t_fractol *fr)
 		while (x < WIDTH)
 		{
 			c.re = fr->area[RE_MIN] + x * fr->area[RE_FACTOR];
-			iter = burning_ship_recurent_cycle(&c);
+			iter = tricorn_recurent_cycle(&c);
 			pixel_put(fr, x, y, iter);
 			++x;
 		}
@@ -26,21 +26,20 @@ void	fill_burning_ship_set(t_fractol *fr)
 	mlx_put_image_to_window(fr->mlx_ptr, fr->win_ptr, fr->img_ptr, 0, 0);
 }
 
-int	burning_ship_recurent_cycle(t_complex *c)
+int	tricorn_recurent_cycle(t_complex *c)
 {
 	int			iter;
-	double		x;	
 	t_complex	z;
 
 	init_complex(&z, c->re, c->im);
 	iter = 0;
 	while (iter < MAX_ITERATIONS)
 	{
-		if (z.re * z.re + z.im * z.im - 4. > 0.)
+		if (z.re * z.re + z.im * z.im - 4. > 0)
 			break ;
 		x2_complex(&z);
-		z.im = fabs(z.im);
-		subtract_complex(&z, c);
+		z.im = -z.im;
+		add_complex(&z, c);
 		++iter;
 	}
 	return (iter);
