@@ -30,15 +30,15 @@ SRCS_D			=	$(SRCS:.c=.d)
 OBJS			=	$(SRCS:.c=.o)
 
 CC				=	gcc
-CC_FLAGS		= 	-Wall -Wextra -Werror -O3
+CC_FLAGS		= 	-Wall -Wextra -Werror -g -O3
 
 RM				=	rm -f
 
-.c.o:
+.c.o:			
 				$(CC) $(C_FLAGS) -c $< -o $(<:.c=.o) -MD -I includes -I ./minilibx-linux
 
 
-$(NAME):		$(OBJS) Makefile
+$(NAME):		$(OBJS)
 				make -sC ./minilibx-linux all
 				$(CC) $(CC_GLAGS) $(OBJS) -o $(NAME) -L ./minilibx-linux -lmlx -lXext -lX11 -lm
 
