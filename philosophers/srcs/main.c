@@ -1,51 +1,85 @@
 #include "philo.h"
 
-static int	check_args(int argc, char **argv, t_init *info);
-
-static int	check_arg(char *arg);
-
 int	main(int argc, char **argv)
 {
-	t_init	info;
+	t_args		*args;
+	int			ret;
+	int			i;
+	pthread_t	th;
 
-	check_args(argc, argv, &info);
-	
+	init_param(args);
+	printf("%d\n", ph.philos_num);
+	ph.data_mutex = malloc(sizeof(pthread_mutex_t));
+	ret = pthread_mutex_init(ph.data_mutex, NULL);
+	printf("hello %d\n", ret);
+	for(i = 0; i < ph.philos_num; ++i)
+	{
+		printf("main id %d\n", i + 1);
+		pthread_mutex_lock(ph.data_mutex);
+		ph.id = i + 1;
+		pthread_create(&th, NULL, philo_thread, &ph);
+		pthread_mutex_unlock(ph.data_mutex);
+		//usleep(1000);
+	}
 }
 
-static int	check_args(int argc, char **argv, t_init *info)
+static void	init_param(t_args *args)
 {
-	if (argc != 5 || argc != 6)
-		return (0);   //print info mess
-	if (!check_arg(argv[1]))
-		return (0);
-	info->philos_num = ft_atoi(argv[1]);
-	if (!check_arg(argv[2]))
-		return (0);
-	info->dtime = ft_atoi(argv[2]);
-	if (!check_arg(argv[3]))
-		return (0);
-	info->etime = ft_atoi(argv[3]);
-	if (!check_arg(argv[4]))
-		return (0);
-	info->stime = ft_atoi(argv[4]);
-	if (argc == 6)
+	args = (t_args *) malloc(sizeof(t_args));
+	if (!args)
 	{
-		if (!check_arg(argv[1]))
-			return (0);
-		info->ecount = ft_atoi(argv[5]);
+		write(STDERR_FILENO, "malloc error\n", sizeof("malloc error\n"));
+		exit(EXIT_FAILURE);
 	}
-	return (1);
+	param.ecount = -1;
+	ret = check_args(argc, argv, args);
+	if (!ret)
+	{
+		printf("args error\n");
+		exit(EXIT_FAILURE);
+	}
+	args->phs = (t_ph *) malloc(sizeof(t_ph) * param->philos_num);
+	if (!args->phs)
+	{
+		write(STDERR_FILENO, "malloc error\n", sizeof("malloc error\n"));
+		exit(EXIT_FAILURE);
+	}
+	args->forks = (pthread_mutex_t **) malloc(sizeof(pthread_mutex_t *) * args->philos_num);
+	if (!args)
+	{
+		write(STDERR_FILENO, "malloc error\n", sizeof("malloc error\n"));
+		exit(EXIT_FAILURE);  // needed free memory
+	}
+	init_mutexes(args);
+	for(i = 0; i < param->philos_num; ++i)
+	{
+		init_philosopher(&args->phs[i], args->philos_num, i + 1);
+	}
 }
 
-static int	check_arg(char *arg)
+static void	init_philosopher(t_ph *ph, int n, int id)
 {
-	if (*arg == '+')
-		++arg;
-	while (*arg)
+	int	first;
+	int	second;
+
+	ph->id = id;
+	firs = (n + id - 1) % n;
+	second = (id + 1) % n;
+
+}
+
+static void init_mutexes(t_args *args)
+{
+	int				n;
+	pthread_mutex_t	*forks;
+	int				ret;
+
+	n = args->philos_num;
+	forks = args->forks;
+	for (int i = 0; i < n; ++i)
 	{
-		if (!ft_isdigit(*arg))
-			return (0);
-		++arg;
+		ret = pthread_mutex_init(forks[i]);
+		if (ret)
+			; //mutex_init_error
 	}
-	return (1);
 }
