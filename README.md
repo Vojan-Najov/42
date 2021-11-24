@@ -22,4 +22,8 @@ c piscine:
 
 6. exam02
 
-7. pipex
+7. minitalk
+
+8. fractol
+
+9. philosophers

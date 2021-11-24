@@ -7,8 +7,8 @@ INCLUDES	= ./includes/
 SRCS_F		= ft_atoi.c \
 			  ft_isdigit.c \
 			  check_args.c \
-			  thread.c \
 			  main.c
+			 # thread.c \
 
 #BONUS		= srcs/check_args.c \
 

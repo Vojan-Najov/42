@@ -1,85 +1,121 @@
 #include "philo.h"
 
+static int	init_philosophers(t_ph **phs, int phs_num, pthread_mutex_t *forks);
+
+static int	init_forks(pthread_mutex_t **forks, int phs_num);
+
+static int	init_args(t_args **args, int argc, char **argv);
+
 int	main(int argc, char **argv)
 {
-	t_args		*args;
+	t_args			*args;
+	t_ph			*phs;
+	pthread_mutex_t	*forks;
 	int			ret;
-	int			i;
-	pthread_t	th;
+	//pthread_t	th;
 
-	init_param(args);
-	printf("%d\n", ph.philos_num);
-	ph.data_mutex = malloc(sizeof(pthread_mutex_t));
-	ret = pthread_mutex_init(ph.data_mutex, NULL);
-	printf("hello %d\n", ret);
-	for(i = 0; i < ph.philos_num; ++i)
-	{
-		printf("main id %d\n", i + 1);
-		pthread_mutex_lock(ph.data_mutex);
-		ph.id = i + 1;
-		pthread_create(&th, NULL, philo_thread, &ph);
-		pthread_mutex_unlock(ph.data_mutex);
-		//usleep(1000);
-	}
+	//args = NULL;
+	ret = init_args(&args, argc, argv);
+	printf("1\n");
+	if (ret)
+		return (ret);
+	//forks = NULL;
+	printf("2.0\n");
+	ret = init_forks(&forks, args->phs_num);
+	printf("2\n");
+	
+	if (ret)
+		return (ret);
+	phs = NULL;
+	ret = init_philosophers(&phs, args->phs_num, forks);
+	if (ret)
+		return (ret);
+	printf("%d\n", args->phs_num);
 }
 
-static void	init_param(t_args *args)
+static int	init_forks(pthread_mutex_t **forks, int phs_num)
 {
-	args = (t_args *) malloc(sizeof(t_args));
-	if (!args)
+	int	i;
+	int	ret;
+
+	printf("a\n");
+	*forks = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * phs_num);
+	if (!*forks)
+	{
+		//free args
+		write(STDERR_FILENO, "malloc error\n", sizeof("malloc_error\n"));
+		return (MALLOC_ERROR);
+	}
+	i = 0;
+	while (i < phs_num)
+	{
+		printf("hel %d\n", i);
+		ret = pthread_mutex_init(*forks + i, NULL);
+		if (ret)
+		{
+			// print error and free args
+			return (ret);
+		}
+		++i;
+	}
+	return (0);
+}
+
+static int	init_args(t_args **args, int argc, char **argv)
+{
+	int	ret;
+
+	*args = (t_args *) malloc(sizeof(t_args));
+	if (!*args)
 	{
 		write(STDERR_FILENO, "malloc error\n", sizeof("malloc error\n"));
-		exit(EXIT_FAILURE);
+		return(MALLOC_ERROR);
 	}
-	param.ecount = -1;
-	ret = check_args(argc, argv, args);
+	(*args)->ecount = -1;
+	ret = check_args(*args, argc, argv);
 	if (!ret)
 	{
 		printf("args error\n");
-		exit(EXIT_FAILURE);
+		free(args);
+		return (ARGS_ERROR);
 	}
-	args->phs = (t_ph *) malloc(sizeof(t_ph) * param->philos_num);
-	if (!args->phs)
-	{
-		write(STDERR_FILENO, "malloc error\n", sizeof("malloc error\n"));
-		exit(EXIT_FAILURE);
-	}
-	args->forks = (pthread_mutex_t **) malloc(sizeof(pthread_mutex_t *) * args->philos_num);
-	if (!args)
-	{
-		write(STDERR_FILENO, "malloc error\n", sizeof("malloc error\n"));
-		exit(EXIT_FAILURE);  // needed free memory
-	}
-	init_mutexes(args);
-	for(i = 0; i < param->philos_num; ++i)
-	{
-		init_philosopher(&args->phs[i], args->philos_num, i + 1);
-	}
+	printf("%d\n", (*args)->phs_num);
+	return (0);
 }
 
-static void	init_philosopher(t_ph *ph, int n, int id)
+static int	init_philosophers(t_ph **phs, int phs_num, pthread_mutex_t *forks)
 {
-	int	first;
-	int	second;
+	int		i;
+	int		idx;
+	t_ph	*ph;
 
-	ph->id = id;
-	firs = (n + id - 1) % n;
-	second = (id + 1) % n;
-
-}
-
-static void init_mutexes(t_args *args)
-{
-	int				n;
-	pthread_mutex_t	*forks;
-	int				ret;
-
-	n = args->philos_num;
-	forks = args->forks;
-	for (int i = 0; i < n; ++i)
+	*phs = (t_ph *) malloc(sizeof(t_ph) * phs_num);
+	if (!*phs)
 	{
-		ret = pthread_mutex_init(forks[i]);
-		if (ret)
-			; //mutex_init_error
+		//free args and destroy forks and free forks;
+		write(STDERR_FILENO, "malloc error\n", sizeof("malloc error\n"));
+		return (MALLOC_ERROR);
 	}
+	i = 0;
+	while (i < phs_num)
+	{
+		ph = *phs + i;
+		ph->id = i + 1;
+		if (i != phs_num - 1)
+		{
+			idx = (phs_num + i) % phs_num;
+			ph->first = forks + idx;
+			idx = (phs_num + i + 1) % phs_num;
+			ph->second = forks + idx;
+		}
+		else
+		{
+			idx = 0;
+			ph->first = forks + idx;
+			idx = phs_num - 1;
+			ph->second = forks + idx;
+		}	
+		++i;
+	}
+	return (0);
 }
