@@ -27,6 +27,7 @@ typedef struct	s_args
 	pthread_mutex_t	*forks;
 	pthread_mutex_t write_mutex;
 	pthread_mutex_t	simul;
+	int				simulation;
 }				t_args;
 
 struct	s_ph
@@ -34,7 +35,7 @@ struct	s_ph
 	int		id;
 	pthread_mutex_t	*first;
 	pthread_mutex_t	*second;
-	struct timeval	*death_time;
+	struct timeval	death_time;
 	int				lasteattime;
 	t_args	*args;
 };

@@ -11,20 +11,25 @@ int	main(int argc, char **argv)
 	ret = init_args(&args, argc, argv);
 	if (ret)
 		return (ret);
-	i = 0;
+
 	pthread_mutex_create(&args->simul, NULL);
 	pthread_mutex_lock(&args->simul);
+
+	i = 0;
 	while (i < args.phs_num)
 	{
 		pthread_create(&th, NULL, thread, &args.phs[i]);
 		pthread_detach(th);
 		++i;
 	}
+
 	for(int j = 0; j < args->phs_num; ++j)
 	{
-		int ms = get_time_of_day_in_ms();
-		ph_t ph = args.phs[j];
-		ph.lasteattime = ms;
+		struct timeval death_time;
+		death_time = args.ph[j].death_time;
+		gettimeofday(&death_time, NULL);
+		death_time.tv_sec += (death_time.tv_usec + args.dtime * 1000) / 1000000;
+		death_time.tv_usec = (death_time.tv_usec + 1000 * dtime) % 1000000;
 	}
 	args->simulation = 1;
 	pthread_mutex_unlock(&args->simul);
@@ -45,26 +50,3 @@ int	main(int argc, char **argv)
 	//usleep(10000);
 	return (0);
 }
-
-/*
-int	main(int argc, char **argv)
-{
-	t_args			*args;
-	t_ph			*phs;
-	pthread_mutex_t	*forks;
-	int			ret;
-	//pthread_t	th;
-
-	ret = init_args(&args, argc, argv);
-	if (ret)
-		return (ret);
-	ret = init_forks(&forks, args->phs_num);
-	if (ret)
-		return (ret);
-	phs = NULL;
-	ret = init_philosophers(&phs, args->phs_num, forks);
-	if (ret)
-		return (ret);
-	printf("%d\n", args->phs_num);
-}
-*/

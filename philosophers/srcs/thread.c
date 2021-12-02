@@ -8,11 +8,12 @@ int			get_time_of_day_in_ms(void)
 	gettimeofday(&tv, NULL);
 	ms = ((int) tv.tv_sec * 1000)  + ((int) tv.tv_usec) / 1000;
 	return (ms);
-}
+G}
 
 static void	think(int id, pthread_mutex_t *write_mutex)
 {
 	int	ms;
+
 
 	pthread_mutex_lock(write_mutex);
 	ms = get_time_of_day_in_ms();
@@ -62,6 +63,12 @@ static void	philo_sleep(int id, pthread_mutex_t *write_mutex, int stime)
 	usleep(stime);
 }
 
+static void	philo_think(t_ph ph)
+{
+	if (ph.args.simulation)
+						
+}
+
 void		*thread(void *vdata)
 {
 	t_ph	*ph;
@@ -71,8 +78,8 @@ void		*thread(void *vdata)
 	pthread_mutex_unlock(&ph->args->simul);
 	while (simulation)
 	{
-		think(ph->id, &ph->args->write_mutex);
-		eat(ph);
+		philo_think(ph);
+		philo_eat(ph);
 		philo_sleep(ph->id, &ph->args->write_mutex, ph->args->stime);
 	}
 	
