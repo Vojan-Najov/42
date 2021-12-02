@@ -1,25 +1,5 @@
 #include "philo.h"
 
-void	think(int id, pthread_mutex_t *write_mutex)
-{
-	struct timeval tv;
-
-	pthread_mutex_lock(write_mutex);
-	gettimeofday(&tv, NULL);
-	printf("%ld %d %d is thinking\n", tv.tv_sec, tv.tv_usec / 1000, id);
-	pthread_mutex_unlock(write_mutex);
-}
-
-void	*thread(void *vdata)
-{
-	t_ph	*ph;
-
-	ph = (t_ph *) vdata;
-	think(ph->id, &ph->args->write_mutex);
-	//printf("%d\n", ph->id);
-	return(NULL);
-}
-
 int	main(int argc, char **argv)
 {
 	int		ret;
@@ -32,14 +12,37 @@ int	main(int argc, char **argv)
 	if (ret)
 		return (ret);
 	i = 0;
+	pthread_mutex_create(&args->simul, NULL);
+	pthread_mutex_lock(&args->simul);
 	while (i < args.phs_num)
 	{
 		pthread_create(&th, NULL, thread, &args.phs[i]);
 		pthread_detach(th);
 		++i;
 	}
-	printf("hell\n");
-	usleep(10000);
+	for(int j = 0; j < args->phs_num; ++j)
+	{
+		int ms = get_time_of_day_in_ms();
+		ph_t ph = args.phs[j];
+		ph.lasteattime = ms;
+	}
+	args->simulation = 1;
+	pthread_mutex_unlock(&args->simul);
+	while (args->simulation)
+	{
+		for(int j = 0; j < args->phs_num, ++j)
+		{
+			ph_t ph = args->ph[j];
+			if (ph.lasteattime + args->dtime > get_time_of_day_in_ms())
+			{
+				args->simulation = 0;
+				pthread_mutex_lock(args->write_mutex);
+				printf("%d %d died\n", get_time_of_day_in_ms(), ph.id);
+				pthread_mutex_unlock(args->write_mutex);
+			}
+		}
+	}
+	//usleep(10000);
 	return (0);
 }
 

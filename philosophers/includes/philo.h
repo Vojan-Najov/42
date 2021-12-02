@@ -26,6 +26,7 @@ typedef struct	s_args
 	t_ph			*phs;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t write_mutex;
+	pthread_mutex_t	simul;
 }				t_args;
 
 struct	s_ph
@@ -34,6 +35,7 @@ struct	s_ph
 	pthread_mutex_t	*first;
 	pthread_mutex_t	*second;
 	struct timeval	*death_time;
+	int				lasteattime;
 	t_args	*args;
 };
 
@@ -47,6 +49,6 @@ int		init_args(t_args *args, int argc, char **argv);
 
 void	completion(t_args *args);
 
-void	*philo_thread(void *v_data);
+void	*thread(void *v_data);
 
 #endif

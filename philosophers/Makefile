@@ -9,8 +9,8 @@ SRCS_F		= ft_atoi.c \
 			  check_args.c \
 			  init.c \
 			  completion.c \
+			  thread.c \
 			  main.c
-			 # thread.c \
 
 #BONUS		= srcs/check_args.c \
 
