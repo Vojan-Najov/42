@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:29:37 by ccartman          #+#    #+#             */
-/*   Updated: 2021/11/27 20:13:49 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/12/02 18:30:36 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,18 @@ static void init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
 	{
 		phs[i].args = args;
 		phs[i].id = i + 1;
+		phs[i].eating = 0;
 		idx1 = i;
 		idx2 = (i + 1) % phs_num;
 		if (idx1 < idx2)
 		{
-			phs[i].first = forks + idx1;
-			phs[i].second = forks + idx2;
+			phs[i].first_fork = forks + idx1;
+			phs[i].second_fork = forks + idx2;
 		}
 		else
 		{
-			phs[i].first = forks + idx2;
-			phs[i].second = forks + idx1;
+			phs[i].first_fork = forks + idx2;
+			phs[i].second_fork = forks + idx1;
 		}
 		++i;
 	}

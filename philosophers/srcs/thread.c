@@ -1,86 +1,124 @@
 #include "philo.h"
 
-int			get_time_of_day_in_ms(void)
+static void	philo_think(t_ph *ph)
 {
 	struct timeval	tv;
-	int				ms;
 
+	pthread_mutex_lock(&ph->args->write_mutex);	
 	gettimeofday(&tv, NULL);
-	ms = ((int) tv.tv_sec * 1000)  + ((int) tv.tv_usec) / 1000;
-	return (ms);
-G}
-
-static void	think(int id, pthread_mutex_t *write_mutex)
-{
-	int	ms;
-
-
-	pthread_mutex_lock(write_mutex);
-	ms = get_time_of_day_in_ms();
-	printf("%d %d is thinking\n", ms, id);
-	pthread_mutex_unlock(write_mutex);
+	if (ph->args->simulation)
+		printf("%ld %03d  %d is thinking\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
+	pthread_mutex_unlock(&ph->args->write_mutex);
 }
 
-static void	eat(t_ph *ph)
+static void	philo_eat(t_ph *ph)
 {
-	int			id;
-	int			ms;
-	pthread_mutex_t	*write_mutex;
-	pthread_mutex_t	*first_fork;
-	pthread_mutex_t	*second_fork;
-	
-	id = ph->id;
-	write_mutex = &ph->args->write_mutex;
-	first_fork = ph->first;
-	second_fork = ph->second;
-	pthread_mutex_lock(first_fork);
-	pthread_mutex_lock(write_mutex);
-	ms = get_time_of_day_in_ms();
-	printf("%d %d has taken a fork\n", ms, id);
-	pthread_mutex_unlock(write_mutex);
-	pthread_mutex_lock(second_fork);
-	pthread_mutex_lock(write_mutex);
-	ms = get_time_of_day_in_ms();
-	printf("%d %d has taken a fork\n", ms, id);
-	ms = get_time_of_day_in_ms();
-	printf("%d %d is eating\n", ms, id);
-	pthread_mutex_unlock(write_mutex);
+	struct timeval	tv;
+	long int		tmp;
+
+	pthread_mutex_lock(ph->first_fork);
+	pthread_mutex_lock(&ph->args->write_mutex);
+	gettimeofday(&tv, NULL);
+	if (ph->args->simulation)
+		printf("%ld %03d  %d has taken a fork\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
+	else
+	{
+		pthread_mutex_unlock(&ph->args->write_mutex);
+		pthread_mutex_unlock(ph->first_fork);
+		return ;
+	}
+	pthread_mutex_unlock(&ph->args->write_mutex);
+	pthread_mutex_lock(ph->second_fork);
+	pthread_mutex_lock(&ph->args->write_mutex);
+	ph->eating = 1;
+	gettimeofday(&tv, NULL);
+	if (ph->args->simulation)
+		printf("%ld %03d  %d is eating\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
+	else
+	{
+		pthread_mutex_unlock(&ph->args->write_mutex);
+		pthread_mutex_unlock(ph->first_fork);
+		pthread_mutex_unlock(ph->second_fork);
+		return ;
+	}
+	pthread_mutex_unlock(&ph->args->write_mutex);
+
 	usleep(ph->args->etime);
-	ms = get_time_of_day();
-	ph->lasteattime = ms;
-	pthread_mutex_unlock(first_fork);
-	pthread_mutex_unlock(second_fork);	
+
+	// update death time
+	gettimeofday(&tv, NULL);
+	tmp = tv.tv_usec + ph->args->dtime / 1000000;
+	ph->death_time.tv_sec += tmp;
+	ph->death_time.tv_usec = (tv.tv_usec + ph->args->dtime) % 1000000;
+	ph->eating = 0;
+
+	pthread_mutex_unlock(ph->first_fork);
+	pthread_mutex_unlock(ph->second_fork);
 }
 
-static void	philo_sleep(int id, pthread_mutex_t *write_mutex, int stime)
+static void	philo_sleep(t_ph *ph)
 {
-	int	ms;
+	struct timeval	tv;
 
-	pthread_mutex_lock(write_mutex);
-	ms = get_time_of_day_in_ms();
-	printf("%d %d is sleeping\n", ms, id);
-	pthread_mutex_unlock(write_mutex);
-	usleep(stime);
+	pthread_mutex_lock(&ph->args->write_mutex);
+	gettimeofday(&tv, NULL);
+	if (ph->args->simulation)
+		printf("%ld %03d  %d is sleeping\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
+	else
+	{
+		pthread_mutex_unlock(&ph->args->write_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&ph->args->write_mutex);
+	usleep(ph->args->stime);
 }
 
-static void	philo_think(t_ph ph)
+void		*watch(void *vph)
 {
-	if (ph.args.simulation)
-						
+	struct timeval	tv;
+	t_ph			*ph;
+
+	ph = (t_ph *) vph;
+	pthread_mutex_lock(&ph->args->simul);
+	pthread_mutex_unlock(&ph->args->simul);
+	while (ph->args->simulation)
+	{
+		if (ph->eating)
+			continue ;
+		gettimeofday(&tv, NULL);
+		if (tv.tv_sec < ph->death_time.tv_sec)
+			continue;
+		if (tv.tv_sec == ph->death_time.tv_sec && \
+				tv.tv_usec < ph->death_time.tv_usec)
+			continue ;
+		if (ph->args->simulation)
+		{
+			ph->args->simulation = 0;
+			pthread_mutex_lock(&ph->args->write_mutex);
+			printf("%ld %03d  %d died\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
+			pthread_mutex_unlock(&ph->args->write_mutex);
+		}
+	}
+	return (NULL);
 }
 
 void		*thread(void *vdata)
 {
-	t_ph	*ph;
+	t_ph		*ph;
+	pthread_t	eye;
 
 	ph = (t_ph *) vdata;
+
+	pthread_create(&eye, NULL, watch, ph);
+	pthread_detach(eye);
+
 	pthread_mutex_lock(&ph->args->simul);
 	pthread_mutex_unlock(&ph->args->simul);
-	while (simulation)
+	while (ph->args->simulation)
 	{
 		philo_think(ph);
 		philo_eat(ph);
-		philo_sleep(ph->id, &ph->args->write_mutex, ph->args->stime);
+		philo_sleep(ph);
 	}
 	
 	return(NULL);

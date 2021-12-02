@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:41:50 by ccartman          #+#    #+#             */
-/*   Updated: 2021/11/27 19:07:00 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/12/02 14:47:00 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	check_args(t_args *args, int argc, char **argv)
 	args->phs_num = ft_atoi(argv[1]);
 	if (!check_arg(argv[2]))
 		return (1);
-	args->dtime = ft_atoi(argv[2]);
+	args->dtime = ft_atoi(argv[2]) * 1000; //
 	if (!check_arg(argv[3]))
 		return (1);
-	args->etime = ft_atoi(argv[3]);
+	args->etime = ft_atoi(argv[3]) * 1000; //
 	if (!check_arg(argv[4]))
 		return (1);
-	args->stime = ft_atoi(argv[4]);
+	args->stime = ft_atoi(argv[4]) * 1000; //
 	if (argc == 6)
 	{
 		if (!check_arg(argv[5]))

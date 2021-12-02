@@ -33,8 +33,9 @@ typedef struct	s_args
 struct	s_ph
 {
 	int		id;
-	pthread_mutex_t	*first;
-	pthread_mutex_t	*second;
+	int		eating;
+	pthread_mutex_t	*first_fork;
+	pthread_mutex_t	*second_fork;
 	struct timeval	death_time;
 	int				lasteattime;
 	t_args	*args;
