@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 		//pthread_detach(th);
 		++i;
 	}
-
+/*
 	for(int j = 0; j < args.phs_num; ++j)
 	{
 		struct timeval *death_time;
@@ -35,12 +35,12 @@ int	main(int argc, char **argv)
 		(*death_time).tv_sec += ((*death_time).tv_usec + args.dtime) / 1000000;
 		(*death_time).tv_usec += ((*death_time).tv_usec +  args.dtime) % 1000000;
 	}
+	printf("%ld %ld\n\n", args.phs[0].death_time.tv_sec, args.phs[0].death_time.tv_usec);
 
-	printf("%ld %d\n\n", args.phs[0].death_time.tv_sec, args.phs[0].death_time.tv_usec);
-
+*/
 	struct timeval s;
 	gettimeofday(&s, NULL);
-	printf("%ld %d start simulation\n\n", s.tv_sec, s.tv_usec);
+	printf("%ld %03ld start simulation\n\n", s.tv_sec, s.tv_usec / 1000);
 	args.simulation = 1;
 	pthread_mutex_unlock(&args.simul);
 

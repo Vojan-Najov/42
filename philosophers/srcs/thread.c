@@ -7,7 +7,7 @@ static void	philo_think(t_ph *ph)
 	pthread_mutex_lock(&ph->args->write_mutex);	
 	gettimeofday(&tv, NULL);
 	if (ph->args->simulation)
-		printf("%ld %03d  %d is thinking\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
+		printf("%ld %03ld  %d is thinking\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
 	pthread_mutex_unlock(&ph->args->write_mutex);
 }
 
@@ -20,7 +20,7 @@ static void	philo_eat(t_ph *ph)
 	pthread_mutex_lock(&ph->args->write_mutex);
 	gettimeofday(&tv, NULL);
 	if (ph->args->simulation)
-		printf("%ld %03d  %d has taken a fork\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
+		printf("%ld %03ld  %d has taken a fork\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
 	else
 	{
 		pthread_mutex_unlock(&ph->args->write_mutex);
@@ -33,7 +33,7 @@ static void	philo_eat(t_ph *ph)
 	ph->eating = 1;
 	gettimeofday(&tv, NULL);
 	if (ph->args->simulation)
-		printf("%ld %03d  %d is eating\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
+		printf("%ld %03ld  %d is eating\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
 	else
 	{
 		pthread_mutex_unlock(&ph->args->write_mutex);
@@ -47,7 +47,7 @@ static void	philo_eat(t_ph *ph)
 
 	// update death time
 	gettimeofday(&tv, NULL);
-	tmp = tv.tv_usec + ph->args->dtime / 1000000;
+	tmp = (tv.tv_usec + ph->args->dtime) / 1000000;
 	ph->death_time.tv_sec += tmp;
 	ph->death_time.tv_usec = (tv.tv_usec + ph->args->dtime) % 1000000;
 	ph->eating = 0;
@@ -63,7 +63,7 @@ static void	philo_sleep(t_ph *ph)
 	pthread_mutex_lock(&ph->args->write_mutex);
 	gettimeofday(&tv, NULL);
 	if (ph->args->simulation)
-		printf("%ld %03d  %d is sleeping\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
+		printf("%ld %03ld  %d is sleeping\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
 	else
 	{
 		pthread_mutex_unlock(&ph->args->write_mutex);
@@ -84,20 +84,27 @@ void		*watch(void *vph)
 	while (ph->args->simulation)
 	{
 		if (ph->eating)
+		{
+			//usleep(ph->args->dtime / 2);
 			continue ;
+		}
 		gettimeofday(&tv, NULL);
 		if (tv.tv_sec < ph->death_time.tv_sec)
 			continue;
 		if (tv.tv_sec == ph->death_time.tv_sec && \
 				tv.tv_usec < ph->death_time.tv_usec)
 			continue ;
+		//pthread_mutex_lock(&ph->args->simul);
 		if (ph->args->simulation)
 		{
 			ph->args->simulation = 0;
 			pthread_mutex_lock(&ph->args->write_mutex);
-			printf("%ld %03d  %d died\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
+			printf("%ld %03ld  %d died\n", tv.tv_sec, tv.tv_usec / 1000, ph->id);
+			printf("%ld %03ld    death_time\n", ph->death_time.tv_sec, ph->death_time.tv_usec / 1000);
+			printf("%ld %03ld    stop simulation\n", tv.tv_sec, tv.tv_usec / 1000);
 			pthread_mutex_unlock(&ph->args->write_mutex);
 		}
+		//pthread_mutex_unlock(&ph->args->simul);
 	}
 	return (NULL);
 }
@@ -113,6 +120,9 @@ void		*thread(void *vdata)
 	pthread_detach(eye);
 
 	pthread_mutex_lock(&ph->args->simul);
+	gettimeofday(&ph->death_time, NULL);
+	ph->death_time.tv_sec += ((ph->death_time.tv_usec + ph->args->dtime) / 1000000);
+	ph->death_time.tv_usec = (ph->death_time.tv_usec + ph->args->dtime) % 1000000;
 	pthread_mutex_unlock(&ph->args->simul);
 	while (ph->args->simulation)
 	{
