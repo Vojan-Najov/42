@@ -40,7 +40,7 @@ int	main(int argc, char **argv)
 */
 	struct timeval s;
 	gettimeofday(&s, NULL);
-	printf("%ld %03d start simulation\n\n", s.tv_sec, s.tv_usec / 1000);
+	printf("%ld %03ld start simulation\n\n", s.tv_sec, s.tv_usec / 1000);
 	args.simulation = 1;
 	pthread_mutex_unlock(&args.simul);
 
