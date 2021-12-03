@@ -37,7 +37,7 @@ struct	s_ph
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 	struct timeval	death_time;
-	int				lasteattime;
+int				ret;
 	t_args	*args;
 };
 
