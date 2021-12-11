@@ -12,10 +12,14 @@
 
 #include "philo.h"
 
+static int	init_fields(t_args *args);
+
 static int init_forks (t_args *args);
 
 static void init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
 								int phs_num, t_args *args);
+
+static int	init_date_mutex(t_args *args);
 
 int	init_args(t_args *args, int argc, char **argv)
 {
@@ -24,30 +28,47 @@ int	init_args(t_args *args, int argc, char **argv)
 	args->ecount = -1;
 	args->phs = NULL;
 	args->forks = NULL;
+	args->ths = NULL;
+	args->simulation = 1;
 	ret = check_args(args, argc, argv);
 	if (ret)
 	{
 		write(STDERR_FILENO, g_arg_err_mes, sizeof(g_arg_err_mes));
-		//write help_mes
+		write(STDIN_FILENO, g_help_mes, sizeof(g_help_mes));
 		return (ARGS_ERROR);
 	}
-	args->phs = (t_ph *) malloc(sizeof(t_ph) * args->phs_num);
-	args->forks = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * args->phs_num);
-	if (!args->phs || !args->forks)
-	{
-		completion(args);
-		return (MALLOC_ERROR);
-	}
+	ret = init_fields(args);
+	if (ret)
+		return (ret);
 	ret = init_forks(args);
 	if (ret)
-		return (MUTEX_ERROR);
+		return (ret);
 	init_philosophers(args->phs, args->forks, args->phs_num, args);
-	//
-	pthread_mutex_init(&args->write_mutex, NULL);
+	ret = init_date_mutex(args);
+	if (ret)
+		return (ret);
 	return (0);
 }
 
-static int init_forks (t_args *args)
+static int	init_fields(t_args *args)
+{
+	int	num;
+
+	num = args->phs_num;
+	args->eaters = 0;
+	args->phs = (t_ph *) malloc(sizeof(t_ph) * num);
+	args->forks = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * num);
+	args->ths = (pthread_t *) malloc(sizeof(pthread_t) * num);
+	if (!args->phs || !args->forks || !args->ths)
+	{
+		write(STDERR_FILENO, g_mal_err_mes, sizeof(g_mal_err_mes));
+		completion(args, 0, 0);
+		return (MALLOC_ERROR);
+	}
+	return (0);
+}
+
+static int	init_forks (t_args *args)
 {
 	pthread_mutex_t	*forks;
 	int				phs_num;
@@ -63,7 +84,7 @@ static int init_forks (t_args *args)
 		if (ret)
 		{
 			write(STDERR_FILENO, g_mut_err_mes, sizeof(g_mut_err_mes));
-			completion(args);
+			completion(args, i, 0);
 			return (MUTEX_ERROR);
 		}
 		++i;
@@ -82,6 +103,7 @@ static void init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
 	while (i < phs_num)
 	{
 		phs[i].args = args;
+		phs[i].eat_count = 0;
 		phs[i].id = i + 1;
 		phs[i].eating = 0;
 		idx1 = i;
@@ -98,4 +120,18 @@ static void init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
 		}
 		++i;
 	}
+}
+
+static int	init_date_mutex(t_args *args)
+{
+	int	ret;
+
+	ret = pthread_mutex_init(&args->date_mutex, NULL);
+	if (ret)
+	{
+		write(STDERR_FILENO, g_mut_err_mes, sizeof(g_mut_err_mes));
+		completion(args, args->phs_num, 0);
+		return (MUTEX_ERROR);
+	}
+	return (0);
 }

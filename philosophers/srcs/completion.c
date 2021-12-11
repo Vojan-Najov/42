@@ -12,9 +12,16 @@
 
 #include "philo.h"
 
-void	completion(t_args *args)
+void	completion(t_args *args, int forks_num, int date_mutex)
 {
-	free(args->phs);
+	int	i;
 
+	i = 0;
+	while (i < forks_num)
+		pthread_mutex_destroy(args->forks + i);
+	if (date_mutex)
+		pthread_mutex_destroy(&args->date_mutex);
+	free(args->phs);
 	free(args->forks);
+	free(args->ths);
 }

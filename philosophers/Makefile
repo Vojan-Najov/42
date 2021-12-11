@@ -24,7 +24,7 @@ SRCS_D		= $(SRCS:.c=.d)
 
 CC			= gcc
 
-CC_FLAGS	= -Wall -Wextra -Werror -I $(INCLUDES)
+CC_FLAGS	= -g -Wall -Wextra -Werror -I $(INCLUDES)
 
 RM			= rm -f
 

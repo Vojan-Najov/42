@@ -1,11 +1,12 @@
 #include "philo.h"
 
+static int	init_threads(t_args *args);
+
 int	main(int argc, char **argv)
 {
 	int		ret;
-	t_args	args;
 	int		i;
-	pthread_t	*th;
+	t_args	args;
 	void		**value_ptr;
 
 
@@ -13,19 +14,55 @@ int	main(int argc, char **argv)
 	if (ret)
 		return (ret);
 
-	th = (pthread_t *) malloc( sizeof(pthread_t) * args.phs_num);
 	value_ptr = malloc(sizeof(void *) * args.phs_num);
-	pthread_mutex_init(&args.simul, NULL);
-	pthread_mutex_lock(&args.simul);
+	
+	ret = init_threads(&args);
+	if (ret)
+		return (ret);
 
+	// join threads
 	i = 0;
 	while (i < args.phs_num)
 	{
-		pthread_create(th + i, NULL, thread, &args.phs[i]);
-
-		//pthread_detach(th);
-		++i;
+		pthread_join(args.ths[i], value_ptr + i);
+		i++;
 	}
+
+	completion(&args, args.phs_num, 1);
+	return (0);
+}
+
+static int	init_threads(t_args *args)
+{
+	int	i;
+	int	ret;
+
+	i = 0;
+	while (i < args->phs_num)
+	{
+		ret = pthread_create(args->ths + i, NULL, thread, &args->phs[i]);
+		if (ret)
+		{
+			completion(args, args->phs_num, 1);
+			write(STDERR_FILENO, g_thr_err_mes, sizeof(g_thr_err_mes));
+			return (THREAD_ERROR);
+		}	 
+		i += 2;
+	}
+	i = 1;
+	while (i < args->phs_num)
+	{
+		ret = pthread_create(args->ths + i, NULL, thread, &args->phs[i]);
+		if (ret)
+		{
+			completion(args, args->phs_num, 1);
+			write(STDERR_FILENO, g_thr_err_mes, sizeof(g_thr_err_mes));
+			return (THREAD_ERROR);
+		}
+		i += 2;
+	}
+	return (0);
+}
 /*
 	for(int j = 0; j < args.phs_num; ++j)
 	{
@@ -37,15 +74,16 @@ int	main(int argc, char **argv)
 	}
 	printf("%ld %ld\n\n", args.phs[0].death_time.tv_sec, args.phs[0].death_time.tv_usec);
 
-*/
+
 	struct timeval s;
 	gettimeofday(&s, NULL);
 	printf("%ld %03ld start simulation\n\n", s.tv_sec, s.tv_usec / 1000);
 	args.simulation = 1;
 	pthread_mutex_unlock(&args.simul);
 
+*/
 
-		/*
+/*
 	while (args.simulation)
 	{
 		usleep(1000000);
@@ -82,14 +120,20 @@ int	main(int argc, char **argv)
 	}
 
 		*/
+
+/*
+	// threads initilization
 	i = 0;
 	while (i < args.phs_num)
 	{
-		pthread_join(th[i], value_ptr + i);
-		i++;
+		pthread_create(args.ths + i, NULL, thread, &args.phs[i]);
+		i += 2;
 	}
-	//usleep(1000000);
-	//args.simulation = 0;
-	//usleep(500);
-	return (0);
-}
+	usleep(10000);
+	i = 1;
+	while (i < args.phs_num)
+	{
+		pthread_create(args.ths + i, NULL, thread, args.phs + i);
+		i += 2;
+	}
+*/
