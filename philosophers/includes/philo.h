@@ -11,6 +11,7 @@
 # define MALLOC_ERROR 2
 # define MUTEX_ERROR 3
 # define THREAD_ERROR 4
+# define JOIN_ERROR 5
 
 static const char	g_arg_err_mes[] = "Incorect arguments\n";
 static const char	g_help_mes[] = "Usage:...\n";
@@ -58,6 +59,14 @@ int		init_args(t_args *args, int argc, char **argv);
 
 void	completion(t_args *args, int forks_num, int date_mutex);
 
+void	philo_think(t_ph *ph);
+
+void	philo_eat(t_ph *ph);
+
+void	philo_sleep(t_ph *ph);
+
 void	*thread(void *v_data);
+
+void	*watch(void *vph);
 
 #endif

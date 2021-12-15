@@ -1,7 +1,6 @@
 #include "philo.h"
 
-/*
-static void	philo_think(t_ph *ph)
+void	philo_think(t_ph *ph)
 {
 	struct timeval	now;
 
@@ -12,7 +11,7 @@ static void	philo_think(t_ph *ph)
 	pthread_mutex_unlock(&ph->args->date_mutex);
 }
 
-static void	philo_eat(t_ph *ph)
+static int	take_first_fork(t_ph *ph)
 {
 	struct timeval	now;
 
@@ -23,10 +22,17 @@ static void	philo_eat(t_ph *ph)
 	{
 		pthread_mutex_unlock(&ph->args->date_mutex);
 		pthread_mutex_unlock(ph->first_fork);
-		return ;
+		return (0);
 	}
 	printf("%ld %03ld  %d has taken a fork\n", now.tv_sec, now.tv_usec / 1000, ph->id);
 	pthread_mutex_unlock(&ph->args->date_mutex);
+	return (1);
+}
+
+static int	take_second_fork(t_ph *ph)
+{
+	struct timeval	now;
+
 	pthread_mutex_lock(ph->second_fork);
 	pthread_mutex_lock(&ph->args->date_mutex);
 	if (!ph->args->simulation)
@@ -34,13 +40,25 @@ static void	philo_eat(t_ph *ph)
 		pthread_mutex_unlock(&ph->args->date_mutex);
 		pthread_mutex_unlock(ph->first_fork);
 		pthread_mutex_unlock(ph->second_fork);
-		return ;
+		return (0);
 	}
 	gettimeofday(&now, NULL);
 	ph->death_time.tv_sec += (now.tv_usec + ph->args->dtime) / 1000000;
 	ph->death_time.tv_usec = (now.tv_usec + ph->args->dtime) % 1000000;
-	++ph->eat_count;
 	printf("%ld %03ld  %d is eating\n", now.tv_sec, now.tv_usec / 1000, ph->id);
+	pthread_mutex_unlock(&ph->args->date_mutex);
+	return (1);
+}
+
+void	philo_eat(t_ph *ph)
+{
+	if (!take_first_fork(ph))
+		return ;
+	if (!take_second_fork(ph))
+		return ;
+	usleep(ph->args->etime);
+	pthread_mutex_lock(&ph->args->date_mutex);
+	++ph->eat_count;
 	if (ph->eat_count == ph->args->ecount)
 	{
 		++ph->args->eaters;
@@ -48,12 +66,11 @@ static void	philo_eat(t_ph *ph)
 			ph->args->simulation = 0;
 	}
 	pthread_mutex_unlock(&ph->args->date_mutex);
-	usleep(ph->args->etime);
 	pthread_mutex_unlock(ph->first_fork);
 	pthread_mutex_unlock(ph->second_fork);
 }
 
-static void	philo_sleep(t_ph *ph)
+void	philo_sleep(t_ph *ph)
 {
 	struct timeval	now;
 
@@ -67,33 +84,4 @@ static void	philo_sleep(t_ph *ph)
 	printf("%ld %03ld  %d is sleeping\n", now.tv_sec, now.tv_usec / 1000, ph->id);
 	pthread_mutex_unlock(&ph->args->date_mutex);
 	usleep(ph->args->stime);
-}
-*/
-
-void		*thread(void *vdata)
-{
-	t_ph		*ph;
-	pthread_t	eye;
-
-	ph = (t_ph *) vdata;
-	pthread_mutex_lock(&ph->args->date_mutex);
-	ph->ret = gettimeofday(&ph->death_time, NULL);
-	if (ph->ret)
-		return (&ph->ret);
-	ph->death_time.tv_sec += ((ph->death_time.tv_usec + ph->args->dtime) / 1000000);
-	ph->death_time.tv_usec = (ph->death_time.tv_usec + ph->args->dtime) % 1000000;
-	ph->ret = pthread_create(&eye, NULL, watch, ph);
-	if (ph->ret)
-		return (&ph->ret);
-	ph->ret = pthread_detach(eye);
-	if (ph->ret)
-		return (&ph->ret);
-	pthread_mutex_unlock(&ph->args->date_mutex);
-	while (ph->args->simulation)
-	{
-		philo_think(ph);
-		philo_eat(ph);
-		philo_sleep(ph);
-	}
-	return(NULL);
 }

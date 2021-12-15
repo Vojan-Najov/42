@@ -18,7 +18,10 @@ void	completion(t_args *args, int forks_num, int date_mutex)
 
 	i = 0;
 	while (i < forks_num)
+	{
 		pthread_mutex_destroy(args->forks + i);
+		++i;
+	}
 	if (date_mutex)
 		pthread_mutex_destroy(&args->date_mutex);
 	free(args->phs);
