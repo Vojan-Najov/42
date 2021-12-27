@@ -1,0 +1,2005 @@
+1639661021 345  1 is thinking
+1639661021 345  1 has taken a fork
+1639661021 345  1 is eating
+1639661021 345  5 is thinking
+1639661021 345  3 is thinking
+1639661021 345  3 has taken a fork
+1639661021 345  5 has taken a fork
+1639661021 345  3 is eating
+1639661021 548  3 is sleeping
+1639661021 548  1 is sleeping
+1639661021 548  5 is eating
+1639661021 548  2 is thinking
+1639661021 548  2 has taken a fork
+1639661021 548  2 is eating
+1639661021 548  4 is thinking
+1639661021 549  4 has taken a fork
+1639661021 753  3 is thinking
+1639661021 753  1 is thinking
+1639661021 753  5 is sleeping
+1639661021 754  2 is sleeping
+1639661021 754  1 has taken a fork
+1639661021 754  1 is eating
+1639661021 754  3 has taken a fork
+1639661021 754  4 is eating
+1639661021 959  5 is thinking
+1639661021 959  1 is sleeping
+1639661021 959  2 is thinking
+1639661021 959  2 has taken a fork
+1639661021 959  4 is sleeping
+1639661021 959  5 has taken a fork
+1639661021 959  5 is eating
+1639661021 959  3 is eating
+1639661022 160  1 is thinking
+1639661022 160  4 is thinking
+1639661022 160  1 has taken a fork
+1639661022 160  3 is sleeping
+1639661022 160  4 has taken a fork
+1639661022 160  4 is eating
+1639661022 160  2 is eating
+1639661022 160  5 is sleeping
+1639661022 360  3 is thinking
+1639661022 360  4 is sleeping
+1639661022 360  5 is thinking
+1639661022 361  1 is eating
+1639661022 361  5 has taken a fork
+1639661022 361  2 is sleeping
+1639661022 361  3 has taken a fork
+1639661022 361  3 is eating
+1639661022 565  4 is thinking
+1639661022 565  2 is thinking
+1639661022 565  4 has taken a fork
+1639661022 565  3 is sleeping
+1639661022 565  1 is sleeping
+1639661022 565  5 is eating
+1639661022 565  2 has taken a fork
+1639661022 565  2 is eating
+1639661022 770  3 is thinking
+1639661022 770  1 is thinking
+1639661022 770  5 is sleeping
+1639661022 770  1 has taken a fork
+1639661022 770  1 is eating
+1639661022 770  2 is sleeping
+1639661022 770  3 has taken a fork
+1639661022 770  4 is eating
+1639661022 975  5 is thinking
+1639661022 975  1 is sleeping
+1639661022 975  2 is thinking
+1639661022 975  2 has taken a fork
+1639661022 975  4 is sleeping
+1639661022 975  3 is eating
+1639661022 975  5 has taken a fork
+1639661022 975  5 is eating
+1639661023 177  1 is thinking
+1639661023 177  4 is thinking
+1639661023 177  3 is sleeping
+1639661023 177  5 is sleeping
+1639661023 177  4 has taken a fork
+1639661023 177  4 is eating
+1639661023 177  1 has taken a fork
+1639661023 177  2 is eating
+1639661023 377  3 is thinking
+1639661023 377  4 is sleeping
+1639661023 377  2 is sleeping
+1639661023 377  1 is eating
+1639661023 377  3 has taken a fork
+1639661023 377  3 is eating
+1639661023 382  5 is thinking
+1639661023 382  5 has taken a fork
+1639661023 582  4 is thinking
+1639661023 582  2 is thinking
+1639661023 582  3 is sleeping
+1639661023 582  2 has taken a fork
+1639661023 582  4 has taken a fork
+1639661023 582  1 is sleeping
+1639661023 582  5 is eating
+1639661023 582  2 is eating
+1639661023 787  3 is thinking
+1639661023 787  1 is thinking
+1639661023 787  5 is sleeping
+1639661023 787  4 is eating
+1639661023 787  1 has taken a fork
+1639661023 787  1 is eating
+1639661023 787  3 has taken a fork
+1639661023 787  2 is sleeping
+1639661023 992  5 is thinking
+1639661023 992  1 is sleeping
+1639661023 992  2 is thinking
+1639661023 992  2 has taken a fork
+1639661023 992  4 is sleeping
+1639661023 992  3 is eating
+1639661023 992  5 has taken a fork
+1639661023 992  5 is eating
+1639661024 194  1 is thinking
+1639661024 194  4 is thinking
+1639661024 194  3 is sleeping
+1639661024 194  5 is sleeping
+1639661024 194  4 has taken a fork
+1639661024 194  4 is eating
+1639661024 194  1 has taken a fork
+1639661024 194  2 is eating
+1639661024 394  3 is thinking
+1639661024 394  5 is thinking
+1639661024 394  4 is sleeping
+1639661024 394  1 is eating
+1639661024 395  3 has taken a fork
+1639661024 395  3 is eating
+1639661024 395  5 has taken a fork
+1639661024 395  2 is sleeping
+1639661024 595  4 is thinking
+1639661024 595  1 is sleeping
+1639661024 595  3 is sleeping
+1639661024 595  2 is thinking
+1639661024 595  2 has taken a fork
+1639661024 595  4 has taken a fork
+1639661024 595  2 is eating
+1639661024 595  5 is eating
+1639661024 800  1 is thinking
+1639661024 800  3 is thinking
+1639661024 800  2 is sleeping
+1639661024 800  3 has taken a fork
+1639661024 800  4 is eating
+1639661024 800  5 is sleeping
+1639661024 800  1 has taken a fork
+1639661024 800  1 is eating
+1639661025 005  2 is thinking
+1639661025 005  5 is thinking
+1639661025 005  3 is eating
+1639661025 005  1 is sleeping
+1639661025 005  2 has taken a fork
+1639661025 005  4 is sleeping
+1639661025 006  5 has taken a fork
+1639661025 006  5 is eating
+1639661025 211  1 is thinking
+1639661025 211  4 is thinking
+1639661025 211  2 is eating
+1639661025 211  5 is sleeping
+1639661025 211  3 is sleeping
+1639661025 211  4 has taken a fork
+1639661025 211  4 is eating
+1639661025 211  1 has taken a fork
+1639661025 414  5 is thinking
+1639661025 414  2 is sleeping
+1639661025 414  1 is eating
+1639661025 414  4 is sleeping
+1639661025 414  5 has taken a fork
+1639661025 414  3 is thinking
+1639661025 414  3 has taken a fork
+1639661025 414  3 is eating
+1639661025 619  2 is thinking
+1639661025 619  1 is sleeping
+1639661025 619  4 is thinking
+1639661025 619  2 has taken a fork
+1639661025 619  2 is eating
+1639661025 619  5 is eating
+1639661025 619  3 is sleeping
+1639661025 619  4 has taken a fork
+1639661025 824  1 is thinking
+1639661025 824  2 is sleeping
+1639661025 824  3 is thinking
+1639661025 824  3 has taken a fork
+1639661025 824  4 is eating
+1639661025 824  5 is sleeping
+1639661025 824  1 has taken a fork
+1639661025 824  1 is eating
+1639661026 028  2 is thinking
+1639661026 028  5 is thinking
+1639661026 028  3 is eating
+1639661026 028  1 is sleeping
+1639661026 028  5 has taken a fork
+1639661026 028  5 is eating
+1639661026 028  2 has taken a fork
+1639661026 028  4 is sleeping
+1639661026 228  1 is thinking
+1639661026 228  3 is sleeping
+1639661026 228  2 is eating
+1639661026 233  5 is sleeping
+1639661026 233  4 is thinking
+1639661026 233  4 has taken a fork
+1639661026 233  4 is eating
+1639661026 233  1 has taken a fork
+1639661026 428  3 is thinking
+1639661026 428  2 is sleeping
+1639661026 428  1 is eating
+1639661026 428  3 has taken a fork
+1639661026 438  5 is thinking
+1639661026 438  4 is sleeping
+1639661026 438  3 is eating
+1639661026 438  5 has taken a fork
+1639661026 628  2 is thinking
+1639661026 629  1 is sleeping
+1639661026 629  5 is eating
+1639661026 629  2 has taken a fork
+1639661026 643  4 is thinking
+1639661026 643  3 is sleeping
+1639661026 643  2 is eating
+1639661026 643  4 has taken a fork
+1639661026 834  1 is thinking
+1639661026 834  5 is sleeping
+1639661026 834  1 has taken a fork
+1639661026 834  4 is eating
+1639661026 845  3 is thinking
+1639661026 845  2 is sleeping
+1639661026 845  1 is eating
+1639661026 845  3 has taken a fork
+1639661027 039  5 is thinking
+1639661027 039  4 is sleeping
+1639661027 039  3 is eating
+1639661027 039  5 has taken a fork
+1639661027 045  2 is thinking
+1639661027 045  1 is sleeping
+1639661027 045  5 is eating
+1639661027 045  2 has taken a fork
+1639661027 244  4 is thinking
+1639661027 244  3 is sleeping
+1639661027 244  2 is eating
+1639661027 244  4 has taken a fork
+1639661027 250  1 is thinking
+1639661027 250  5 is sleeping
+1639661027 250  4 is eating
+1639661027 250  1 has taken a fork
+1639661027 445  2 is sleeping
+1639661027 445  1 is eating
+1639661027 449  3 is thinking
+1639661027 449  3 has taken a fork
+1639661027 456  5 is thinking
+1639661027 456  4 is sleeping
+1639661027 456  3 is eating
+1639661027 456  5 has taken a fork
+1639661027 645  2 is thinking
+1639661027 645  1 is sleeping
+1639661027 645  5 is eating
+1639661027 645  2 has taken a fork
+1639661027 661  4 is thinking
+1639661027 661  3 is sleeping
+1639661027 661  2 is eating
+1639661027 661  4 has taken a fork
+1639661027 846  1 is thinking
+1639661027 846  5 is sleeping
+1639661027 846  4 is eating
+1639661027 846  1 has taken a fork
+1639661027 866  3 is thinking
+1639661027 866  2 is sleeping
+1639661027 866  1 is eating
+1639661027 866  3 has taken a fork
+1639661028 051  5 is thinking
+1639661028 051  4 is sleeping
+1639661028 051  5 has taken a fork
+1639661028 052  3 is eating
+1639661028 066  2 is thinking
+1639661028 066  1 is sleeping
+1639661028 066  5 is eating
+1639661028 066  2 has taken a fork
+1639661028 257  4 is thinking
+1639661028 257  3 is sleeping
+1639661028 257  2 is eating
+1639661028 257  4 has taken a fork
+1639661028 266  1 is thinking
+1639661028 266  5 is sleeping
+1639661028 266  4 is eating
+1639661028 266  1 has taken a fork
+1639661028 462  3 is thinking
+1639661028 462  2 is sleeping
+1639661028 462  1 is eating
+1639661028 462  3 has taken a fork
+1639661028 471  5 is thinking
+1639661028 471  4 is sleeping
+1639661028 471  3 is eating
+1639661028 471  5 has taken a fork
+1639661028 662  2 is thinking
+1639661028 662  1 is sleeping
+1639661028 662  5 is eating
+1639661028 662  2 has taken a fork
+1639661028 677  4 is thinking
+1639661028 677  3 is sleeping
+1639661028 677  2 is eating
+1639661028 677  4 has taken a fork
+1639661028 862  1 is thinking
+1639661028 862  5 is sleeping
+1639661028 862  1 has taken a fork
+1639661028 862  4 is eating
+1639661028 879  3 is thinking
+1639661028 879  2 is sleeping
+1639661028 879  3 has taken a fork
+1639661028 879  1 is eating
+1639661029 064  5 is thinking
+1639661029 064  4 is sleeping
+1639661029 064  3 is eating
+1639661029 064  5 has taken a fork
+1639661029 082  2 is thinking
+1639661029 082  1 is sleeping
+1639661029 082  5 is eating
+1639661029 082  2 has taken a fork
+1639661029 269  4 is thinking
+1639661029 269  3 is sleeping
+1639661029 269  4 has taken a fork
+1639661029 269  2 is eating
+1639661029 287  1 is thinking
+1639661029 287  5 is sleeping
+1639661029 287  1 has taken a fork
+1639661029 287  4 is eating
+1639661029 473  3 is thinking
+1639661029 473  2 is sleeping
+1639661029 473  3 has taken a fork
+1639661029 473  1 is eating
+1639661029 492  5 is thinking
+1639661029 493  4 is sleeping
+1639661029 493  3 is eating
+1639661029 493  5 has taken a fork
+1639661029 678  2 is thinking
+1639661029 678  1 is sleeping
+1639661029 678  2 has taken a fork
+1639661029 678  5 is eating
+1639661029 696  4 is thinking
+1639661029 696  3 is sleeping
+1639661029 696  2 is eating
+1639661029 696  4 has taken a fork
+1639661029 879  5 is sleeping
+1639661029 879  4 is eating
+1639661029 883  1 is thinking
+1639661029 883  1 has taken a fork
+1639661029 896  3 is thinking
+1639661029 901  2 is sleeping
+1639661029 901  3 has taken a fork
+1639661029 901  1 is eating
+1639661030 081  5 is thinking
+1639661030 081  4 is sleeping
+1639661030 081  5 has taken a fork
+1639661030 081  3 is eating
+1639661030 101  2 is thinking
+1639661030 101  1 is sleeping
+1639661030 101  5 is eating
+1639661030 101  2 has taken a fork
+1639661030 286  4 is thinking
+1639661030 286  3 is sleeping
+1639661030 286  4 has taken a fork
+1639661030 286  2 is eating
+1639661030 306  1 is thinking
+1639661030 306  5 is sleeping
+1639661030 306  4 is eating
+1639661030 306  1 has taken a fork
+1639661030 491  3 is thinking
+1639661030 491  2 is sleeping
+1639661030 491  1 is eating
+1639661030 491  3 has taken a fork
+1639661030 509  5 is thinking
+1639661030 509  4 is sleeping
+1639661030 509  3 is eating
+1639661030 509  5 has taken a fork
+1639661030 696  2 is thinking
+1639661030 696  1 is sleeping
+1639661030 696  5 is eating
+1639661030 696  2 has taken a fork
+1639661030 712  4 is thinking
+1639661030 712  3 is sleeping
+1639661030 712  2 is eating
+1639661030 712  4 has taken a fork
+1639661030 896  1 is thinking
+1639661030 896  5 is sleeping
+1639661030 896  1 has taken a fork
+1639661030 896  4 is eating
+1639661030 913  3 is thinking
+1639661030 913  2 is sleeping
+1639661030 913  3 has taken a fork
+1639661030 913  1 is eating
+1639661031 097  5 is thinking
+1639661031 097  4 is sleeping
+1639661031 097  3 is eating
+1639661031 097  5 has taken a fork
+1639661031 113  2 is thinking
+1639661031 113  1 is sleeping
+1639661031 113  5 is eating
+1639661031 113  2 has taken a fork
+1639661031 302  4 is thinking
+1639661031 302  3 is sleeping
+1639661031 302  2 is eating
+1639661031 302  4 has taken a fork
+1639661031 313  1 is thinking
+1639661031 313  5 is sleeping
+1639661031 313  1 has taken a fork
+1639661031 313  4 is eating
+1639661031 507  3 is thinking
+1639661031 507  2 is sleeping
+1639661031 507  1 is eating
+1639661031 507  3 has taken a fork
+1639661031 513  5 is thinking
+1639661031 519  4 is sleeping
+1639661031 519  3 is eating
+1639661031 519  5 has taken a fork
+1639661031 712  2 is thinking
+1639661031 712  1 is sleeping
+1639661031 712  5 is eating
+1639661031 712  2 has taken a fork
+1639661031 724  4 is thinking
+1639661031 724  3 is sleeping
+1639661031 724  2 is eating
+1639661031 724  4 has taken a fork
+1639661031 913  1 is thinking
+1639661031 913  5 is sleeping
+1639661031 913  4 is eating
+1639661031 913  1 has taken a fork
+1639661031 929  3 is thinking
+1639661031 929  2 is sleeping
+1639661031 929  3 has taken a fork
+1639661031 929  1 is eating
+1639661032 114  5 is thinking
+1639661032 114  4 is sleeping
+1639661032 114  3 is eating
+1639661032 114  5 has taken a fork
+1639661032 130  2 is thinking
+1639661032 130  1 is sleeping
+1639661032 130  5 is eating
+1639661032 130  2 has taken a fork
+1639661032 319  4 is thinking
+1639661032 319  3 is sleeping
+1639661032 319  2 is eating
+1639661032 319  4 has taken a fork
+1639661032 330  1 is thinking
+1639661032 330  5 is sleeping
+1639661032 330  4 is eating
+1639661032 330  1 has taken a fork
+1639661032 524  3 is thinking
+1639661032 524  2 is sleeping
+1639661032 524  1 is eating
+1639661032 524  3 has taken a fork
+1639661032 535  5 is thinking
+1639661032 535  4 is sleeping
+1639661032 535  5 has taken a fork
+1639661032 535  3 is eating
+1639661032 729  2 is thinking
+1639661032 729  1 is sleeping
+1639661032 729  5 is eating
+1639661032 729  2 has taken a fork
+1639661032 740  4 is thinking
+1639661032 740  3 is sleeping
+1639661032 740  2 is eating
+1639661032 740  4 has taken a fork
+1639661032 930  1 is thinking
+1639661032 930  5 is sleeping
+1639661032 930  1 has taken a fork
+1639661032 930  4 is eating
+1639661032 945  3 is thinking
+1639661032 945  2 is sleeping
+1639661032 945  3 has taken a fork
+1639661032 945  1 is eating
+1639661033 130  5 is thinking
+1639661033 130  4 is sleeping
+1639661033 130  5 has taken a fork
+1639661033 130  3 is eating
+1639661033 147  2 is thinking
+1639661033 147  1 is sleeping
+1639661033 147  5 is eating
+1639661033 147  2 has taken a fork
+1639661033 335  4 is thinking
+1639661033 335  3 is sleeping
+1639661033 335  2 is eating
+1639661033 335  4 has taken a fork
+1639661033 347  1 is thinking
+1639661033 347  5 is sleeping
+1639661033 347  4 is eating
+1639661033 347  1 has taken a fork
+1639661033 540  3 is thinking
+1639661033 541  2 is sleeping
+1639661033 541  1 is eating
+1639661033 541  3 has taken a fork
+1639661033 547  5 is thinking
+1639661033 547  4 is sleeping
+1639661033 547  3 is eating
+1639661033 547  5 has taken a fork
+1639661033 746  2 is thinking
+1639661033 746  1 is sleeping
+1639661033 746  2 has taken a fork
+1639661033 746  5 is eating
+1639661033 747  4 is thinking
+1639661033 747  3 is sleeping
+1639661033 747  4 has taken a fork
+1639661033 747  2 is eating
+1639661033 947  1 is thinking
+1639661033 947  5 is sleeping
+1639661033 947  4 is eating
+1639661033 947  1 has taken a fork
+1639661033 947  3 is thinking
+1639661033 947  1 is eating
+1639661033 947  2 is sleeping
+1639661033 947  3 has taken a fork
+1639661034 147  5 is thinking
+1639661034 147  2 is thinking
+1639661034 147  5 has taken a fork
+1639661034 148  3 is eating
+1639661034 148  5 is eating
+1639661034 148  4 is sleeping
+1639661034 148  1 is sleeping
+1639661034 148  2 has taken a fork
+1639661034 353  5 is sleeping
+1639661034 353  4 is thinking
+1639661034 353  1 is thinking
+1639661034 353  4 has taken a fork
+1639661034 353  4 is eating
+1639661034 353  1 has taken a fork
+1639661034 353  2 is eating
+1639661034 353  3 is sleeping
+1639661034 555  5 is thinking
+1639661034 555  3 is thinking
+1639661034 555  4 is sleeping
+1639661034 555  2 is sleeping
+1639661034 555  5 has taken a fork
+1639661034 555  1 is eating
+1639661034 555  3 has taken a fork
+1639661034 555  3 is eating
+1639661034 761  4 is thinking
+1639661034 761  2 is thinking
+1639661034 761  3 is sleeping
+1639661034 761  5 is eating
+1639661034 761  1 is sleeping
+1639661034 761  2 has taken a fork
+1639661034 761  2 is eating
+1639661034 761  4 has taken a fork
+1639661034 966  3 is thinking
+1639661034 966  5 is sleeping
+1639661034 966  4 is eating
+1639661034 966  1 is thinking
+1639661034 966  3 has taken a fork
+1639661034 966  2 is sleeping
+1639661034 966  1 has taken a fork
+1639661034 966  1 is eating
+1639661035 171  5 is thinking
+1639661035 171  2 is thinking
+1639661035 171  4 is sleeping
+1639661035 171  1 is sleeping
+1639661035 171  5 has taken a fork
+1639661035 171  5 is eating
+1639661035 171  3 is eating
+1639661035 171  2 has taken a fork
+1639661035 376  4 is thinking
+1639661035 376  5 is sleeping
+1639661035 376  1 is thinking
+1639661035 376  1 has taken a fork
+1639661035 376  3 is sleeping
+1639661035 376  4 has taken a fork
+1639661035 376  4 is eating
+1639661035 376  2 is eating
+1639661035 581  5 is thinking
+1639661035 581  3 is thinking
+1639661035 581  4 is sleeping
+1639661035 581  2 is sleeping
+1639661035 581  5 has taken a fork
+1639661035 581  1 is eating
+1639661035 581  3 has taken a fork
+1639661035 581  3 is eating
+1639661035 781  4 is thinking
+1639661035 781  2 is thinking
+1639661035 781  3 is sleeping
+1639661035 781  1 is sleeping
+1639661035 781  2 has taken a fork
+1639661035 781  2 is eating
+1639661035 781  5 is eating
+1639661035 781  4 has taken a fork
+1639661035 981  2 is sleeping
+1639661035 986  3 is thinking
+1639661035 986  3 has taken a fork
+1639661035 986  5 is sleeping
+1639661035 986  4 is eating
+1639661035 986  1 is thinking
+1639661035 986  1 has taken a fork
+1639661035 986  1 is eating
+1639661036 184  2 is thinking
+1639661036 191  5 is thinking
+1639661036 191  1 is sleeping
+1639661036 191  4 is sleeping
+1639661036 191  3 is eating
+1639661036 191  2 has taken a fork
+1639661036 191  5 has taken a fork
+1639661036 191  5 is eating
+1639661036 396  1 is thinking
+1639661036 396  4 is thinking
+1639661036 396  3 is sleeping
+1639661036 396  2 is eating
+1639661036 396  4 has taken a fork
+1639661036 396  4 is eating
+1639661036 396  5 is sleeping
+1639661036 396  1 has taken a fork
+1639661036 598  3 is thinking
+1639661036 598  5 is thinking
+1639661036 598  5 has taken a fork
+1639661036 598  3 has taken a fork
+1639661036 598  1 is eating
+1639661036 598  3 is eating
+1639661036 598  2 is sleeping
+1639661036 598  4 is sleeping
+1639661036 798  2 is thinking
+1639661036 803  3 is sleeping
+1639661036 803  4 is thinking
+1639661036 803  4 has taken a fork
+1639661036 803  1 is sleeping
+1639661036 803  2 has taken a fork
+1639661036 803  2 is eating
+1639661036 803  5 is eating
+1639661037 008  3 is thinking
+1639661037 008  1 is thinking
+1639661037 008  3 has taken a fork
+1639661037 008  2 is sleeping
+1639661037 008  4 is eating
+1639661037 008  5 is sleeping
+1639661037 008  1 has taken a fork
+1639661037 008  1 is eating
+1639661037 213  2 is thinking
+1639661037 213  4 is sleeping
+1639661037 213  5 is thinking
+1639661037 213  5 has taken a fork
+1639661037 213  1 is sleeping
+1639661037 213  3 is eating
+1639661037 213  5 is eating
+1639661037 213  2 has taken a fork
+1639661037 415  4 is thinking
+1639661037 415  1 is thinking
+1639661037 415  1 has taken a fork
+1639661037 415  5 is sleeping
+1639661037 415  4 has taken a fork
+1639661037 415  4 is eating
+1639661037 415  3 is sleeping
+1639661037 415  2 is eating
+1639661037 615  5 is thinking
+1639661037 615  3 is thinking
+1639661037 615  2 is sleeping
+1639661037 615  1 is eating
+1639661037 615  3 has taken a fork
+1639661037 615  3 is eating
+1639661037 615  5 has taken a fork
+1639661037 615  4 is sleeping
+1639661037 820  2 is thinking
+1639661037 820  1 is sleeping
+1639661037 820  3 is sleeping
+1639661037 820  4 is thinking
+1639661037 820  4 has taken a fork
+1639661037 820  5 is eating
+1639661037 820  2 has taken a fork
+1639661037 820  2 is eating
+1639661038 025  1 is thinking
+1639661038 026  3 is thinking
+1639661038 026  3 has taken a fork
+1639661038 026  4 is eating
+1639661038 026  5 is sleeping
+1639661038 026  2 is sleeping
+1639661038 026  1 has taken a fork
+1639661038 026  1 is eating
+1639661038 231  2 is thinking
+1639661038 231  2 has taken a fork
+1639661038 231  5 is thinking
+1639661038 231  5 has taken a fork
+1639661038 231  5 is eating
+1639661038 231  4 is sleeping
+1639661038 231  3 is eating
+1639661038 231  1 is sleeping
+1639661038 432  5 is sleeping
+1639661038 432  4 is thinking
+1639661038 432  3 is sleeping
+1639661038 432  1 is thinking
+1639661038 432  1 has taken a fork
+1639661038 432  2 is eating
+1639661038 432  4 has taken a fork
+1639661038 432  4 is eating
+1639661038 632  5 is thinking
+1639661038 632  3 is thinking
+1639661038 632  2 is sleeping
+1639661038 632  1 is eating
+1639661038 632  3 has taken a fork
+1639661038 632  4 is sleeping
+1639661038 632  3 is eating
+1639661038 632  5 has taken a fork
+1639661038 832  2 is thinking
+1639661038 832  3 is sleeping
+1639661038 832  1 is sleeping
+1639661038 832  5 is eating
+1639661038 832  2 has taken a fork
+1639661038 832  2 is eating
+1639661038 832  4 is thinking
+1639661038 832  4 has taken a fork
+1639661039 032  3 is thinking
+1639661039 037  1 is thinking
+1639661039 037  2 is sleeping
+1639661039 037  3 has taken a fork
+1639661039 037  1 has taken a fork
+1639661039 037  1 is eating
+1639661039 037  4 is eating
+1639661039 037  5 is sleeping
+1639661039 242  2 is thinking
+1639661039 243  4 is sleeping
+1639661039 243  1 is sleeping
+1639661039 243  2 has taken a fork
+1639661039 243  3 is eating
+1639661039 243  5 is thinking
+1639661039 243  5 has taken a fork
+1639661039 243  5 is eating
+1639661039 447  4 is thinking
+1639661039 447  3 is sleeping
+1639661039 447  5 is sleeping
+1639661039 447  2 is eating
+1639661039 447  4 has taken a fork
+1639661039 447  4 is eating
+1639661039 447  1 is thinking
+1639661039 447  1 has taken a fork
+1639661039 649  3 is thinking
+1639661039 649  5 is thinking
+1639661039 649  2 is sleeping
+1639661039 649  1 is eating
+1639661039 649  3 has taken a fork
+1639661039 649  3 is eating
+1639661039 649  4 is sleeping
+1639661039 649  5 has taken a fork
+1639661039 849  2 is thinking
+1639661039 849  1 is sleeping
+1639661039 849  4 is thinking
+1639661039 849  2 has taken a fork
+1639661039 849  2 is eating
+1639661039 849  5 is eating
+1639661039 849  4 has taken a fork
+1639661039 849  3 is sleeping
+1639661040 049  1 is thinking
+1639661040 049  2 is sleeping
+1639661040 049  3 is thinking
+1639661040 049  4 is eating
+1639661040 049  1 has taken a fork
+1639661040 049  1 is eating
+1639661040 049  3 has taken a fork
+1639661040 049  5 is sleeping
+1639661040 254  2 is thinking
+1639661040 254  4 is sleeping
+1639661040 254  5 is thinking
+1639661040 254  5 has taken a fork
+1639661040 254  2 has taken a fork
+1639661040 254  1 is sleeping
+1639661040 254  3 is eating
+1639661040 255  5 is eating
+1639661040 456  4 is thinking
+1639661040 456  1 is thinking
+1639661040 456  3 is sleeping
+1639661040 456  5 is sleeping
+1639661040 456  2 is eating
+1639661040 456  4 has taken a fork
+1639661040 456  4 is eating
+1639661040 456  1 has taken a fork
+1639661040 661  3 is thinking
+1639661040 661  5 is thinking
+1639661040 661  4 is sleeping
+1639661040 661  5 has taken a fork
+1639661040 661  2 is sleeping
+1639661040 661  3 has taken a fork
+1639661040 661  3 is eating
+1639661040 661  1 is eating
+1639661040 862  4 is thinking
+1639661040 862  2 is thinking
+1639661040 862  3 is sleeping
+1639661040 862  1 is sleeping
+1639661040 862  4 has taken a fork
+1639661040 862  5 is eating
+1639661040 862  2 has taken a fork
+1639661040 862  2 is eating
+1639661041 064  3 is thinking
+1639661041 064  5 is sleeping
+1639661041 064  1 is thinking
+1639661041 064  4 is eating
+1639661041 064  1 has taken a fork
+1639661041 064  3 has taken a fork
+1639661041 064  2 is sleeping
+1639661041 064  1 is eating
+1639661041 266  5 is thinking
+1639661041 266  2 is thinking
+1639661041 266  3 is eating
+1639661041 266  1 is sleeping
+1639661041 266  5 has taken a fork
+1639661041 266  4 is sleeping
+1639661041 266  5 is eating
+1639661041 266  2 has taken a fork
+1639661041 466  3 is sleeping
+1639661041 466  2 is eating
+1639661041 466  1 is thinking
+1639661041 467  4 is thinking
+1639661041 467  4 has taken a fork
+1639661041 467  4 is eating
+1639661041 467  5 is sleeping
+1639661041 467  1 has taken a fork
+1639661041 666  3 is thinking
+1639661041 666  2 is sleeping
+1639661041 666  1 is eating
+1639661041 667  3 has taken a fork
+1639661041 672  4 is sleeping
+1639661041 672  3 is eating
+1639661041 672  5 is thinking
+1639661041 672  5 has taken a fork
+1639661041 872  2 is thinking
+1639661041 872  1 is sleeping
+1639661041 872  5 is eating
+1639661041 872  2 has taken a fork
+1639661041 872  4 is thinking
+1639661041 872  3 is sleeping
+1639661041 872  4 has taken a fork
+1639661041 872  2 is eating
+1639661042 073  1 is thinking
+1639661042 073  2 is sleeping
+1639661042 073  5 is sleeping
+1639661042 073  4 is eating
+1639661042 073  1 has taken a fork
+1639661042 073  1 is eating
+1639661042 073  3 is thinking
+1639661042 073  3 has taken a fork
+1639661042 278  2 is thinking
+1639661042 278  5 is thinking
+1639661042 278  4 is sleeping
+1639661042 278  1 is sleeping
+1639661042 278  5 has taken a fork
+1639661042 278  5 is eating
+1639661042 278  2 has taken a fork
+1639661042 278  3 is eating
+1639661042 483  4 is thinking
+1639661042 483  5 is sleeping
+1639661042 483  3 is sleeping
+1639661042 483  1 is thinking
+1639661042 483  1 has taken a fork
+1639661042 483  2 is eating
+1639661042 483  4 has taken a fork
+1639661042 483  4 is eating
+1639661042 683  5 is thinking
+1639661042 683  3 is thinking
+1639661042 683  4 is sleeping
+1639661042 683  2 is sleeping
+1639661042 683  1 is eating
+1639661042 683  5 has taken a fork
+1639661042 683  3 has taken a fork
+1639661042 683  3 is eating
+1639661042 884  4 is thinking
+1639661042 884  3 is sleeping
+1639661042 884  1 is sleeping
+1639661042 884  5 is eating
+1639661042 884  4 has taken a fork
+1639661042 884  2 is thinking
+1639661042 884  2 has taken a fork
+1639661042 884  2 is eating
+1639661043 084  3 is thinking
+1639661043 084  1 is thinking
+1639661043 084  2 is sleeping
+1639661043 084  5 is sleeping
+1639661043 084  4 is eating
+1639661043 084  1 has taken a fork
+1639661043 084  1 is eating
+1639661043 084  3 has taken a fork
+1639661043 289  2 is thinking
+1639661043 289  1 is sleeping
+1639661043 289  5 is thinking
+1639661043 289  3 is eating
+1639661043 289  5 has taken a fork
+1639661043 289  5 is eating
+1639661043 289  4 is sleeping
+1639661043 289  2 has taken a fork
+1639661043 494  1 is thinking
+1639661043 494  4 is thinking
+1639661043 494  5 is sleeping
+1639661043 494  1 has taken a fork
+1639661043 494  3 is sleeping
+1639661043 494  2 is eating
+1639661043 494  4 has taken a fork
+1639661043 494  4 is eating
+1639661043 699  5 is thinking
+1639661043 699  3 is thinking
+1639661043 699  2 is sleeping
+1639661043 699  3 has taken a fork
+1639661043 699  3 is eating
+1639661043 699  1 is eating
+1639661043 699  5 has taken a fork
+1639661043 699  4 is sleeping
+1639661043 900  2 is thinking
+1639661043 904  4 is thinking
+1639661043 904  3 is sleeping
+1639661043 904  4 has taken a fork
+1639661043 904  1 is sleeping
+1639661043 904  2 has taken a fork
+1639661043 904  2 is eating
+1639661043 904  5 is eating
+1639661044 109  3 is thinking
+1639661044 109  1 is thinking
+1639661044 109  2 is sleeping
+1639661044 109  3 has taken a fork
+1639661044 109  4 is eating
+1639661044 110  5 is sleeping
+1639661044 110  1 has taken a fork
+1639661044 110  1 is eating
+1639661044 315  2 is thinking
+1639661044 315  1 is sleeping
+1639661044 315  5 is thinking
+1639661044 315  2 has taken a fork
+1639661044 315  5 has taken a fork
+1639661044 315  5 is eating
+1639661044 315  4 is sleeping
+1639661044 315  3 is eating
+1639661044 517  1 is thinking
+1639661044 517  4 is thinking
+1639661044 517  2 is eating
+1639661044 517  3 is sleeping
+1639661044 517  4 has taken a fork
+1639661044 517  5 is sleeping
+1639661044 517  4 is eating
+1639661044 517  1 has taken a fork
+1639661044 717  3 is thinking
+1639661044 717  2 is sleeping
+1639661044 717  1 is eating
+1639661044 717  3 has taken a fork
+1639661044 717  3 is eating
+1639661044 717  5 is thinking
+1639661044 717  5 has taken a fork
+1639661044 717  4 is sleeping
+1639661044 920  2 is thinking
+1639661044 920  3 is sleeping
+1639661044 920  4 is thinking
+1639661044 920  4 has taken a fork
+1639661044 920  1 is sleeping
+1639661044 920  5 is eating
+1639661044 920  2 has taken a fork
+1639661044 920  2 is eating
+1639661045 125  3 is thinking
+1639661045 125  1 is thinking
+1639661045 125  5 is sleeping
+1639661045 125  4 is eating
+1639661045 125  2 is sleeping
+1639661045 125  3 has taken a fork
+1639661045 125  1 has taken a fork
+1639661045 125  1 is eating
+1639661045 330  5 is thinking
+1639661045 330  4 is sleeping
+1639661045 330  2 is thinking
+1639661045 330  1 is sleeping
+1639661045 330  3 is eating
+1639661045 330  5 has taken a fork
+1639661045 330  5 is eating
+1639661045 330  2 has taken a fork
+1639661045 534  4 is thinking
+1639661045 534  1 is thinking
+1639661045 534  3 is sleeping
+1639661045 534  2 is eating
+1639661045 534  5 is sleeping
+1639661045 534  1 has taken a fork
+1639661045 534  4 has taken a fork
+1639661045 534  4 is eating
+1639661045 734  3 is thinking
+1639661045 734  5 is thinking
+1639661045 739  2 is sleeping
+1639661045 739  1 is eating
+1639661045 739  4 is sleeping
+1639661045 739  5 has taken a fork
+1639661045 739  3 has taken a fork
+1639661045 739  3 is eating
+1639661045 939  3 is sleeping
+1639661045 940  2 is thinking
+1639661045 940  4 is thinking
+1639661045 940  4 has taken a fork
+1639661045 940  5 is eating
+1639661045 940  2 has taken a fork
+1639661045 940  2 is eating
+1639661045 940  1 is sleeping
+1639661046 145  3 is thinking
+1639661046 145  5 is sleeping
+1639661046 145  2 is sleeping
+1639661046 145  1 is thinking
+1639661046 145  1 has taken a fork
+1639661046 145  1 is eating
+1639661046 145  4 is eating
+1639661046 145  3 has taken a fork
+1639661046 350  5 is thinking
+1639661046 350  2 is thinking
+1639661046 350  4 is sleeping
+1639661046 350  1 is sleeping
+1639661046 350  5 has taken a fork
+1639661046 350  5 is eating
+1639661046 350  2 has taken a fork
+1639661046 350  3 is eating
+1639661046 551  4 is thinking
+1639661046 551  5 is sleeping
+1639661046 551  3 is sleeping
+1639661046 551  2 is eating
+1639661046 551  1 is thinking
+1639661046 551  1 has taken a fork
+1639661046 551  4 has taken a fork
+1639661046 551  4 is eating
+1639661046 751  5 is thinking
+1639661046 751  3 is thinking
+1639661046 751  4 is sleeping
+1639661046 751  1 is eating
+1639661046 751  2 is sleeping
+1639661046 751  3 has taken a fork
+1639661046 751  3 is eating
+1639661046 751  5 has taken a fork
+1639661046 957  4 is thinking
+1639661046 957  1 is sleeping
+1639661046 957  3 is sleeping
+1639661046 957  5 is eating
+1639661046 957  4 has taken a fork
+1639661046 957  2 is thinking
+1639661046 957  2 has taken a fork
+1639661046 957  2 is eating
+1639661047 162  1 is thinking
+1639661047 162  3 is thinking
+1639661047 162  5 is sleeping
+1639661047 162  4 is eating
+1639661047 162  2 is sleeping
+1639661047 162  1 has taken a fork
+1639661047 162  1 is eating
+1639661047 162  3 has taken a fork
+1639661047 367  5 is thinking
+1639661047 367  4 is sleeping
+1639661047 367  2 is thinking
+1639661047 367  1 is sleeping
+1639661047 367  3 is eating
+1639661047 367  5 has taken a fork
+1639661047 367  5 is eating
+1639661047 367  2 has taken a fork
+1639661047 568  4 is thinking
+1639661047 568  5 is sleeping
+1639661047 568  3 is sleeping
+1639661047 568  1 is thinking
+1639661047 568  1 has taken a fork
+1639661047 568  2 is eating
+1639661047 568  4 has taken a fork
+1639661047 568  4 is eating
+1639661047 768  3 is thinking
+1639661047 768  4 is sleeping
+1639661047 768  2 is sleeping
+1639661047 768  1 is eating
+1639661047 768  5 is thinking
+1639661047 768  5 has taken a fork
+1639661047 768  3 has taken a fork
+1639661047 768  3 is eating
+1639661047 973  4 is thinking
+1639661047 973  1 is sleeping
+1639661047 973  2 is thinking
+1639661047 974  2 has taken a fork
+1639661047 974  2 is eating
+1639661047 974  3 is sleeping
+1639661047 974  5 is eating
+1639661047 974  4 has taken a fork
+1639661048 179  1 is thinking
+1639661048 179  3 is thinking
+1639661048 179  3 has taken a fork
+1639661048 179  2 is sleeping
+1639661048 179  4 is eating
+1639661048 179  5 is sleeping
+1639661048 179  1 has taken a fork
+1639661048 179  1 is eating
+1639661048 383  2 is thinking
+1639661048 383  5 is thinking
+1639661048 383  5 has taken a fork
+1639661048 383  5 is eating
+1639661048 383  3 is eating
+1639661048 383  2 has taken a fork
+1639661048 383  4 is sleeping
+1639661048 383  1 is sleeping
+1639661048 584  5 is sleeping
+1639661048 584  3 is sleeping
+1639661048 584  1 is thinking
+1639661048 584  1 has taken a fork
+1639661048 584  2 is eating
+1639661048 584  4 is thinking
+1639661048 584  4 has taken a fork
+1639661048 584  4 is eating
+1639661048 785  5 is thinking
+1639661048 785  3 is thinking
+1639661048 785  2 is sleeping
+1639661048 785  1 is eating
+1639661048 785  3 has taken a fork
+1639661048 785  4 is sleeping
+1639661048 785  3 is eating
+1639661048 785  5 has taken a fork
+1639661048 985  2 is thinking
+1639661048 985  4 is thinking
+1639661048 985  5 is eating
+1639661048 985  1 is sleeping
+1639661048 985  4 has taken a fork
+1639661048 985  2 has taken a fork
+1639661048 985  2 is eating
+1639661048 985  3 is sleeping
+1639661049 190  1 is thinking
+1639661049 190  3 is thinking
+1639661049 190  3 has taken a fork
+1639661049 190  2 is sleeping
+1639661049 190  4 is eating
+1639661049 190  1 has taken a fork
+1639661049 190  1 is eating
+1639661049 190  5 is sleeping
+1639661049 395  2 is thinking
+1639661049 395  4 is sleeping
+1639661049 395  5 is thinking
+1639661049 395  5 has taken a fork
+1639661049 395  3 is eating
+1639661049 395  5 is eating
+1639661049 395  2 has taken a fork
+1639661049 395  1 is sleeping
+1639661049 600  4 is thinking
+1639661049 600  5 is sleeping
+1639661049 600  3 is sleeping
+1639661049 600  1 is thinking
+1639661049 600  1 has taken a fork
+1639661049 600  2 is eating
+1639661049 600  4 has taken a fork
+1639661049 600  4 is eating
+1639661049 802  5 is thinking
+1639661049 802  3 is thinking
+1639661049 802  4 is sleeping
+1639661049 802  5 has taken a fork
+1639661049 802  2 is sleeping
+1639661049 802  1 is eating
+1639661049 802  3 has taken a fork
+1639661049 802  3 is eating
+1639661050 002  4 is thinking
+1639661050 002  2 is thinking
+1639661050 002  1 is sleeping
+1639661050 002  5 is eating
+1639661050 002  2 has taken a fork
+1639661050 002  4 has taken a fork
+1639661050 002  2 is eating
+1639661050 002  3 is sleeping
+1639661050 205  1 is thinking
+1639661050 205  2 is sleeping
+1639661050 205  3 is thinking
+1639661050 205  3 has taken a fork
+1639661050 205  4 is eating
+1639661050 205  1 has taken a fork
+1639661050 205  1 is eating
+1639661050 205  5 is sleeping
+1639661050 410  2 is thinking
+1639661050 410  4 is sleeping
+1639661050 410  5 is thinking
+1639661050 410  1 is sleeping
+1639661050 410  2 has taken a fork
+1639661050 410  5 has taken a fork
+1639661050 410  5 is eating
+1639661050 410  3 is eating
+1639661050 615  4 is thinking
+1639661050 615  1 is thinking
+1639661050 615  5 is sleeping
+1639661050 615  2 is eating
+1639661050 615  4 has taken a fork
+1639661050 615  3 is sleeping
+1639661050 615  1 has taken a fork
+1639661050 615  4 is eating
+1639661050 817  5 is thinking
+1639661050 817  2 is sleeping
+1639661050 817  1 is eating
+1639661050 817  4 is sleeping
+1639661050 817  5 has taken a fork
+1639661050 817  3 is thinking
+1639661050 817  3 has taken a fork
+1639661050 817  3 is eating
+1639661051 019  1 is sleeping
+1639661051 019  2 is thinking
+1639661051 019  5 is eating
+1639661051 019  2 has taken a fork
+1639661051 019  3 is sleeping
+1639661051 019  2 is eating
+1639661051 019  4 is thinking
+1639661051 019  4 has taken a fork
+1639661051 219  1 is thinking
+1639661051 219  5 is sleeping
+1639661051 219  3 is thinking
+1639661051 219  4 is eating
+1639661051 219  3 has taken a fork
+1639661051 219  1 has taken a fork
+1639661051 219  1 is eating
+1639661051 219  2 is sleeping
+1639661051 420  2 is thinking
+1639661051 420  4 is sleeping
+1639661051 420  5 is thinking
+1639661051 420  5 has taken a fork
+1639661051 420  5 is eating
+1639661051 420  3 is eating
+1639661051 420  1 is sleeping
+1639661051 420  2 has taken a fork
+1639661051 625  4 is thinking
+1639661051 625  5 is sleeping
+1639661051 625  3 is sleeping
+1639661051 625  1 is thinking
+1639661051 625  1 has taken a fork
+1639661051 625  2 is eating
+1639661051 625  4 has taken a fork
+1639661051 625  4 is eating
+1639661051 830  5 is thinking
+1639661051 830  3 is thinking
+1639661051 830  1 is eating
+1639661051 830  4 is sleeping
+1639661051 830  2 is sleeping
+1639661051 830  5 has taken a fork
+1639661051 830  3 has taken a fork
+1639661051 830  3 is eating
+1639661052 035  4 is thinking
+1639661052 035  2 is thinking
+1639661052 035  1 is sleeping
+1639661052 035  3 is sleeping
+1639661052 035  4 has taken a fork
+1639661052 035  5 is eating
+1639661052 035  2 has taken a fork
+1639661052 035  2 is eating
+1639661052 236  1 is thinking
+1639661052 236  3 is thinking
+1639661052 236  5 is sleeping
+1639661052 236  2 is sleeping
+1639661052 236  4 is eating
+1639661052 236  3 has taken a fork
+1639661052 236  1 has taken a fork
+1639661052 236  1 is eating
+1639661052 436  5 is thinking
+1639661052 436  2 is thinking
+1639661052 436  4 is sleeping
+1639661052 436  5 has taken a fork
+1639661052 436  3 is eating
+1639661052 436  1 is sleeping
+1639661052 436  5 is eating
+1639661052 436  2 has taken a fork
+1639661052 636  4 is thinking
+1639661052 637  3 is sleeping
+1639661052 637  1 is thinking
+1639661052 637  5 is sleeping
+1639661052 637  1 has taken a fork
+1639661052 637  2 is eating
+1639661052 637  4 has taken a fork
+1639661052 637  4 is eating
+1639661052 837  3 is thinking
+1639661052 837  5 is thinking
+1639661052 842  2 is sleeping
+1639661052 842  1 is eating
+1639661052 842  4 is sleeping
+1639661052 842  5 has taken a fork
+1639661052 842  3 has taken a fork
+1639661052 842  3 is eating
+1639661053 047  2 is thinking
+1639661053 047  1 is sleeping
+1639661053 047  3 is sleeping
+1639661053 047  5 is eating
+1639661053 047  4 is thinking
+1639661053 047  4 has taken a fork
+1639661053 047  2 has taken a fork
+1639661053 047  2 is eating
+1639661053 252  1 is thinking
+1639661053 252  3 is thinking
+1639661053 252  5 is sleeping
+1639661053 252  4 is eating
+1639661053 252  3 has taken a fork
+1639661053 252  1 has taken a fork
+1639661053 252  1 is eating
+1639661053 252  2 is sleeping
+1639661053 453  4 is sleeping
+1639661053 453  3 is eating
+1639661053 457  5 is thinking
+1639661053 457  5 has taken a fork
+1639661053 457  2 is thinking
+1639661053 457  2 has taken a fork
+1639661053 457  1 is sleeping
+1639661053 457  5 is eating
+1639661053 653  4 is thinking
+1639661053 653  3 is sleeping
+1639661053 653  2 is eating
+1639661053 653  4 has taken a fork
+1639661053 662  1 is thinking
+1639661053 662  5 is sleeping
+1639661053 662  4 is eating
+1639661053 662  1 has taken a fork
+1639661053 853  3 is thinking
+1639661053 853  2 is sleeping
+1639661053 853  1 is eating
+1639661053 853  3 has taken a fork
+1639661053 867  5 is thinking
+1639661053 867  4 is sleeping
+1639661053 868  3 is eating
+1639661053 868  5 has taken a fork
+1639661054 055  2 is thinking
+1639661054 055  5 is eating
+1639661054 055  1 is sleeping
+1639661054 055  2 has taken a fork
+1639661054 070  4 is thinking
+1639661054 073  3 is sleeping
+1639661054 073  2 is eating
+1639661054 073  4 has taken a fork
+1639661054 260  5 is sleeping
+1639661054 260  1 is thinking
+1639661054 260  1 has taken a fork
+1639661054 261  4 is eating
+1639661054 278  3 is thinking
+1639661054 278  2 is sleeping
+1639661054 278  1 is eating
+1639661054 278  3 has taken a fork
+1639661054 462  5 is thinking
+1639661054 462  4 is sleeping
+1639661054 462  5 has taken a fork
+1639661054 462  3 is eating
+1639661054 483  2 is thinking
+1639661054 483  1 is sleeping
+1639661054 483  5 is eating
+1639661054 483  2 has taken a fork
+1639661054 667  4 is thinking
+1639661054 667  3 is sleeping
+1639661054 667  2 is eating
+1639661054 667  4 has taken a fork
+1639661054 687  1 is thinking
+1639661054 687  5 is sleeping
+1639661054 687  4 is eating
+1639661054 687  1 has taken a fork
+1639661054 870  3 is thinking
+1639661054 870  2 is sleeping
+1639661054 870  1 is eating
+1639661054 870  3 has taken a fork
+1639661054 887  5 is thinking
+1639661054 887  4 is sleeping
+1639661054 887  3 is eating
+1639661054 887  5 has taken a fork
+1639661055 073  2 is thinking
+1639661055 073  1 is sleeping
+1639661055 073  5 is eating
+1639661055 073  2 has taken a fork
+1639661055 087  4 is thinking
+1639661055 087  2 is eating
+1639661055 087  3 is sleeping
+1639661055 087  4 has taken a fork
+1639661055 278  1 is thinking
+1639661055 278  5 is sleeping
+1639661055 278  4 is eating
+1639661055 278  1 has taken a fork
+1639661055 293  2 is sleeping
+1639661055 293  3 is thinking
+1639661055 293  3 has taken a fork
+1639661055 293  1 is eating
+1639661055 483  5 is thinking
+1639661055 483  4 is sleeping
+1639661055 483  3 is eating
+1639661055 483  5 has taken a fork
+1639661055 498  2 is thinking
+1639661055 498  1 is sleeping
+1639661055 498  5 is eating
+1639661055 498  2 has taken a fork
+1639661055 687  4 is thinking
+1639661055 687  3 is sleeping
+1639661055 687  2 is eating
+1639661055 687  4 has taken a fork
+1639661055 703  1 is thinking
+1639661055 703  5 is sleeping
+1639661055 703  1 has taken a fork
+1639661055 703  4 is eating
+1639661055 887  3 is thinking
+1639661055 887  2 is sleeping
+1639661055 887  1 is eating
+1639661055 887  3 has taken a fork
+1639661055 904  5 is thinking
+1639661055 904  4 is sleeping
+1639661055 904  3 is eating
+1639661055 904  5 has taken a fork
+1639661056 088  1 is sleeping
+1639661056 088  5 is eating
+1639661056 088  2 is thinking
+1639661056 088  2 has taken a fork
+1639661056 104  4 is thinking
+1639661056 104  3 is sleeping
+1639661056 104  2 is eating
+1639661056 104  4 has taken a fork
+1639661056 293  1 is thinking
+1639661056 293  5 is sleeping
+1639661056 293  4 is eating
+1639661056 293  1 has taken a fork
+1639661056 304  3 is thinking
+1639661056 304  2 is sleeping
+1639661056 304  1 is eating
+1639661056 304  3 has taken a fork
+1639661056 498  5 is thinking
+1639661056 498  4 is sleeping
+1639661056 498  3 is eating
+1639661056 498  5 has taken a fork
+1639661056 508  2 is thinking
+1639661056 508  1 is sleeping
+1639661056 508  5 is eating
+1639661056 508  2 has taken a fork
+1639661056 703  4 is thinking
+1639661056 703  3 is sleeping
+1639661056 703  2 is eating
+1639661056 703  4 has taken a fork
+1639661056 713  1 is thinking
+1639661056 713  5 is sleeping
+1639661056 713  4 is eating
+1639661056 713  1 has taken a fork
+1639661056 904  2 is sleeping
+1639661056 904  1 is eating
+1639661056 904  3 is thinking
+1639661056 904  3 has taken a fork
+1639661056 918  5 is thinking
+1639661056 918  4 is sleeping
+1639661056 918  5 has taken a fork
+1639661056 918  3 is eating
+1639661057 105  2 is thinking
+1639661057 105  5 is eating
+1639661057 105  2 has taken a fork
+1639661057 105  1 is sleeping
+1639661057 121  4 is thinking
+1639661057 121  3 is sleeping
+1639661057 121  2 is eating
+1639661057 121  4 has taken a fork
+1639661057 310  5 is sleeping
+1639661057 310  4 is eating
+1639661057 310  1 is thinking
+1639661057 310  1 has taken a fork
+1639661057 326  3 is thinking
+1639661057 326  2 is sleeping
+1639661057 326  1 is eating
+1639661057 326  3 has taken a fork
+1639661057 515  5 is thinking
+1639661057 515  4 is sleeping
+1639661057 515  5 has taken a fork
+1639661057 515  3 is eating
+1639661057 531  2 is thinking
+1639661057 531  1 is sleeping
+1639661057 531  5 is eating
+1639661057 531  2 has taken a fork
+1639661057 720  4 is thinking
+1639661057 720  3 is sleeping
+1639661057 720  4 has taken a fork
+1639661057 720  2 is eating
+1639661057 736  1 is thinking
+1639661057 736  5 is sleeping
+1639661057 736  4 is eating
+1639661057 736  1 has taken a fork
+1639661057 921  2 is sleeping
+1639661057 921  1 is eating
+1639661057 921  3 is thinking
+1639661057 921  3 has taken a fork
+1639661057 938  5 is thinking
+1639661057 941  4 is sleeping
+1639661057 941  3 is eating
+1639661057 941  5 has taken a fork
+1639661058 121  2 is thinking
+1639661058 121  1 is sleeping
+1639661058 121  5 is eating
+1639661058 121  2 has taken a fork
+1639661058 147  4 is thinking
+1639661058 147  3 is sleeping
+1639661058 147  2 is eating
+1639661058 147  4 has taken a fork
+1639661058 321  1 is thinking
+1639661058 321  5 is sleeping
+1639661058 321  4 is eating
+1639661058 321  1 has taken a fork
+1639661058 352  3 is thinking
+1639661058 352  2 is sleeping
+1639661058 352  3 has taken a fork
+1639661058 352  1 is eating
+1639661058 522  5 is thinking
+1639661058 522  4 is sleeping
+1639661058 522  5 has taken a fork
+1639661058 522  3 is eating
+1639661058 555  2 is thinking
+1639661058 556  1 is sleeping
+1639661058 556  5 is eating
+1639661058 556  2 has taken a fork
+1639661058 727  4 is thinking
+1639661058 727  3 is sleeping
+1639661058 727  2 is eating
+1639661058 727  4 has taken a fork
+1639661058 761  1 is thinking
+1639661058 761  5 is sleeping
+1639661058 761  4 is eating
+1639661058 761  1 has taken a fork
+1639661058 933  3 is thinking
+1639661058 933  2 is sleeping
+1639661058 933  3 has taken a fork
+1639661058 933  1 is eating
+1639661058 966  5 is thinking
+1639661058 966  4 is sleeping
+1639661058 966  3 is eating
+1639661058 966  5 has taken a fork
+1639661059 138  2 is thinking
+1639661059 138  1 is sleeping
+1639661059 138  5 is eating
+1639661059 138  2 has taken a fork
+1639661059 171  4 is thinking
+1639661059 171  3 is sleeping
+1639661059 171  2 is eating
+1639661059 171  4 has taken a fork
+1639661059 338  1 is thinking
+1639661059 338  5 is sleeping
+1639661059 338  4 is eating
+1639661059 338  1 has taken a fork
+1639661059 372  3 is thinking
+1639661059 372  2 is sleeping
+1639661059 372  1 is eating
+1639661059 372  3 has taken a fork
+1639661059 539  5 is thinking
+1639661059 539  4 is sleeping
+1639661059 539  3 is eating
+1639661059 539  5 has taken a fork
+1639661059 572  2 is thinking
+1639661059 572  1 is sleeping
+1639661059 572  2 has taken a fork
+1639661059 572  5 is eating
+1639661059 744  4 is thinking
+1639661059 744  3 is sleeping
+1639661059 744  2 is eating
+1639661059 744  4 has taken a fork
+1639661059 772  1 is thinking
+1639661059 772  5 is sleeping
+1639661059 772  1 has taken a fork
+1639661059 772  4 is eating
+1639661059 949  3 is thinking
+1639661059 949  2 is sleeping
+1639661059 949  1 is eating
+1639661059 949  3 has taken a fork
+1639661059 977  5 is thinking
+1639661059 977  4 is sleeping
+1639661059 977  3 is eating
+1639661059 977  5 has taken a fork
+1639661060 149  2 is thinking
+1639661060 154  1 is sleeping
+1639661060 154  5 is eating
+1639661060 154  2 has taken a fork
+1639661060 177  4 is thinking
+1639661060 177  3 is sleeping
+1639661060 177  4 has taken a fork
+1639661060 177  2 is eating
+1639661060 359  1 is thinking
+1639661060 359  5 is sleeping
+1639661060 359  4 is eating
+1639661060 359  1 has taken a fork
+1639661060 380  3 is thinking
+1639661060 380  2 is sleeping
+1639661060 380  1 is eating
+1639661060 380  3 has taken a fork
+1639661060 564  5 is thinking
+1639661060 564  4 is sleeping
+1639661060 564  5 has taken a fork
+1639661060 564  3 is eating
+1639661060 582  2 is thinking
+1639661060 582  1 is sleeping
+1639661060 582  2 has taken a fork
+1639661060 582  5 is eating
+1639661060 769  4 is thinking
+1639661060 769  3 is sleeping
+1639661060 769  4 has taken a fork
+1639661060 769  2 is eating
+1639661060 787  1 is thinking
+1639661060 787  5 is sleeping
+1639661060 787  1 has taken a fork
+1639661060 787  4 is eating
+1639661060 972  3 is thinking
+1639661060 972  2 is sleeping
+1639661060 972  3 has taken a fork
+1639661060 972  1 is eating
+1639661060 990  5 is thinking
+1639661060 990  4 is sleeping
+1639661060 990  3 is eating
+1639661060 990  5 has taken a fork
+1639661061 172  2 is thinking
+1639661061 172  1 is sleeping
+1639661061 172  5 is eating
+1639661061 173  2 has taken a fork
+1639661061 195  4 is thinking
+1639661061 195  3 is sleeping
+1639661061 196  2 is eating
+1639661061 196  4 has taken a fork
+1639661061 373  1 is thinking
+1639661061 373  5 is sleeping
+1639661061 373  4 is eating
+1639661061 373  1 has taken a fork
+1639661061 401  3 is thinking
+1639661061 401  2 is sleeping
+1639661061 401  3 has taken a fork
+1639661061 401  1 is eating
+1639661061 573  5 is thinking
+1639661061 573  4 is sleeping
+1639661061 573  3 is eating
+1639661061 573  5 has taken a fork
+1639661061 602  1 is sleeping
+1639661061 602  2 is thinking
+1639661061 602  2 has taken a fork
+1639661061 603  5 is eating
+1639661061 778  4 is thinking
+1639661061 778  3 is sleeping
+1639661061 778  4 has taken a fork
+1639661061 778  2 is eating
+1639661061 806  1 is thinking
+1639661061 806  4 is eating
+1639661061 806  1 has taken a fork
+1639661061 806  5 is sleeping
+1639661061 983  3 is thinking
+1639661061 984  2 is sleeping
+1639661061 984  1 is eating
+1639661061 984  3 has taken a fork
+1639661062 006  4 is sleeping
+1639661062 006  5 is thinking
+1639661062 006  5 has taken a fork
+1639661062 006  3 is eating
+1639661062 184  2 is thinking
+1639661062 184  1 is sleeping
+1639661062 184  5 is eating
+1639661062 184  2 has taken a fork
+1639661062 206  4 is thinking
+1639661062 206  3 is sleeping
+1639661062 206  2 is eating
+1639661062 206  4 has taken a fork
+1639661062 389  1 is thinking
+1639661062 389  5 is sleeping
+1639661062 389  4 is eating
+1639661062 389  1 has taken a fork
+1639661062 411  3 is thinking
+1639661062 411  2 is sleeping
+1639661062 411  1 is eating
+1639661062 411  3 has taken a fork
+1639661062 590  5 is thinking
+1639661062 590  4 is sleeping
+1639661062 590  3 is eating
+1639661062 590  5 has taken a fork
+1639661062 616  2 is thinking
+1639661062 616  1 is sleeping
+1639661062 616  5 is eating
+1639661062 616  2 has taken a fork
+1639661062 795  4 is thinking
+1639661062 795  3 is sleeping
+1639661062 795  2 is eating
+1639661062 795  4 has taken a fork
+1639661062 822  1 is thinking
+1639661062 822  5 is sleeping
+1639661062 822  4 is eating
+1639661062 822  1 has taken a fork
+1639661063 000  3 is thinking
+1639661063 000  2 is sleeping
+1639661063 000  3 has taken a fork
+1639661063 000  1 is eating
+1639661063 023  5 is thinking
+1639661063 023  4 is sleeping
+1639661063 023  3 is eating
+1639661063 023  5 has taken a fork
+1639661063 205  2 is thinking
+1639661063 205  1 is sleeping
+1639661063 205  2 has taken a fork
+1639661063 205  5 is eating
+1639661063 223  4 is thinking
+1639661063 223  3 is sleeping
+1639661063 223  2 is eating
+1639661063 223  4 has taken a fork
+1639661063 406  1 is thinking
+1639661063 406  5 is sleeping
+1639661063 406  4 is eating
+1639661063 406  1 has taken a fork
+1639661063 428  3 is thinking
+1639661063 428  2 is sleeping
+1639661063 428  1 is eating
+1639661063 428  3 has taken a fork
+1639661063 606  5 is thinking
+1639661063 607  4 is sleeping
+1639661063 607  3 is eating
+1639661063 607  5 has taken a fork
+1639661063 633  2 is thinking
+1639661063 633  1 is sleeping
+1639661063 633  5 is eating
+1639661063 633  2 has taken a fork
+1639661063 808  4 is thinking
+1639661063 809  2 is eating
+1639661063 809  4 has taken a fork
+1639661063 809  3 is sleeping
+1639661063 839  1 is thinking
+1639661063 839  5 is sleeping
+1639661063 839  4 is eating
+1639661063 839  1 has taken a fork
+1639661064 014  2 is sleeping
+1639661064 014  3 is thinking
+1639661064 014  3 has taken a fork
+1639661064 014  1 is eating
+1639661064 040  5 is thinking
+1639661064 040  4 is sleeping
+1639661064 040  3 is eating
+1639661064 040  5 has taken a fork
+1639661064 219  2 is thinking
+1639661064 219  1 is sleeping
+1639661064 219  2 has taken a fork
+1639661064 219  5 is eating
+1639661064 240  4 is thinking
+1639661064 240  3 is sleeping
+1639661064 240  2 is eating
+1639661064 240  4 has taken a fork
+1639661064 423  1 is thinking
+1639661064 423  5 is sleeping
+1639661064 423  4 is eating
+1639661064 423  1 has taken a fork
+1639661064 440  3 is thinking
+1639661064 440  2 is sleeping
+1639661064 440  1 is eating
+1639661064 440  3 has taken a fork
+1639661064 624  5 is thinking
+1639661064 624  4 is sleeping
+1639661064 624  3 is eating
+1639661064 624  5 has taken a fork
+1639661064 645  2 is thinking
+1639661064 645  1 is sleeping
+1639661064 645  5 is eating
+1639661064 645  2 has taken a fork
+1639661064 824  4 is thinking
+1639661064 824  3 is sleeping
+1639661064 824  2 is eating
+1639661064 824  4 has taken a fork
+1639661064 850  1 is thinking
+1639661064 850  4 is eating
+1639661064 850  5 is sleeping
+1639661064 850  1 has taken a fork
+1639661065 024  3 is thinking
+1639661065 024  2 is sleeping
+1639661065 024  3 has taken a fork
+1639661065 024  1 is eating
+1639661065 055  5 is thinking
+1639661065 055  3 is eating
+1639661065 055  4 is sleeping
+1639661065 055  5 has taken a fork
+1639661065 229  2 is thinking
+1639661065 229  1 is sleeping
+1639661065 229  2 has taken a fork
+1639661065 229  5 is eating
+1639661065 259  3 is sleeping
+1639661065 259  4 is thinking
+1639661065 259  4 has taken a fork
+1639661065 259  2 is eating
+1639661065 434  1 is thinking
+1639661065 434  5 is sleeping
+1639661065 434  4 is eating
+1639661065 434  1 has taken a fork
+1639661065 464  3 is thinking
+1639661065 465  2 is sleeping
+1639661065 465  3 has taken a fork
+1639661065 465  1 is eating
+1639661065 639  5 is thinking
+1639661065 639  4 is sleeping
+1639661065 639  3 is eating
+1639661065 639  5 has taken a fork
+1639661065 667  2 is thinking
+1639661065 667  1 is sleeping
+1639661065 667  5 is eating
+1639661065 667  2 has taken a fork
+1639661065 840  4 is thinking
+1639661065 840  3 is sleeping
+1639661065 840  2 is eating
+1639661065 840  4 has taken a fork
+1639661065 872  1 is thinking
+1639661065 872  5 is sleeping
+1639661065 872  1 has taken a fork
+1639661065 872  4 is eating
+1639661066 041  3 is thinking
+1639661066 045  2 is sleeping
+1639661066 045  1 is eating
+1639661066 045  3 has taken a fork
+1639661066 073  5 is thinking
+1639661066 075  4 is sleeping
+1639661066 075  3 is eating
+1639661066 075  5 has taken a fork
+1639661066 246  2 is thinking
+1639661066 246  1 is sleeping
+1639661066 246  2 has taken a fork
+1639661066 246  5 is eating
+1639661066 280  4 is thinking
+1639661066 280  3 is sleeping
+1639661066 280  2 is eating
+1639661066 280  4 has taken a fork
+1639661066 451  1 is thinking
+1639661066 451  5 is sleeping
+1639661066 451  4 is eating
+1639661066 451  1 has taken a fork
+1639661066 484  3 is thinking
+1639661066 484  2 is sleeping
+1639661066 484  1 is eating
+1639661066 485  3 has taken a fork
+1639661066 656  5 is thinking
+1639661066 656  4 is sleeping
+1639661066 656  3 is eating
+1639661066 656  5 has taken a fork
+1639661066 690  2 is thinking
+1639661066 690  1 is sleeping
+1639661066 690  5 is eating
+1639661066 690  2 has taken a fork
+1639661066 861  4 is thinking
+1639661066 861  3 is sleeping
+1639661066 861  2 is eating
+1639661066 861  4 has taken a fork
+1639661066 895  1 is thinking
+1639661066 895  5 is sleeping
+1639661066 895  4 is eating
+1639661066 895  1 has taken a fork
+1639661067 063  3 is thinking
+1639661067 063  1 is eating
+1639661067 063  2 is sleeping
+1639661067 063  3 has taken a fork
+1639661067 100  5 is thinking
+1639661067 100  4 is sleeping
+1639661067 100  3 is eating
+1639661067 100  5 has taken a fork
+1639661067 268  2 is thinking
+1639661067 268  1 is sleeping
+1639661067 268  5 is eating
+1639661067 268  2 has taken a fork
+1639661067 305  4 is thinking
+1639661067 305  3 is sleeping
+1639661067 305  4 has taken a fork
+1639661067 305  2 is eating
+1639661067 473  1 is thinking
+1639661067 473  5 is sleeping
+1639661067 473  4 is eating
+1639661067 473  1 has taken a fork
+1639661067 507  3 is thinking
+1639661067 507  2 is sleeping
+1639661067 507  1 is eating
+1639661067 507  3 has taken a fork
+1639661067 674  5 is thinking
+1639661067 674  4 is sleeping
+1639661067 674  3 is eating
+1639661067 674  5 has taken a fork
+1639661067 707  2 is thinking
+1639661067 708  1 is sleeping
+1639661067 708  2 has taken a fork
+1639661067 708  5 is eating
+1639661067 875  3 is sleeping
+1639661067 875  2 is eating
+1639661067 875  4 is thinking
+1639661067 875  4 has taken a fork
+1639661067 908  1 is thinking
+1639661067 913  5 is sleeping
+1639661067 913  4 is eating
+1639661067 913  1 has taken a fork
+1639661068 076  3 is thinking
+1639661068 076  1 is eating
+1639661068 076  2 is sleeping
+1639661068 076  3 has taken a fork
+1639661068 118  5 is thinking
+1639661068 118  4 is sleeping
+1639661068 118  3 is eating
+1639661068 118  5 has taken a fork
+1639661068 280  1 is sleeping
+1639661068 280  5 is eating
+1639661068 280  2 is thinking
+1639661068 280  2 has taken a fork
+1639661068 323  4 is thinking
+1639661068 323  3 is sleeping
+1639661068 323  4 has taken a fork
+1639661068 323  2 is eating
+1639661068 485  1 is thinking
+1639661068 485  5 is sleeping
+1639661068 485  1 has taken a fork
+1639661068 485  4 is eating
+1639661068 524  3 is thinking
+1639661068 524  2 is sleeping
+1639661068 524  3 has taken a fork
+1639661068 524  1 is eating
+1639661068 690  5 is thinking
+1639661068 690  3 is eating
+1639661068 690  4 is sleeping
+1639661068 690  5 has taken a fork
+1639661068 724  1 is sleeping
+1639661068 724  5 is eating
+1639661068 729  2 is thinking
+1639661068 729  2 has taken a fork
+1639661068 891  4 is thinking
+1639661068 891  3 is sleeping
+1639661068 891  2 is eating
+1639661068 891  4 has taken a fork
+1639661068 925  1 is thinking
+1639661068 925  5 is sleeping
+1639661068 925  4 is eating
+1639661068 925  1 has taken a fork
+1639661069 092  3 is thinking
+1639661069 092  2 is sleeping
+1639661069 092  1 is eating
+1639661069 092  3 has taken a fork
+1639661069 125  5 is thinking
+1639661069 125  4 is sleeping
+1639661069 125  3 is eating
+1639661069 125  5 has taken a fork
+1639661069 297  2 is thinking
+1639661069 297  1 is sleeping
+1639661069 297  5 is eating
+1639661069 297  2 has taken a fork
+1639661069 330  4 is thinking
+1639661069 330  3 is sleeping
+1639661069 330  2 is eating
+1639661069 330  4 has taken a fork
+1639661069 502  1 is thinking
+1639661069 502  4 is eating
+1639661069 502  5 is sleeping
+1639661069 503  1 has taken a fork
+1639661069 535  3 is thinking
+1639661069 535  2 is sleeping
+1639661069 535  1 is eating
+1639661069 535  3 has taken a fork
+1639661069 704  5 is thinking
+1639661069 704  5 has taken a fork
+1639661069 704  3 is eating
+1639661069 704  4 is sleeping
+1639661069 740  2 is thinking
+1639661069 740  1 is sleeping
+1639661069 740  5 is eating
+1639661069 740  2 has taken a fork
+1639661069 909  3 is sleeping
+1639661069 909  2 is eating
+1639661069 909  4 is thinking
+1639661069 909  4 has taken a fork
+1639661069 941  1 is thinking
+1639661069 942  5 is sleeping
+1639661069 942  1 has taken a fork
+1639661069 942  4 is eating
+1639661070 109  3 is thinking
+1639661070 109  2 is sleeping
+1639661070 109  1 is eating
+1639661070 109  3 has taken a fork
+1639661070 142  5 is thinking
+1639661070 142  4 is sleeping
+1639661070 142  3 is eating
+1639661070 142  5 has taken a fork
+1639661070 310  2 is thinking
+1639661070 310  1 is sleeping
+1639661070 310  2 has taken a fork
+1639661070 310  5 is eating
+1639661070 342  4 is thinking
+1639661070 342  3 is sleeping
+1639661070 342  2 is eating
+1639661070 342  4 has taken a fork
+1639661070 515  1 is thinking
+1639661070 515  5 is sleeping
+1639661070 515  1 has taken a fork
+1639661070 515  4 is eating
+1639661070 546  3 is thinking
+1639661070 546  2 is sleeping
+1639661070 546  3 has taken a fork
+1639661070 546  1 is eating
+1639661070 720  5 is thinking
+1639661070 720  4 is sleeping
+1639661070 720  3 is eating
+1639661070 720  5 has taken a fork
+1639661070 751  2 is thinking
+1639661070 751  1 is sleeping
+1639661070 751  5 is eating
+1639661070 751  2 has taken a fork
+1639661070 925  4 is thinking
+1639661070 925  3 is sleeping
+1639661070 925  2 is eating
+1639661070 925  4 has taken a fork
+1639661070 957  1 is thinking
+1639661070 957  5 is sleeping
+1639661070 957  4 is eating
+1639661070 957  1 has taken a fork
+1639661071 125  3 is thinking
+1639661071 125  2 is sleeping
+1639661071 125  1 is eating
+1639661071 125  3 has taken a fork
+1639661071 159  5 is thinking
+1639661071 159  4 is sleeping
+1639661071 159  5 has taken a fork
+1639661071 159  3 is eating
+1639661071 325  2 is thinking
+1639661071 325  1 is sleeping
+1639661071 325  2 has taken a fork
+1639661071 325  5 is eating
+1639661071 359  3 is sleeping
+1639661071 359  2 is eating
+1639661071 360  4 is thinking
+1639661071 360  4 has taken a fork
+1639661071 526  1 is thinking
+1639661071 526  5 is sleeping
+1639661071 526  4 is eating
+1639661071 526  1 has taken a fork
+1639661071 564  3 is thinking
+1639661071 564  2 is sleeping
+1639661071 564  3 has taken a fork
+1639661071 564  1 is eating
+1639661071 726  5 is thinking
+1639661071 726  4 is sleeping
+1639661071 726  3 is eating
+1639661071 726  5 has taken a fork
+1639661071 769  2 is thinking
+1639661071 769  1 is sleeping
+1639661071 769  2 has taken a fork
+1639661071 769  5 is eating
+1639661071 931  4 is thinking
+1639661071 931  3 is sleeping
+1639661071 931  4 has taken a fork
+1639661071 931  2 is eating
+1639661071 974  1 is thinking
+1639661071 974  5 is sleeping
+1639661071 974  4 is eating
+1639661071 974  1 has taken a fork
+1639661072 136  3 is thinking
+1639661072 136  2 is sleeping
+1639661072 136  1 is eating
+1639661072 136  3 has taken a fork
+1639661072 176  5 is thinking
