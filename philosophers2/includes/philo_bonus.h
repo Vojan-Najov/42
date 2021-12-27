@@ -1,11 +1,16 @@
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <fcntl.h>
+# include <sys/stat.h> 
+# include <semaphore.h>
 # include <pthread.h>
 # include <stdlib.h>
+# include <string.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <signal.h>
 
 # define ARGS_ERROR 1
 # define MALLOC_ERROR 2
@@ -28,14 +33,14 @@ typedef struct	s_args
 	useconds_t		etime;
 	useconds_t		stime;
 	int				ecount;
-	int				simulation;
-	int				eaters;
-	pthread_t		*ths;
-	t_ph			*phs;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t date_mutex;
-	pthread_mutex_t	simul;
+	int				id;
+	int				eat_count;
+	sem_t			*date_sem;
+	sem_t			*forks_sem;
+	sem_t			*death_sem;
+	pid_t			*pids;
 	struct timeval	start;  //
+	struct timeval	death_time;  //
 }				t_args;
 
 struct	s_ph
@@ -54,17 +59,19 @@ int		ft_atoi(const char *str);
 
 int		ft_isdigit(int c);
 
+unsigned long	gettimeofsimulation(t_args *args);
+
 int		check_args(t_args *args, int argc, char **argv);
 
 int		init_args(t_args *args, int argc, char **argv);
 
-void	completion(t_args *args, int forks_num, int date_mutex);
+void	completion(t_args *args, int forks_num, int date_mutex, int simul_mutex);
 
-void	philo_think(t_ph *ph);
+void	philo_think(t_args *args);
 
-void	philo_eat(t_ph *ph);
+void	philo_eat(t_args *args);
 
-void	philo_sleep(t_ph *ph);
+void	philo_sleep(t_args *args);
 
 void	*thread(void *v_data);
 

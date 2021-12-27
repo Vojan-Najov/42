@@ -118,7 +118,7 @@ void		*thread(void *vdata)
 	ph->ret = pthread_detach(eye);
 	if (ph->ret)
 		return (&ph->ret);
-	if (ph->id % 2)
+	if (ph->id % 2 == 0)
 		usleep(ph->args->etime);
 		//usleep(10000);
 	while (ph->args->simulation)

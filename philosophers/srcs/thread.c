@@ -68,7 +68,6 @@ static void	philo_sleep(t_ph *ph)
 	pthread_mutex_unlock(&ph->args->date_mutex);
 	usleep(ph->args->stime);
 }
-*/
 
 void		*thread(void *vdata)
 {
@@ -89,11 +88,44 @@ void		*thread(void *vdata)
 	if (ph->ret)
 		return (&ph->ret);
 	pthread_mutex_unlock(&ph->args->date_mutex);
+	if (ph->id % 2)
+		//usleep(ph->args->etime);
+		usleep(10000);
 	while (ph->args->simulation)
 	{
-		philo_think(ph);
 		philo_eat(ph);
 		philo_sleep(ph);
+		philo_think(ph);
+	}
+	return(NULL);
+}
+*/
+
+void		*thread(void *vdata)
+{
+	t_ph		*ph;
+	pthread_t	eye;
+
+	ph = (t_ph *) vdata;
+	pthread_mutex_lock(&ph->args->simul);
+	pthread_mutex_unlock(&ph->args->simul);
+	ph->death_time.tv_sec = ph->args->start.tv_sec + \
+							((ph->args->start.tv_usec + ph->args->dtime) / 1000000);
+	ph->death_time.tv_usec = (ph->args->start.tv_usec + ph->args->dtime) % 1000000;
+	ph->ret = pthread_create(&eye, NULL, watch, ph);
+	if (ph->ret)
+		return (&ph->ret);
+	ph->ret = pthread_detach(eye);
+	if (ph->ret)
+		return (&ph->ret);
+	if (ph->id % 2)
+		usleep(ph->args->etime);
+		//usleep(10000);
+	while (ph->args->simulation)
+	{
+		philo_eat(ph);
+		philo_sleep(ph);
+		philo_think(ph);
 	}
 	return(NULL);
 }

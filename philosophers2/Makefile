@@ -1,6 +1,7 @@
 NAME		= philo
 
 SRCS_DIR	= ./srcs/
+BONUS_DIR	= ./bonus/
 
 INCLUDES	= ./includes/
 
@@ -15,15 +16,22 @@ SRCS_F		= ft_atoi.c \
 			  thread.c \
 			  main.c
 
-#BONUS		= srcs/check_args.c \
+BONUS_F		= ft_atoi.c \
+			  ft_isdigit.c \
+			  gettimeofsimulation.c \
+			  check_args.c \
+			  init.c \
+			  actions.c \
+			  main.c
 
 SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_F))
+BONUS		= $(addprefix $(BONUS_DIR), $(BONUS_F))
 
 OBJS		= $(SRCS:.c=.o)
 OBJS_B		= $(BONUS:.c=.o)
 
 SRCS_D		= $(SRCS:.c=.d)
-#BONUS_D		= $(BONUS:.c=.d)
+BONUS_D		= $(BONUS:.c=.d)
 
 CC			= gcc
 
@@ -50,8 +58,8 @@ fclean:		clean
 
 re:			fclean all
 
-#bonus:		$(OBJS_B)
-#			$(CC) -g $(OBJS_B) -o $(NAME_B) -L ./libft -lft
+bonus:		$(OBJS_B)
+			$(CC) -g $(OBJS_B) -o $(NAME) -lpthread
 
 
 .PHONY:		all clean fclean re bonus

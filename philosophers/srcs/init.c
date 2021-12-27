@@ -108,6 +108,9 @@ static void init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
 		phs[i].eating = 0;
 		idx1 = i;
 		idx2 = (i + 1) % phs_num;
+			phs[i].first_fork = forks + idx1;
+			phs[i].second_fork = forks + idx2;
+/*
 		if (idx1 < idx2)
 		{
 			phs[i].first_fork = forks + idx1;
@@ -118,6 +121,7 @@ static void init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
 			phs[i].first_fork = forks + idx2;
 			phs[i].second_fork = forks + idx1;
 		}
+*/
 		++i;
 	}
 }
@@ -131,6 +135,13 @@ static int	init_date_mutex(t_args *args)
 	{
 		write(STDERR_FILENO, g_mut_err_mes, sizeof(g_mut_err_mes));
 		completion(args, args->phs_num, 0);
+		return (MUTEX_ERROR);
+	}
+	ret = pthread_mutex_init(&args->simul, NULL);
+	if (ret)
+	{
+		write(STDERR_FILENO, g_mut_err_mes, sizeof(g_mut_err_mes));
+		completion(args, args->phs_num, 0); // fix completion to destroy simul mutex
 		return (MUTEX_ERROR);
 	}
 	return (0);
