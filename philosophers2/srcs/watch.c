@@ -38,6 +38,7 @@ static int	check_death(time_t now_sec, suseconds_t now_usec, t_ph *ph)
 	if (now_sec < death_sec || (now_sec == death_sec && now_usec < death_usec))
 	{
 		pthread_mutex_unlock(&ph->args->date_mutex);
+		//usleep(1000);
 		usleep((death_sec - now_sec) * 1000000 + (death_usec - now_usec));
 		return (1);
 	}

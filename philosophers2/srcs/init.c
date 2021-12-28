@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:29:37 by ccartman          #+#    #+#             */
-/*   Updated: 2021/12/02 18:30:36 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/12/28 20:57:10 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int	init_fields(t_args *args);
 
-static int init_forks (t_args *args);
+static int	init_forks(t_args *args);
 
-static void init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
+static void	init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
 								int phs_num, t_args *args);
 
 static int	init_date_and_simul_mutex(t_args *args);
@@ -64,7 +64,7 @@ static int	init_fields(t_args *args)
 	return (0);
 }
 
-static int	init_forks (t_args *args)
+static int	init_forks(t_args *args)
 {
 	pthread_mutex_t	*forks;
 	int				phs_num;
@@ -88,11 +88,11 @@ static int	init_forks (t_args *args)
 	return (0);
 }
 
-static void init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
+static void	init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
 								int phs_num, t_args *args)
 {
 	int	i;
-	int idx1;
+	int	idx1;
 	int	idx2;
 
 	i = 0;

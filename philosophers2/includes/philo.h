@@ -18,7 +18,9 @@ static const char	g_arg_err_mes[] = "Incorect arguments\n";
 static const char	g_help_mes[] = "Usage:...\n";
 static const char	g_mal_err_mes[] = "Memory allocation error \n";
 static const char	g_mut_err_mes[] = "Mutex initialization error\n";
+static const char	g_mutd_err_mes[] = "Mutex destruction error\n";
 static const char	g_thr_err_mes[] = "Thread creation error\n";
+static const char	g_thrj_err_mes[] = "Thread joining error\n";
 
 typedef	struct s_ph	t_ph;
 

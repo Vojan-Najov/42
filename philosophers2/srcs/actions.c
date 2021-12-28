@@ -2,10 +2,7 @@
 
 void	philo_think(t_ph *ph)
 {
-	struct timeval	now;
-
 	pthread_mutex_lock(&ph->args->date_mutex);	
-	gettimeofday(&now, NULL);
 	if (ph->args->simulation)
 		printf("%10lu %d is thinking\n", gettimeofsimulation(ph->args), ph->id);
 	pthread_mutex_unlock(&ph->args->date_mutex);
@@ -13,11 +10,8 @@ void	philo_think(t_ph *ph)
 
 static int	take_first_fork(t_ph *ph)
 {
-	struct timeval	now;
-
 	pthread_mutex_lock(ph->first_fork);
 	pthread_mutex_lock(&ph->args->date_mutex);
-	gettimeofday(&now, NULL);
 	if (!ph->args->simulation)
 	{
 		pthread_mutex_unlock(&ph->args->date_mutex);
@@ -31,6 +25,12 @@ static int	take_first_fork(t_ph *ph)
 
 static int	take_second_fork(t_ph *ph)
 {
+	if (ph->first_fork == ph->second_fork)
+	{
+		usleep(ph->args->dtime + 1000);  //
+		pthread_mutex_unlock(ph->first_fork);
+		return (0);
+	}
 	pthread_mutex_lock(ph->second_fork);
 	pthread_mutex_lock(&ph->args->date_mutex);
 	if (!ph->args->simulation)
@@ -79,15 +79,12 @@ void	philo_eat(t_ph *ph)
 
 void	philo_sleep(t_ph *ph)
 {
-	struct timeval	now;
-
 	pthread_mutex_lock(&ph->args->date_mutex);
 	if (!ph->args->simulation)
 	{
 		pthread_mutex_unlock(&ph->args->date_mutex);
 		return ;
 	}
-	gettimeofday(&now, NULL);
 	printf("%10lu %d is sleeping\n", gettimeofsimulation(ph->args), ph->id);
 	pthread_mutex_unlock(&ph->args->date_mutex);
 	usleep(ph->args->stime);

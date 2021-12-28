@@ -120,7 +120,6 @@ void		*thread(void *vdata)
 		return (&ph->ret);
 	if (ph->id % 2 == 0)
 		usleep(ph->args->etime);
-		//usleep(10000);
 	while (ph->args->simulation)
 	{
 		philo_eat(ph);
