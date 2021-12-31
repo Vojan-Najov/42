@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/28 20:37:17 by ccartman          #+#    #+#             */
-/*   Updated: 2021/12/28 22:26:06 by ccartman         ###   ########.fr       */
+/*   Created: 2021/12/31 14:50:36 by ccartman          #+#    #+#             */
+/*   Updated: 2021/12/31 15:20:14 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 	void	**value_ptr;
 
 	ret = init_args(&args, argc, argv);
-	if (ret)
+	if (ret || !args.ecount)
 		return (ret);
 	value_ptr = malloc(sizeof(void *) * args.phs_num);
 	if (!value_ptr)
@@ -41,7 +41,7 @@ int	main(int argc, char **argv)
 	return (ret);
 }
 
-static int init_threads(t_args *args)
+static int	init_threads(t_args *args)
 {	
 	int	i;
 	int	ret;
@@ -63,23 +63,6 @@ static int init_threads(t_args *args)
 	pthread_mutex_unlock(&args->simul);
 	return (0);
 }
-
-/*
-static void	check_death(t_arg	*args)
-{
-	int		i;
-	int		num;
-	t_ph	*phs;
-
-	i = -1;
-	num = args->phs_num;
-	phs = args->phs;
-	while (++i < num)
-	{
-		
-	}
-}
-*/
 
 static int	join_threads(t_args *args, void **value_ptr)
 {

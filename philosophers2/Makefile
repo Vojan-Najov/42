@@ -10,11 +10,12 @@ SRCS_F		= ft_atoi.c \
 			  gettimeofsimulation.c \
 			  check_args.c \
 			  init.c \
+			  ft_usleep.c \
 			  completion.c \
 			  actions.c \
 			  watch.c \
 			  thread.c \
-			  main.c
+			  philosophers.c
 
 BONUS_F		= ft_atoi.c \
 			  ft_isdigit.c \

@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:29:37 by ccartman          #+#    #+#             */
-/*   Updated: 2021/12/28 20:57:10 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/12/31 15:19:04 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	init_args(t_args *args, int argc, char **argv)
 
 	memset(args, 0, sizeof(t_args));
 	args->simulation = 1;
+	args->ecount = -1;
 	ret = check_args(args, argc, argv);
 	if (ret)
 	{
