@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/31 14:54:14 by ccartman          #+#    #+#             */
+/*   Updated: 2021/12/31 15:06:20 by ccartman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
 # include <pthread.h>
 # include <stdlib.h>
+# include <string.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/time.h>
@@ -17,11 +30,13 @@ static const char	g_arg_err_mes[] = "Incorect arguments\n";
 static const char	g_help_mes[] = "Usage:...\n";
 static const char	g_mal_err_mes[] = "Memory allocation error \n";
 static const char	g_mut_err_mes[] = "Mutex initialization error\n";
+static const char	g_mutd_err_mes[] = "Mutex destruction error\n";
 static const char	g_thr_err_mes[] = "Thread creation error\n";
+static const char	g_thrj_err_mes[] = "Thread joining error\n";
 
-typedef	struct s_ph	t_ph;
+typedef struct s_ph	t_ph;
 
-typedef struct	s_args
+typedef struct s_args
 {
 	int				phs_num;
 	useconds_t		dtime;
@@ -33,41 +48,46 @@ typedef struct	s_args
 	pthread_t		*ths;
 	t_ph			*phs;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t date_mutex;
+	pthread_mutex_t	date_mutex;
 	pthread_mutex_t	simul;
-	struct timeval	start;  //
-}				t_args;
+	struct timeval	start;
+}	t_args;
 
 struct	s_ph
 {
-	int		id;
-	int		eating;
+	int				id;
+	int				eating;
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 	struct timeval	death_time;
 	int				eat_count;
-int				ret;
-	t_args	*args;
+	int				ret;
+	t_args			*args;
 };
 
-int		ft_atoi(const char *str);
+int				ft_atoi(const char *str);
 
-int		ft_isdigit(int c);
+int				ft_isdigit(int c);
 
-int		check_args(t_args *args, int argc, char **argv);
+unsigned long	gettimeofsimulation(t_args *args);
 
-int		init_args(t_args *args, int argc, char **argv);
+int				check_args(t_args *args, int argc, char **argv);
 
-void	completion(t_args *args, int forks_num, int date_mutex);
+int				init_args(t_args *args, int argc, char **argv);
 
-void	philo_think(t_ph *ph);
+void			completion(t_args *args, int forks_num, int date_mutex, \
+															int simul_mutex);
 
-void	philo_eat(t_ph *ph);
+void			ft_usleep(unsigned long time, t_args *args);
 
-void	philo_sleep(t_ph *ph);
+void			philo_think(t_ph *ph);
 
-void	*thread(void *v_data);
+void			philo_eat(t_ph *ph);
 
-void	*watch(void *vph);
+void			philo_sleep(t_ph *ph);
+
+void			*thread(void *v_data);
+
+void			*watch(void *vph);
 
 #endif

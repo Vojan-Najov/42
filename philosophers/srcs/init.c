@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:29:37 by ccartman          #+#    #+#             */
-/*   Updated: 2021/12/02 18:30:36 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/12/31 15:19:04 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 
 static int	init_fields(t_args *args);
 
-static int init_forks (t_args *args);
+static int	init_forks(t_args *args);
 
-static void init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
+static void	init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
 								int phs_num, t_args *args);
 
-static int	init_date_mutex(t_args *args);
+static int	init_date_and_simul_mutex(t_args *args);
 
 int	init_args(t_args *args, int argc, char **argv)
 {
 	int	ret;
 
-	args->ecount = -1;
-	args->phs = NULL;
-	args->forks = NULL;
-	args->ths = NULL;
+	memset(args, 0, sizeof(t_args));
 	args->simulation = 1;
+	args->ecount = -1;
 	ret = check_args(args, argc, argv);
 	if (ret)
 	{
@@ -44,7 +42,7 @@ int	init_args(t_args *args, int argc, char **argv)
 	if (ret)
 		return (ret);
 	init_philosophers(args->phs, args->forks, args->phs_num, args);
-	ret = init_date_mutex(args);
+	ret = init_date_and_simul_mutex(args);
 	if (ret)
 		return (ret);
 	return (0);
@@ -55,20 +53,19 @@ static int	init_fields(t_args *args)
 	int	num;
 
 	num = args->phs_num;
-	args->eaters = 0;
 	args->phs = (t_ph *) malloc(sizeof(t_ph) * num);
 	args->forks = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * num);
 	args->ths = (pthread_t *) malloc(sizeof(pthread_t) * num);
 	if (!args->phs || !args->forks || !args->ths)
 	{
 		write(STDERR_FILENO, g_mal_err_mes, sizeof(g_mal_err_mes));
-		completion(args, 0, 0);
+		completion(args, 0, 0, 0);
 		return (MALLOC_ERROR);
 	}
 	return (0);
 }
 
-static int	init_forks (t_args *args)
+static int	init_forks(t_args *args)
 {
 	pthread_mutex_t	*forks;
 	int				phs_num;
@@ -84,7 +81,7 @@ static int	init_forks (t_args *args)
 		if (ret)
 		{
 			write(STDERR_FILENO, g_mut_err_mes, sizeof(g_mut_err_mes));
-			completion(args, i, 0);
+			completion(args, i, 0, 0);
 			return (MUTEX_ERROR);
 		}
 		++i;
@@ -92,11 +89,11 @@ static int	init_forks (t_args *args)
 	return (0);
 }
 
-static void init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
+static void	init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
 								int phs_num, t_args *args)
 {
 	int	i;
-	int idx1;
+	int	idx1;
 	int	idx2;
 
 	i = 0;
@@ -108,25 +105,13 @@ static void init_philosophers(t_ph *phs, pthread_mutex_t *forks, \
 		phs[i].eating = 0;
 		idx1 = i;
 		idx2 = (i + 1) % phs_num;
-			phs[i].first_fork = forks + idx1;
-			phs[i].second_fork = forks + idx2;
-/*
-		if (idx1 < idx2)
-		{
-			phs[i].first_fork = forks + idx1;
-			phs[i].second_fork = forks + idx2;
-		}
-		else
-		{
-			phs[i].first_fork = forks + idx2;
-			phs[i].second_fork = forks + idx1;
-		}
-*/
+		phs[i].first_fork = forks + idx1;
+		phs[i].second_fork = forks + idx2;
 		++i;
 	}
 }
 
-static int	init_date_mutex(t_args *args)
+static int	init_date_and_simul_mutex(t_args *args)
 {
 	int	ret;
 
@@ -134,14 +119,14 @@ static int	init_date_mutex(t_args *args)
 	if (ret)
 	{
 		write(STDERR_FILENO, g_mut_err_mes, sizeof(g_mut_err_mes));
-		completion(args, args->phs_num, 0);
+		completion(args, args->phs_num, 0, 0);
 		return (MUTEX_ERROR);
 	}
 	ret = pthread_mutex_init(&args->simul, NULL);
 	if (ret)
 	{
 		write(STDERR_FILENO, g_mut_err_mes, sizeof(g_mut_err_mes));
-		completion(args, args->phs_num, 0); // fix completion to destroy simul mutex
+		completion(args, args->phs_num, 1, 0);
 		return (MUTEX_ERROR);
 	}
 	return (0);
