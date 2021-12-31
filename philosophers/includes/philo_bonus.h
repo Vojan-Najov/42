@@ -14,9 +14,10 @@
 
 # define ARGS_ERROR 1
 # define MALLOC_ERROR 2
-# define MUTEX_ERROR 3
+# define SEMAPHORE_ERROR 3
 # define THREAD_ERROR 4
 # define JOIN_ERROR 5
+# define FORK_ERROR 6
 
 static const char	g_arg_err_mes[] = "Incorect arguments\n";
 static const char	g_help_mes[] = "Usage:...\n";
@@ -45,13 +46,13 @@ typedef struct	s_args
 
 struct	s_ph
 {
-	int		id;
-	int		eating;
+	int				id;
+	int				eating;
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 	struct timeval	death_time;
 	int				eat_count;
-int				ret;
+	int				ret;
 	t_args	*args;
 };
 
@@ -66,6 +67,8 @@ int		check_args(t_args *args, int argc, char **argv);
 int		init_args(t_args *args, int argc, char **argv);
 
 void	completion(t_args *args, int forks_num, int date_mutex, int simul_mutex);
+
+void	ft_usleep(unsigned long time);
 
 void	philo_think(t_args *args);
 

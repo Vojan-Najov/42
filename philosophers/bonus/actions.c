@@ -51,5 +51,5 @@ void	philo_sleep(t_args *args)
 	sem_wait(args->date_sem);
 	printf("%10lu %d is sleeping\n", gettimeofsimulation(args), args->id);
 	sem_post(args->date_sem);
-	usleep(args->stime);
+	ft_usleep(args->stime);
 }

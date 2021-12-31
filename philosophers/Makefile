@@ -19,6 +19,7 @@ SRCS_F		= ft_atoi.c \
 
 BONUS_F		= ft_atoi.c \
 			  ft_isdigit.c \
+			  ft_usleep.c \
 			  gettimeofsimulation.c \
 			  check_args.c \
 			  init.c \

@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 14:50:36 by ccartman          #+#    #+#             */
-/*   Updated: 2021/12/31 15:20:14 by ccartman         ###   ########.fr       */
+/*   Updated: 2021/12/31 16:16:01 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,25 @@
 
 static int	init_threads(t_args *args);
 
-static int	join_threads(t_args *args, void **value_ptr);
+static int	join_threads(t_args *args);
 
 int	main(int argc, char **argv)
 {
 	int		ret;
 	t_args	args;
-	void	**value_ptr;
 
 	ret = init_args(&args, argc, argv);
-	if (ret || !args.ecount)
+	if (ret)
 		return (ret);
-	value_ptr = malloc(sizeof(void *) * args.phs_num);
-	if (!value_ptr)
+	if (!args.ecount)
 	{
-		write(STDERR_FILENO, g_mal_err_mes, sizeof(g_mal_err_mes));
 		completion(&args, args.phs_num, 1, 1);
-		return (MALLOC_ERROR);
+		return (0);
 	}
 	ret = init_threads(&args);
 	if (ret)
 		return (ret);
-	ret = join_threads(&args, value_ptr);
-	free(value_ptr);
+	ret = join_threads(&args);
 	completion(&args, args.phs_num, 1, 1);
 	return (ret);
 }
@@ -64,11 +60,19 @@ static int	init_threads(t_args *args)
 	return (0);
 }
 
-static int	join_threads(t_args *args, void **value_ptr)
+static int	join_threads(t_args *args)
 {
-	int	i;
-	int	ret;
+	int		i;
+	int		ret;
+	void	**value_ptr;
 
+	value_ptr = malloc(sizeof(void *) * args->phs_num);
+	if (!value_ptr)
+	{
+		write(STDERR_FILENO, g_mal_err_mes, sizeof(g_mal_err_mes));
+		completion(args, args->phs_num, 1, 1);
+		return (MALLOC_ERROR);
+	}
 	i = 0;
 	while (i < args->phs_num)
 	{
@@ -80,5 +84,6 @@ static int	join_threads(t_args *args, void **value_ptr)
 		}
 		++i;
 	}
+	free(value_ptr);
 	return (0);
 }

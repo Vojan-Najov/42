@@ -5,27 +5,28 @@ void	philosopher(t_args *args);
 int	main(int argc, char **argv)
 {
 	int		ret;
+	int		i;
 	t_args	args;
 
 	ret = init_args(&args, argc, argv);
 	if (ret)
 		return (ret);
-	int i = 0;
+	i = -1;
 	gettimeofday(&args.start, NULL);
-	while (i < args.phs_num)
+	while (++i < args.phs_num)
 	{
 		args.id = i + 1;
 		args.pids[i] = fork();
 		if (args.pids[i] == -1)
 		{
-			return (2);
+			//completion
+			return (FORK_ERROR);
 		}
 		else if (args.pids[i] == 0)
 		{
 			philosopher(&args);
-			exit(0);
+			return (0);
 		}
-		++i;
 	}
 	sem_wait(args.death_sem);
 	i = 0;
@@ -76,7 +77,7 @@ void	*watch(void *vargs)
 
 void	philosopher(t_args *args)
 {
-	int	i;
+	int			i;
 	pthread_t	th;
 
 	args->death_time.tv_sec = (args->start.tv_sec + \
