@@ -1,41 +1,89 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/02 15:50:24 by ccartman          #+#    #+#             */
+/*   Updated: 2022/01/02 20:05:44 by ccartman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
-void	philosopher(t_args *args);
+static int	philosopher(t_args *args);
+
+static int	launch_philos(t_args *args);
+
+static int	wait_philos(t_args *args);
 
 int	main(int argc, char **argv)
 {
 	int		ret;
-	int		i;
-	t_args	args;
+	t_args	*args;
 
-	ret = init_args(&args, argc, argv);
+	args = (t_args *) malloc(sizeof(t_args));
+	if (!args)
+	{
+		write(STDERR_FILENO, g_mal_err_mes, sizeof(g_mal_err_mes));
+		return (MALLOC_ERROR);
+	}
+	ret = init_args(args, argc, argv);
 	if (ret)
 		return (ret);
-	i = -1;
-	gettimeofday(&args.start, NULL);
-	while (++i < args.phs_num)
+	ret = launch_philos(args);
+	if (ret)
+		return (ret);
+	wait_philos(args);
+	completion(args, 1, 1, 1);
+	return (0);
+}
+
+static int	launch_philos(t_args *args)
+{
+	int	ret;
+	int	i;
+
+	ret = gettimeofday(&args->start, NULL);
+	if (ret)
 	{
-		args.id = i + 1;
-		args.pids[i] = fork();
-		if (args.pids[i] == -1)
+		//completion;
+		return (GETTIME_ERROR);
+	}
+	i = -1;
+	while (++i < args->phs_num)
+	{
+		args->id = i + 1;
+		args->pids[i] = fork();
+		if (args->pids[i] == -1)
 		{
-			//completion
+			//completion;
 			return (FORK_ERROR);
 		}
-		else if (args.pids[i] == 0)
+		else if (args->pids[i] == 0)
 		{
-			philosopher(&args);
-			return (0);
+			ret = philosopher(args);
+			free(args);
+			exit(ret);
 		}
 	}
-	sem_wait(args.death_sem);
-	i = 0;
-	while (i < args.phs_num)
-	{
-		kill(args.pids[i], SIGINT);
-		++i;
-	}
-	//completion(&args, args.phs_num, 1, 1);
+	return (0);
+}
+
+static int	wait_philos(t_args *args)
+{
+	int	i;
+	int	ret;
+
+	sem_wait(args->end_sem);
+	i = -1;
+	while (++i < args->phs_num)
+		kill(args->pids[i], SIGINT);
+	i = -1;
+	while (++i < args->phs_num)
+		waitpid(-1, &ret, WUNTRACED);
+
 	return (0);
 }
 
@@ -46,13 +94,10 @@ int		check_death(time_t now_sec, suseconds_t now_usec, t_args *args)
 
 	death_sec = args->death_time.tv_sec;
 	death_usec = args->death_time.tv_usec;
-	//printf("start: %ld   %ld\n", args->start.tv_sec, args->start.tv_usec);
-	//printf("now  : %ld   %ld\n", now_sec, now_usec);
-	//printf("death: %ld   %ld\n", death_sec, death_usec);
 	if (now_sec < death_sec || (now_sec == death_sec && now_usec < death_usec))
 	{
 		sem_post(args->date_sem);
-		usleep((death_sec - now_sec) * 1000000 + (death_usec - now_usec));
+		ft_usleep((death_sec - now_sec) * 1000000 + (death_usec - now_usec), args);
 		return (1);
 	}
 	return (0);
@@ -71,27 +116,35 @@ void	*watch(void *vargs)
 		if (check_death(now.tv_sec, now.tv_usec, args))
 			continue;
 		printf("%10lu %d is died\n", gettimeofsimulation(args), args->id);
-		sem_post(args->death_sem);
+		sem_post(args->end_sem);
+		break ;
 	}
+	return (NULL);
 }
 
-void	philosopher(t_args *args)
+static int	philosopher(t_args *args)
 {
 	int			i;
+	int			ret;
 	pthread_t	th;
 
 	args->death_time.tv_sec = (args->start.tv_sec + \
 						(args->start.tv_usec + args->dtime) / 1000000);
 	args->death_time.tv_usec = (args->start.tv_usec + args->dtime) % 1000000;
-	i = 0;
-	pthread_create(&th, NULL, watch, args);
+	ret = pthread_create(&th, NULL, watch, args);
+	if (ret)
+		return (THREAD_ERROR);
 	if (args->id % 2 == 0)
-		usleep(args->etime);
+		ft_usleep(args->etime, args);
+	i = -1;
 	while (++i < 12)
 	{
 		philo_eat(args);
 		philo_sleep(args);
 		philo_think(args);
 	}
-	pthread_detach(th);
+	ret = pthread_detach(th);
+	if (ret)
+		return (JOIN_ERROR); //
+	return (0);
 }

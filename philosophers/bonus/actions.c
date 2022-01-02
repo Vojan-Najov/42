@@ -41,7 +41,7 @@ void	philo_eat(t_args *args)
 		return ;
 	if (!take_second_fork(args))
 		return ;
-	usleep(args->etime);
+	ft_usleep(args->etime, args);
 	sem_post(args->forks_sem);
 	sem_post(args->forks_sem);
 }
@@ -51,5 +51,5 @@ void	philo_sleep(t_args *args)
 	sem_wait(args->date_sem);
 	printf("%10lu %d is sleeping\n", gettimeofsimulation(args), args->id);
 	sem_post(args->date_sem);
-	ft_usleep(args->stime);
+	ft_usleep(args->stime, args);
 }

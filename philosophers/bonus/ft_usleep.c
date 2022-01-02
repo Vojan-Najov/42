@@ -5,21 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/31 16:05:31 by ccartman          #+#    #+#             */
-/*   Updated: 2021/12/31 16:05:34 by ccartman         ###   ########.fr       */
+/*   Created: 2021/12/31 14:13:04 by ccartman          #+#    #+#             */
+/*   Updated: 2022/01/02 15:48:05 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "philo.h"
 
-void	ft_usleep(unsigned long time)
+void	ft_usleep(long time, t_args *args)
 {
 	struct timeval	now;
 	struct timeval	start;
-	unsigned long	lasttime;
+	long	lasttime;
 
 	gettimeofday(&start, NULL);
-	while (1)
+	while (args->simulation)
 	{
 		gettimeofday(&now, NULL);
 		lasttime = now.tv_usec - start.tv_usec;

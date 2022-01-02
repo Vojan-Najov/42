@@ -18,11 +18,14 @@
 # define THREAD_ERROR 4
 # define JOIN_ERROR 5
 # define FORK_ERROR 6
+# define GETTIME_ERROR 7
 
 static const char	g_arg_err_mes[] = "Incorect arguments\n";
 static const char	g_help_mes[] = "Usage:...\n";
 static const char	g_mal_err_mes[] = "Memory allocation error \n";
-static const char	g_mut_err_mes[] = "Mutex initialization error\n";
+static const char	g_sem_unl_mes[] = "Semaphore unlinking error\n";
+static const char	g_sem_open_mes[] = "Semaphore opening error\n";
+static const char	g_sem_close_mes[] = "Semaphore closing error\n";
 static const char	g_thr_err_mes[] = "Thread creation error\n";
 
 typedef	struct s_ph	t_ph;
@@ -38,7 +41,7 @@ typedef struct	s_args
 	int				eat_count;
 	sem_t			*date_sem;
 	sem_t			*forks_sem;
-	sem_t			*death_sem;
+	sem_t			*end_sem;
 	pid_t			*pids;
 	struct timeval	start;  //
 	struct timeval	death_time;  //
@@ -66,9 +69,9 @@ int		check_args(t_args *args, int argc, char **argv);
 
 int		init_args(t_args *args, int argc, char **argv);
 
-void	completion(t_args *args, int forks_num, int date_mutex, int simul_mutex);
+void	completion(t_args *args, int forks_sem, int date_sem, int end_sem);
 
-void	ft_usleep(unsigned long time);
+void	ft_usleep(long time, t_args *args);
 
 void	philo_think(t_args *args);
 

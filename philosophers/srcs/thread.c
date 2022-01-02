@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 13:43:33 by ccartman          #+#    #+#             */
-/*   Updated: 2021/12/31 15:09:32 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/01/02 15:49:21 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*thread(void *vdata)
 	ph->ret = pthread_detach(eye);
 	if (ph->ret)
 		return (&ph->ret);
-	if (ph->id % 2)
+	if (ph->id % 2 == 0)
 		ft_usleep(ph->args->etime, ph->args);
 	while (ph->args->simulation)
 	{

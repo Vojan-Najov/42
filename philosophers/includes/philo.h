@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 14:54:14 by ccartman          #+#    #+#             */
-/*   Updated: 2021/12/31 15:06:20 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/01/02 15:48:29 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int				init_args(t_args *args, int argc, char **argv);
 void			completion(t_args *args, int forks_num, int date_mutex, \
 															int simul_mutex);
 
-void			ft_usleep(unsigned long time, t_args *args);
+void			ft_usleep(long time, t_args *args);
 
 void			philo_think(t_ph *ph);
 

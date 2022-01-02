@@ -24,7 +24,8 @@ BONUS_F		= ft_atoi.c \
 			  check_args.c \
 			  init.c \
 			  actions.c \
-			  main.c
+			  completion.c \
+			  philosophers.c
 
 SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_F))
 BONUS		= $(addprefix $(BONUS_DIR), $(BONUS_F))
