@@ -17,7 +17,7 @@ int	philosopher(t_args *args)
 		return (THREAD_ERROR);
 	ret = pthread_detach(th);
 	if (ret)
-		return (JOIN_ERROR); //
+		return (DETACH_ERROR);
 	if (args->id % 2 == 0)
 		ft_usleep(args->etime, args);
 	while (1)

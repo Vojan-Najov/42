@@ -46,7 +46,6 @@ void	completion(t_args *args, int forks_sem, int date_sem, int end_sem)
 	}
 	if (args->ecount > 0 && args->eaters_sem != SEM_FAILED)
 	{
-		printf("close eatrs_sem______________________\n");
 		ret = sem_close(args->eaters_sem);
 		if (ret)
 			write(STDERR_FILENO, g_sem_close_mes, sizeof(g_sem_close_mes));

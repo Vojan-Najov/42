@@ -28,7 +28,7 @@ static int	take_second_fork(t_args *args)
 	args->death_time.tv_usec = (args->death_time.tv_usec + args->dtime) % 1000000;
 	++eat_count;
 	if (eat_count == args->ecount)
-		sem_post(args->eaters_sem);
+		sem_post(args->eaters_sem); // maybe after usleep with nonpost datesem
 	sem_post(args->date_sem);
 	return (1);
 }
