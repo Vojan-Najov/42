@@ -10,6 +10,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <sys/wait.h>
 # include <signal.h>
 
 # define ARGS_ERROR 1
@@ -19,6 +20,10 @@
 # define JOIN_ERROR 5
 # define FORK_ERROR 6
 # define GETTIME_ERROR 7
+# define FORKS_SEM "/forks"
+# define DATE_SEM "/date"
+# define EATERS_SEM "/eaters"
+# define END_SEM "/end"
 
 static const char	g_arg_err_mes[] = "Incorect arguments\n";
 static const char	g_help_mes[] = "Usage:...\n";
@@ -42,22 +47,11 @@ typedef struct	s_args
 	sem_t			*date_sem;
 	sem_t			*forks_sem;
 	sem_t			*end_sem;
+	sem_t			*eaters_sem;
 	pid_t			*pids;
 	struct timeval	start;  //
 	struct timeval	death_time;  //
 }				t_args;
-
-struct	s_ph
-{
-	int				id;
-	int				eating;
-	pthread_mutex_t	*first_fork;
-	pthread_mutex_t	*second_fork;
-	struct timeval	death_time;
-	int				eat_count;
-	int				ret;
-	t_args	*args;
-};
 
 int		ft_atoi(const char *str);
 
@@ -79,8 +73,6 @@ void	philo_eat(t_args *args);
 
 void	philo_sleep(t_args *args);
 
-void	*thread(void *v_data);
-
-void	*watch(void *vph);
+int		philosopher(t_args *args);
 
 #endif

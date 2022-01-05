@@ -14,17 +14,15 @@
 
 void	completion(t_args *args, int forks_sem, int date_sem, int end_sem)
 {
-	int	i;
 	int	ret;
 
-	i = -1;
 	free(args->pids);
 	if (date_sem)
 	{
 		ret = sem_close(args->date_sem);
 		if (ret)
 			write(STDERR_FILENO, g_sem_close_mes, sizeof(g_sem_close_mes));
-		ret = sem_unlink("date");
+		ret = sem_unlink(DATE_SEM);
 		if (ret)
 			write(STDERR_FILENO, g_sem_unl_mes, sizeof(g_sem_unl_mes));
 	}
@@ -33,7 +31,7 @@ void	completion(t_args *args, int forks_sem, int date_sem, int end_sem)
 		ret = sem_close(args->forks_sem);
 		if (ret)
 			write(STDERR_FILENO, g_sem_close_mes, sizeof(g_sem_close_mes));
-		ret = sem_unlink("forks");
+		ret = sem_unlink(FORKS_SEM);
 		if (ret)
 			write(STDERR_FILENO, g_sem_unl_mes, sizeof(g_sem_unl_mes));
 	}
@@ -42,7 +40,17 @@ void	completion(t_args *args, int forks_sem, int date_sem, int end_sem)
 		ret = sem_close(args->end_sem);
 		if (ret)
 			write(STDERR_FILENO, g_sem_close_mes, sizeof(g_sem_close_mes));
-		ret = sem_unlink("end");
+		ret = sem_unlink(END_SEM);
+		if (ret)
+			write(STDERR_FILENO, g_sem_unl_mes, sizeof(g_sem_unl_mes));
+	}
+	if (args->ecount > 0 && args->eaters_sem != SEM_FAILED)
+	{
+		printf("close eatrs_sem______________________\n");
+		ret = sem_close(args->eaters_sem);
+		if (ret)
+			write(STDERR_FILENO, g_sem_close_mes, sizeof(g_sem_close_mes));
+		ret = sem_unlink(EATERS_SEM);
 		if (ret)
 			write(STDERR_FILENO, g_sem_unl_mes, sizeof(g_sem_unl_mes));
 	}

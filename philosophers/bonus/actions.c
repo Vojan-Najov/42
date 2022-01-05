@@ -18,19 +18,17 @@ static int	take_first_fork(t_args *args)
 
 static int	take_second_fork(t_args *args)
 {
+	static int	eat_count;
+
 	sem_wait(args->forks_sem);
 	sem_wait(args->date_sem);
+	printf("%10lu %d is eating\n", gettimeofsimulation(args), args->id);
 	gettimeofday(&args->death_time, NULL);
 	args->death_time.tv_sec += ((args->death_time.tv_usec + args->dtime) / 1000000);
 	args->death_time.tv_usec = (args->death_time.tv_usec + args->dtime) % 1000000;
-	++args->eat_count;
-	//if (ph->eat_count == ph->args->ecount)
-	//{
-	//	++ph->args->eaters;
-	//	if (ph->args->eaters == ph->args->phs_num)
-	//		ph->args->simulation = 0;
-	//}
-	printf("%10lu %d is eating\n", gettimeofsimulation(args), args->id);
+	++eat_count;
+	if (eat_count == args->ecount)
+		sem_post(args->eaters_sem);
 	sem_post(args->date_sem);
 	return (1);
 }
