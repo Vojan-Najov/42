@@ -47,7 +47,7 @@ RM			= rm -f
 .c.o:
 			$(CC) $(CC_FLAGS) -c $< -o $(<:.c=.o) -MD
 
-$(NAME):	$(OBJS)
+$(NAME):	$(OBJS) Makefile
 			$(CC) -g $(OBJS) -o $(NAME) -lpthread
 
 all:		$(NAME)
@@ -62,7 +62,7 @@ fclean:		clean
 
 re:			fclean all
 
-bonus:		$(OBJS_B)
+bonus:		$(OBJS_B) Makefile
 			$(CC) -g $(OBJS_B) -o $(NAME) -lpthread
 
 

@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 14:13:04 by ccartman          #+#    #+#             */
-/*   Updated: 2022/01/02 15:48:05 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/01/06 19:23:38 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_usleep(long time, t_args *args)
 {
 	struct timeval	now;
 	struct timeval	start;
-	long	lasttime;
+	long			lasttime;
 
 	gettimeofday(&start, NULL);
 	while (args->simulation)

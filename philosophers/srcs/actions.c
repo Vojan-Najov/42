@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 15:11:26 by ccartman          #+#    #+#             */
-/*   Updated: 2021/12/31 15:15:58 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/01/06 19:47:11 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	take_second_fork(t_ph *ph)
 	ph->death_time.tv_usec = \
 						(ph->death_time.tv_usec + ph->args->dtime) % 1000000;
 	printf("%10lu %d is eating\n", gettimeofsimulation(ph->args), ph->id);
-	pthread_mutex_unlock(&ph->args->date_mutex);
+	++ph->eat_count;
 	return (1);
 }
 
@@ -69,16 +69,15 @@ void	philo_eat(t_ph *ph)
 		return ;
 	if (!take_second_fork(ph))
 		return ;
-	ft_usleep(ph->args->etime, ph->args);
-	++ph->eat_count;
 	if (ph->eat_count == ph->args->ecount)
 	{
-		pthread_mutex_lock(&ph->args->date_mutex);
 		++ph->args->eaters;
 		if (ph->args->eaters == ph->args->phs_num)
 			ph->args->simulation = 0;
 		pthread_mutex_unlock(&ph->args->date_mutex);
 	}
+	pthread_mutex_unlock(&ph->args->date_mutex);
+	ft_usleep(ph->args->etime, ph->args);
 	pthread_mutex_unlock(ph->first_fork);
 	pthread_mutex_unlock(ph->second_fork);
 }

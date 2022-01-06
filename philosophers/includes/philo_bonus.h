@@ -1,5 +1,17 @@
-#ifndef PHILO_H
-# define PHILO_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/06 15:54:10 by ccartman          #+#    #+#             */
+/*   Updated: 2022/01/06 19:28:51 by ccartman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <fcntl.h>
 # include <sys/stat.h> 
@@ -26,16 +38,21 @@
 # define END_SEM "/end"
 
 static const char	g_arg_err_mes[] = "Incorect arguments\n";
-static const char	g_help_mes[] = "Usage:...\n";
+static const char	g_help_mes[] = "Usage: "
+	"./philo number_of_philosophers time_to_die "
+	"time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n";
 static const char	g_mal_err_mes[] = "Memory allocation error \n";
 static const char	g_sem_unl_mes[] = "Semaphore unlinking error\n";
 static const char	g_sem_open_mes[] = "Semaphore opening error\n";
 static const char	g_sem_close_mes[] = "Semaphore closing error\n";
 static const char	g_thr_err_mes[] = "Thread creation error\n";
+static const char	g_dtch_err_mes[] = "Thread detaching error\n";
+static const char	g_fork_err_mes[] = "Fork creation error\n";
+static const char	g_gettime_err_mes[] = "Getting time of day error\n";
 
-typedef	struct s_ph	t_ph;
+typedef struct s_ph	t_ph;
 
-typedef struct	s_args
+typedef struct s_args
 {
 	int				phs_num;
 	useconds_t		dtime;
@@ -43,36 +60,36 @@ typedef struct	s_args
 	useconds_t		stime;
 	int				ecount;
 	int				id;
-	int				eat_count;
+	int				end;
 	sem_t			*date_sem;
 	sem_t			*forks_sem;
 	sem_t			*end_sem;
 	sem_t			*eaters_sem;
 	pid_t			*pids;
-	struct timeval	start;  //
-	struct timeval	death_time;  //
+	struct timeval	start;
+	struct timeval	death_time;
 }				t_args;
 
-int		ft_atoi(const char *str);
+int				ft_atoi(const char *str);
 
-int		ft_isdigit(int c);
+int				ft_isdigit(int c);
 
 unsigned long	gettimeofsimulation(t_args *args);
 
-int		check_args(t_args *args, int argc, char **argv);
+int				check_args(t_args *args, int argc, char **argv);
 
-int		init_args(t_args *args, int argc, char **argv);
+int				init_args(t_args *args, int argc, char **argv);
 
-void	completion(t_args *args, int forks_sem, int date_sem, int end_sem);
+void			completion(t_args *args);
 
-void	ft_usleep(long time, t_args *args);
+void			ft_usleep(long time, t_args *args);
 
-void	philo_think(t_args *args);
+void			philo_think(t_args *args);
 
-void	philo_eat(t_args *args);
+void			philo_eat(t_args *args);
 
-void	philo_sleep(t_args *args);
+void			philo_sleep(t_args *args);
 
-int		philosopher(t_args *args);
+int				philosopher(t_args *args);
 
 #endif
