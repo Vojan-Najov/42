@@ -27,3 +27,9 @@ c piscine:
 8. fractol
 
 9. philosophers
+
+exams:
+
+1. exam02
+
+2. exan03
