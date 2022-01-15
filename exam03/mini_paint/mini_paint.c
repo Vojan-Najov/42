@@ -42,20 +42,20 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		write(STDOUT_FILENO, g_arg_err, sizeof(g_arg_err));
+		write(STDOUT_FILENO, g_arg_err, sizeof(g_arg_err) - 1);
 		return (ERROR);
 	}
 	file = fopen(argv[1], "r");
 	if (!file)
 	{
-		write(STDOUT_FILENO, g_file_err, sizeof(g_file_err));
+		write(STDOUT_FILENO, g_file_err, sizeof(g_file_err) - 1);
 		return (ERROR);
 	}
 	matrix = get_zone(file, &zone);
 	if (!matrix)
 	{
 		fclose(file);
-		write(STDOUT_FILENO, g_file_err, sizeof(g_file_err));
+		write(STDOUT_FILENO, g_file_err, sizeof(g_file_err) - 1);
 		return (ERROR);
 	}	
 	ret = draw_circle(file, matrix, &zone);
@@ -63,7 +63,7 @@ int	main(int argc, char **argv)
 	{
 		free(matrix);
 		fclose(file);
-		write(STDOUT_FILENO, g_file_err, sizeof(g_file_err));
+		write(STDOUT_FILENO, g_file_err, sizeof(g_file_err) - 1);
 		return (ERROR);
 	}
 	print_result(matrix, &zone);
