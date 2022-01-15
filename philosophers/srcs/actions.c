@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 15:11:26 by ccartman          #+#    #+#             */
-/*   Updated: 2022/01/06 19:47:11 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/01/07 17:42:46 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	take_second_fork(t_ph *ph)
 	if (ph->first_fork == ph->second_fork)
 	{
 		while (ph->args->simulation)
-			usleep(1000);
+			usleep(ph->args->dtime);
 		pthread_mutex_unlock(ph->first_fork);
 		return (0);
 	}

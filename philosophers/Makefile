@@ -1,4 +1,5 @@
 NAME		= philo
+BONUS_NAME	= philo_bonus
 
 SRCS_DIR	= ./srcs/
 BONUS_DIR	= ./bonus/
@@ -63,7 +64,7 @@ fclean:		clean
 re:			fclean all
 
 bonus:		$(OBJS_B) Makefile
-			$(CC) -g $(OBJS_B) -o $(NAME) -lpthread
+			$(CC) -g $(OBJS_B) -o $(BONUS_NAME) -lpthread
 
 
 .PHONY:		all clean fclean re bonus
