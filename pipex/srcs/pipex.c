@@ -31,12 +31,12 @@ int	main(int argc, char **argv, char **envp)
 		return (ARG_ERROR);
 	}
 	ft_memset(&ppx, 0, sizeof(t_ppx));
+	open_fds(&ppx, argv[1], argv[argc - 1]);
 	ppx.paths = get_paths(envp);
 	if (!find_cmd1(&ppx, argv[2]) || !find_cmd2(&ppx, argv[3]))
 	{
 		return (CMD_ERROR);
 	}
-	open_fds(&ppx, argv[1], argv[argc - 1]);
 	pipex(&ppx, envp);
 	close(ppx.fd[0]);
 	close(ppx.fd[1]);
@@ -54,21 +54,18 @@ static void	open_fds(t_ppx *ppx, char *input, char *output)
 	if (ppx->fd_input == -1)
 	{
 		perror(input);
-		ft_free(ppx);
 		exit(EXIT_FAILURE);
 	}
 	ppx->fd_output = open(output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (ppx->fd_output == -1)
 	{
 		perror(output);
-		ft_free(ppx);
 		exit(EXIT_FAILURE);
 	}
 	ret = pipe(ppx->fd);
 	if (ret)
 	{
 		perror("pipe");
-		ft_free(ppx);
 		exit(EXIT_FAILURE);
 	}
 }
