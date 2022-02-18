@@ -12,161 +12,130 @@
 
 #include "pipex.h"
 
-static int	search_path(char *str);
+static void	open_fds(t_ppx *ppx, char *input, char *output);
 
-int	main(int argc, char **argv, char **env)
+static void	first_proccess(t_ppx *ppx, char **envp);
+
+static void	second_process(t_ppx *ppx, char **envp);
+
+static void	pipex(t_ppx *ppx, char **envp);
+
+int	main(int argc, char **argv, char **envp)
 {
-	char	**paths;
-	int		save0;
-	int		save1;
-	int		fd_input;
-	int		fd_output;
-	int		fd[2];
-	pid_t	pid1;
-	pid_t	pid2;
+	t_ppx	ppx;
+	int		status;
 
-	(void) argc;
-	(void) argv;
-	while (*env)
+	if (argc != 5)
 	{
-		if (search_path(*env))
-			break ;
-		++env;
+		write(STDERR_FILENO, g_arg_err, sizeof(g_arg_err) - 1);
+		return (ARG_ERROR);
 	}
-	if (*env == NULL)
-		return (1);
-	paths = ft_split(&(*env)[5], ':');
-	while (*paths)
+	ft_memset(&ppx, 0, sizeof(t_ppx));
+	open_fds(&ppx, argv[1], argv[argc - 1]);
+	ppx.paths = get_paths(envp);
+	if (!find_cmd1(&ppx, argv[2]) || !find_cmd2(&ppx, argv[3]))
 	{
-		printf("%s\n", *paths);
-		++paths;
+		return (CMD_ERROR);
 	}
+	pipex(&ppx, envp);
+	close(ppx.fd[0]);
+	close(ppx.fd[1]);
+	ft_free(&ppx);
+	status = 0;
+	ft_waiting(&ppx, &status);
+	return (status);
+}
 
-	/*	stdin */
-	if (access(argv[1], R_OK))
-	{
-		perror(argv[1]);
-		// completion();
-	}
-	fd_input = open(argv[1], O_RDONLY);
-	if (fd[0] == -1)
-	{
-		perror(argv[1]);
-		//completion();
-	}
-	save0 = dup(STDIN_FILENO);
-	dup2(fd_input, STDIN_FILENO);
-	close(fd_input);
+static void	open_fds(t_ppx *ppx, char *input, char *output)
+{
+	int	ret;
 
-	/*	stdout */
-	if (!access(argv[2], F_OK) && access(argv[2], W_OK))
+	ppx->fd_input = open(input, O_RDONLY);
+	if (ppx->fd_input == -1)
 	{
-		perror(argv[2]); //maybe need unlinking and creating output file
-		// completion;
+		perror(input);
+		exit(EXIT_FAILURE);
 	}
-	fd_output = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0666 /*- umask*/);
-	if (fd[1] == -1)
+	ppx->fd_output = open(output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (ppx->fd_output == -1)
 	{
-		perror(argv[2]);
-		//completion();
+		perror(output);
+		exit(EXIT_FAILURE);
 	}
-	save1 = dup(STDOUT_FILENO);
-	dup2(fd_output, STDOUT_FILENO);
-	close(fd_output);
-	
-	/* pipe time */
-	pipe(fd);
-	pid1 = fork();
-	if (pid1 == -1)
+	ret = pipe(ppx->fd);
+	if (ret)
+	{
+		perror("pipe");
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void	first_proccess(t_ppx *ppx, char **envp)
+{
+	close(ppx->fd[0]);
+	if (dup2(ppx->fd_input, STDIN_FILENO) == -1)
+	{
+		ft_free(ppx);
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
+	close(ppx->fd_input);
+	if (dup2(ppx->fd[1], STDOUT_FILENO) == -1)
+	{
+		ft_free(ppx);
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
+	close(ppx->fd[1]);
+	execve(ppx->path_name1, ppx->argv1, envp);
+	perror(ppx->argv1[0]);
+	exit(EXIT_FAILURE);
+}
+
+static void	second_process(t_ppx *ppx, char **envp)
+{
+	close(ppx->fd[1]);
+	if (dup2(ppx->fd_output, STDOUT_FILENO) == -1)
+	{
+		ft_free(ppx);
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
+	close(ppx->fd_output);
+	if (dup2(ppx->fd[0], STDIN_FILENO) == -1)
+	{
+		ft_free(ppx);
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
+	close(ppx->fd[0]);
+	execve(ppx->path_name2, ppx->argv2, envp);
+	perror(ppx->argv2[0]);
+	exit(EXIT_FAILURE);
+}
+
+static void	pipex(t_ppx *ppx, char **envp)
+{
+	ppx->pid1 = fork();
+	if (ppx->pid1 == -1)
 	{
 		perror("fork");
-		// completion();
+		ft_free(ppx);
+		exit(EXIT_FAILURE);
 	}
-	if (pid1 == 0)
+	if (ppx->pid1 == 0)
 	{
-		close(fd[0]);
-		//
-	}
-	pid2 = fork();
-	if (pid2 == -1)
+		first_proccess(ppx, envp);
+	}	
+	ppx->pid2 = fork();
+	if (ppx->pid2 == -1)
 	{
 		perror("fork");
-		//completion
+		ft_free(ppx);
+		exit(EXIT_FAILURE);
 	}
-	if (pid2 == 0)
+	if (ppx->pid2 == 0)
 	{
-		close(fd[1]);
-		//
+		second_process(ppx, envp);
 	}
-	close(fd[0]);
-	close(fd[1]);
-
-	/* return old fds */
-	dup2(save0, STDIN_FILENO);
-	close(save0);
-	dup2(save1, STDOUT_FILENO);
-	close(save1);
-
-	return (0);
 }
-
-static int	search_path(char *str)
-{
-	size_t	len;
-
-	len = ft_strlen(str);
-	if (len < 5)
-		return (0);
-	if (str[0] == 'P' && str[1] == 'A' && str[2] == 'T' && str[3] == 'H' && \
-															str[4] == '=')
-		return (1);
-	return (0);
-}
-
-/* 	FORK
-
- * int	p;
- * p = fork();
- * if (p == -1)
- * {
- * 		//
- * }
- * else if (p == 0)
- * {
- * 		// child
- * }
- * else
- * {
- * 		// parent
- * 	}
- */
-/*	OPEN
-// < << input file
-fd = open(argv[1], O_RDONLY);
-if (fd == -1)
-{
-	perror("open");
-	exit(EXIT_FAILURE);
-}
-// > output file
-fd = open(argv[4], O_WRONLY | O_CREATE | O_TRUNK, S_IRUSR | S_IWUSR);
-if (fd == -1)
-{
-	perror("open");
-	exit(EXIT_FAILURE);
-}// >> output file
-fd = open(argv[4], O_WRONLY | O_APPEND | O_CREATE, S_IRUSR | S_IWUSR);
-if (fd == -1)
-{
-	perror("open");
-	exit(EXIT_FAILURE);
-}
-// CLOSE ERROR
-ret = close(fd);
-if (ret == -1)
-{
-	perror("close");
-	exit(EXIT_FAILURE);
-}
-*/
-

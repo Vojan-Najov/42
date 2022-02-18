@@ -59,7 +59,7 @@ clean:
 			$(RM) $(OBJS) $(SRCS_D) $(OBJS_B) $(BONUS_D)
 
 fclean:		clean
-			$(RM) $(NAME) $(NAME_B)
+			$(RM) $(NAME) $(BONUS_NAME)
 
 re:			fclean all
 
