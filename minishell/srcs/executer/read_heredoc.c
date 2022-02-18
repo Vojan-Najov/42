@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 21:21:54 by ccartman          #+#    #+#             */
-/*   Updated: 2022/02/18 13:10:31 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/02/18 14:07:20 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ int	read_heredoc(int fd, char *stop)
 		if (*cntrlc)
 			return (completion(str, cntrlc, 0));
 		if (!str || !ft_strcmp(str, stop))
-		{
-			completion(str, cntrlc, 1);
-			break ;
-		}
+			return (completion(str, cntrlc, 1));
 		if (!write_in_tmp_file(fd, str))
 			return (completion(str, cntrlc, 0));
 		free(str);
