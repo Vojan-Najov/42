@@ -20,6 +20,8 @@ static char	*check_cmd(char *cmd, char **path_name, t_ppx *ppx)
 
 char	*find_cmd1(t_ppx *ppx, char *cmd1)
 {
+	// add condition if argv1[0] == '.' || argv1[0] == '/' then check cmd
+	// else find_cmd
 	ppx->argv1 = ft_split(cmd1, ' ');
 	check_cmd(ppx->argv1[0], &ppx->path_name1, ppx);
 	if (ppx->path_name1)
