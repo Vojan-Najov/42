@@ -67,7 +67,10 @@ static int	handle_heredoc(t_redirect *redirect)
 		return (0);
 	}
 	if (!read_heredoc(fd, redirect->name))
+	{
+		free(filename);
 		return (0);
+	}
 	free(redirect->name);
 	redirect->name = filename;
 	if (close (fd) == -1)
@@ -92,34 +95,3 @@ static char	*get_filename(int num)
 		print_str_error("malloc");
 	return (filename);
 }
-
-/*
-static int	read_heredoc(int fd, char *stop)
-{
-	char	*str;
-	ssize_t	len;
-	ssize_t	ret;
-
-	while (1)
-	{
-		str = readline(HEREDOC_PROMPT);
-		if (!str)
-			break ;
-		if (!ft_strcmp(str, stop))
-		{
-			free(str);
-			break ;
-		}
-		len = ft_strlen(str);
-		ret = write(fd, str, len);
-		ret += write(fd, "\n", 1);
-		if (ret != len + 1)
-		{
-			free(str);
-			return (0);
-		}
-		free(str);
-	}
-	return (1);
-}
-*/
