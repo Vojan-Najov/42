@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 10:57:49 by ccartman          #+#    #+#             */
-/*   Updated: 2022/02/17 18:01:18 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/02/20 14:51:29 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	execution(t_cmds *cmds)
 {
 	if (!handle_heredocuments(cmds->command))
 	{
+		unlink_heredoc_tmp_file(cmds->command);
 		free_cmds(cmds);
 		return ;
 	}

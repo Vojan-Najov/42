@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 21:21:54 by ccartman          #+#    #+#             */
-/*   Updated: 2022/02/18 14:07:20 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/02/20 14:58:37 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <readline/readline.h>
 
-static int	completion(char *str, int *cntrlc, int status);
+static int	completion(char *str, int *cntrlc, int status, int fd);
 
 static sig_atomic_t	*get_cntrlc(void)
 {
@@ -65,17 +65,17 @@ int	read_heredoc(int fd, char *stop)
 		str = readline(HEREDOC_PROMPT);
 		cntrlc = get_cntrlc();
 		if (*cntrlc)
-			return (completion(str, cntrlc, 0));
+			return (completion(str, cntrlc, 0, fd));
 		if (!str || !ft_strcmp(str, stop))
-			return (completion(str, cntrlc, 1));
+			return (completion(str, cntrlc, 1, fd));
 		if (!write_in_tmp_file(fd, str))
-			return (completion(str, cntrlc, 0));
+			return (completion(str, cntrlc, 0, fd));
 		free(str);
 	}
 	return (1);
 }
 
-static int	completion(char *str, int *cntrlc, int status)
+static int	completion(char *str, int *cntrlc, int status, int fd)
 {
 	*cntrlc = 0;
 	rl_done = 0;
@@ -84,5 +84,7 @@ static int	completion(char *str, int *cntrlc, int status)
 		write(STDOUT_FILENO, "\033[1A> ", sizeof("\033[1A> ") - 1);
 	signal(SIGINT, SIG_IGN);
 	free(str);
+	if (close(fd) == -1)
+		print_str_error("close");
 	return (status);
 }

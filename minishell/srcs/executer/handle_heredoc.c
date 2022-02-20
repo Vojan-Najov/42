@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 14:37:29 by ccartman          #+#    #+#             */
-/*   Updated: 2022/02/15 17:52:22 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/02/20 14:58:27 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ static int	handle_heredoc(t_redirect *redirect)
 	}
 	if (!read_heredoc(fd, redirect->name))
 	{
+		if (unlink(filename) == -1)
+			print_str_error(filename);
 		free(filename);
 		return (0);
 	}
 	free(redirect->name);
 	redirect->name = filename;
-	if (close (fd) == -1)
-		print_str_error(filename);
 	return (1);
 }
 
@@ -89,7 +89,7 @@ static char	*get_filename(int num)
 		print_str_error("malloc");
 		return (NULL);
 	}
-	filename = ft_strjoin(HEREDOC_TMP_FILE, tmp);
+	filename = ft_strjoin(HRDC_TMPFILE, tmp);
 	free(tmp);
 	if (!filename)
 		print_str_error("malloc");

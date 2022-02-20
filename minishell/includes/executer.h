@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 14:09:15 by ccartman          #+#    #+#             */
-/*   Updated: 2022/02/18 13:08:21 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/02/20 14:50:11 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define FIRST_ELEM 1
 # define MIDDLE_ELEM 2
 # define LAST_ELEM 3
-# define HEREDOC_TMP_FILE "/tmp/minishell_heredoc"
+# define HRDC_TMPFILE "/tmp/minishell_heredoc"
 # define HEREDOC_PROMPT "> "
 
 typedef int(*t_biltin_ptr)(char **argv);
