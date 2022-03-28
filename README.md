@@ -8,28 +8,34 @@ c piscine:
 
 42cursus:
 
-0. libft
+00. libft
 
-1. get_next_line
+01. get_next_line
 
-2. printf
+02. printf
 
-3. netwhat
+03. netwhat
 
-4. born2beroot
+04. born2beroot
 
-5. push_swap
+05. push_swap
 
-6. exam02
+06. exam02
 
-7. minitalk
+07. minitalk
 
-8. fractol
+08. fractol
 
-9. philosophers
+09. philosophers
+
+10. minishell
+
+11. miniRT
 
 exams:
 
 1. exam02
 
-2. exan03
+2. exam03
+
+3. exam04
