@@ -20,17 +20,19 @@ c piscine:
 
 05. push_swap
 
-06. exam02
+06. minitalk
 
-07. minitalk
+07. fractol
 
-08. fractol
+08. philosophers
 
-09. philosophers
+09. minishell
 
-10. minishell
+10. miniRT
 
-11. miniRT
+11. cpp_module:
+		cpp_module_00
+		cpp_module_01
 
 exams:
 
