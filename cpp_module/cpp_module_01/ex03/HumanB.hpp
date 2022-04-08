@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 19:47:47 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/06 21:15:25 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/08 19:08:10 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ class HumanB
 public:
 	HumanB( std::string const & name );
 	void attack( void ) const;
-	void setWeapon( Weapon & weapon_ );
+	void setWeapon( Weapon const & weapon_ );
 private:
-	std::string name;
-	Weapon * weapon;
+	std::string const name;
+	Weapon const * weapon;
 };
 
 #endif

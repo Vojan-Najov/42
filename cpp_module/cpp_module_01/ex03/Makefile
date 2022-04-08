@@ -9,7 +9,7 @@ OBJS		= $(SRCS:.cpp=.o)
 
 D_FILE		= $(SRCS:.cpp=.d)
 
-CC			= clang++
+CC			= c++
 CC_FLAGS	= -Wall -Wextra -Werror -std=c++98
 
 RM			= rm -f

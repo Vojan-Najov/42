@@ -1,8 +1,7 @@
-NAME		= moar_brainz
+NAME		= harl_2.0
 
-SRCS		= Zombie.cpp \
-			  zombieHorde.cpp \
-			  main.cpp
+SRCS		= main.cpp \
+			  Harl.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 
