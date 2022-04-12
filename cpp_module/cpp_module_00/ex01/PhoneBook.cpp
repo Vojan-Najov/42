@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 19:22:30 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/05 15:31:51 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/12 14:07:43 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,41 +73,41 @@ static int readContactData(std::string *str)
 	{
 		std::cout << "Enter the first name" << std::endl;
 		std::getline(std::cin, str[0]);
+		if (!std::cin)
+			return 0;
 	}
 	while (str[0].empty());
-	if (!std::cin)
-		return 0;
 	do
 	{
 		std::cout << "Enter the last name" << std::endl;
 		std::getline(std::cin, str[1]);
+		if (!std::cin)
+			return 0;
 	}
 	while (str[1].empty());
-	if (!std::cin)
-		return 0;
 	do
 	{
 		std::cout << "Enter the nickname" << std::endl;
 		std::getline(std::cin, str[2]);
+		if (!std::cin)
+			return 0;
 	}
 	while (str[2].empty());
-	if (!std::cin)
-		return 0;
 	do
 	{
 		std::cout << "Enter the phone number" << std::endl;
 		std::getline(std::cin, str[3]);
+		if (!std::cin)
+			return 0;
 	}
 	while (str[3].empty());
-	if (!std::cin)
-		return 0;
 	do
 	{
 		std::cout << "Enter the darkest secret" << std::endl;
 		std::getline(std::cin, str[4]);
+		if (!std::cin)
+			return 0;
 	}
 	while (str[4].empty());
-	if (!std::cin)
-		return 0;
 	return (1);
 }
