@@ -1,7 +1,9 @@
-NAME		= towards_a_more_useful_fixed_point_number_class
+NAME		= bsp
 
 SRCS		= main.cpp \
-			  Fixed.cpp
+			  Fixed.cpp \
+			  Point.cpp \
+			  bsp.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 

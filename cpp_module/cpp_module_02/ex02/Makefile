@@ -1,4 +1,4 @@
-NAME		= towards_a_more_useful_fixed_point_number_class
+NAME		= now_we_are_talking
 
 SRCS		= main.cpp \
 			  Fixed.cpp
