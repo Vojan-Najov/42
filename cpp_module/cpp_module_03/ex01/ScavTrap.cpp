@@ -6,24 +6,22 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 20:52:41 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/14 00:02:56 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/14 16:17:29 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "ScavTrap.hpp"
 
-const unsigned int ScavTrap::hitPoints = 100; 
-
 ScavTrap::ScavTrap( void )
 {
-	std::cout << "ClavTrap default constructor called." << std::endl;
+	std::cout << "ScavTrap default constructor called." << std::endl;
 	hitPoints = 100;
 	energyPoints = 50;
 	attackDamage = 20;
 }
 
-ScavTrap::ScavTrap( std::string name_ ) : ClapTrap(name_)
+ScavTrap::ScavTrap( std::string const & name_ ) : ClapTrap(name_)
 {
 	std::cout << "ScavTrap string constructor called." << std::endl;
 	hitPoints = 100;
@@ -41,14 +39,6 @@ ScavTrap::~ScavTrap( void )
 	std::cout << "ScavTrap destructor called." << std::endl;
 }
 
-ScavTrap & ScavTrap::operator=(ScavTrap const & other )
-{
-	std::cout << "ScavTrap copy assignment operator called." << std::endl;
-	this->operator=(other);
-	
-	return *this;
-}
-
 void ScavTrap::attack( const std::string & target )
 {
 	if (hitPoints && energyPoints)
@@ -60,7 +50,8 @@ void ScavTrap::attack( const std::string & target )
 	}
 }
 
-void ScavTrap::guardGate( void )
+void ScavTrap::guardGate( void ) const
 {
-
+	std::cout << "ScavTrap " << name << " is now in Gate keeper mode";
+	std::cout << std::endl;
 }

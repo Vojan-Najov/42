@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 20:08:58 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/14 00:02:57 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/14 16:13:26 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ ClapTrap::ClapTrap( void )
 	attackDamage = 0;
 }
 
-ClapTrap::ClapTrap( std::string name_ )
+ClapTrap::ClapTrap( std::string const & name_ )
 {
 	std::cout << "ClapTrap string constructor called." << std::endl;
 	name = name_;
@@ -72,7 +72,7 @@ void ClapTrap::takeDamage( unsigned int amount )
 	if (hitPoints)
 	{
 		hitPoints = hitPoints < amount ? 0 : hitPoints - amount;
-		std::cout << "ClapTrap " << name << " taking " << amount;
+		std::cout << name << " taking " << amount;
 		std::cout << " points of damage. ";
 		std::cout << "Hit points is " << hitPoints<< std::endl;
 	}
@@ -84,7 +84,7 @@ void ClapTrap::beRepaired( unsigned int amount )
 	{
 		--energyPoints;
 		hitPoints += amount;
-		std::cout << "ClapTrap " << name << " repaire " << amount;
+		std::cout << name << " repaire " << amount;
 		std::cout << " points of hit. Hit points is ";
 		std::cout << hitPoints << ", Energy points is ";
 	    std::cout << energyPoints << std::endl;
