@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 20:52:41 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/14 16:17:29 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/14 17:05:07 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ ScavTrap::ScavTrap( ScavTrap const & other) : ClapTrap(other)
 ScavTrap::~ScavTrap( void )
 {
 	std::cout << "ScavTrap destructor called." << std::endl;
+}
+
+ScavTrap & ScavTrap::operator=( ScavTrap const & other )
+{
+	std::cout << "ScavTrap copy assignment operator called." << std::endl;
+	ClapTrap::operator=(other);
+
+	return *this;
 }
 
 void ScavTrap::attack( const std::string & target )

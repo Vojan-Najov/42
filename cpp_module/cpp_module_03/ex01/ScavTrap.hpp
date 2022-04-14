@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 20:46:52 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/14 16:16:23 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/14 17:05:48 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ public:
 	ScavTrap( std::string const & name_ );
 	ScavTrap( ScavTrap const & other );
 	~ScavTrap( void );
+
+	ScavTrap & operator=(ScavTrap const & other );
 
 	void attack( const std::string & target );
 	void guardGate( void ) const;
