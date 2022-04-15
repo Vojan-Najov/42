@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 18:13:03 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/15 19:25:16 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/15 19:33:13 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,20 @@ int main()
 		const WrongAnimal* meta = new WrongAnimal();
 		const WrongAnimal* j = new WrongDog();
 		const WrongAnimal* i = new WrongCat();
+		const WrongCat* t = new WrongCat();
 
 		std::cout << j->getType() << " " << std::endl;
 		std::cout << i->getType() << " " << std::endl;
+		std::cout << t->getType() << " " << std::endl;
 		i->makeSound();
 		j->makeSound();
+		t->makeSound();
 		meta->makeSound();
 		std::cout << "_____________DESTRUCTORS______________" << std::endl;
 		delete meta;
 		delete j;
 		delete i;
+		delete t;
 	}
 	return 0;
 }
