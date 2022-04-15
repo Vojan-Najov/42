@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/12 22:01:34 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/14 17:36:46 by ccartman         ###   ########.fr       */
+/*   Created: 2022/04/13 20:46:52 by ccartman          #+#    #+#             */
+/*   Updated: 2022/04/14 17:05:48 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef SCAVTRAP_HPP
+#define SCAVTRAP_HPP
+
 #include "ClapTrap.hpp"
 
-int main( void )
+class ScavTrap : public ClapTrap
 {
-	ClapTrap a;
-	ClapTrap bob = ClapTrap("Bob");
-	ClapTrap c = a;
-	ClapTrap joe = ClapTrap("Joe");
+public:
+	ScavTrap( void );
+	ScavTrap( std::string const & name_ );
+	ScavTrap( ScavTrap const & other );
+	~ScavTrap( void );
 
-	a = c;
+	ScavTrap & operator=(ScavTrap const & other );
 
-	bob.attack("Joe");
-	joe.takeDamage(5);
-	joe.beRepaired(7);
-	joe.attack("Bob");
-	bob.takeDamage(11);
-	bob.takeDamage(11);
-	bob.beRepaired(10);
+	void attack( const std::string & target );
+	void guardGate( void ) const;
+};
 
-	return 0;
-}
+#endif

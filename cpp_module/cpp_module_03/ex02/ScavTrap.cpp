@@ -6,14 +6,14 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 20:52:41 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/14 17:33:27 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/14 17:06:50 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "ScavTrap.hpp"
 
-ScavTrap::ScavTrap( void ) 
+ScavTrap::ScavTrap( void )
 {
 	std::cout << "ScavTrap default constructor called." << std::endl;
 	hitPoints = 100;

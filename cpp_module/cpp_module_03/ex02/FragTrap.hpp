@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   FragTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/12 22:01:34 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/14 17:36:46 by ccartman         ###   ########.fr       */
+/*   Created: 2022/04/14 16:27:22 by ccartman          #+#    #+#             */
+/*   Updated: 2022/04/14 17:00:35 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef FRAGTRAP_HPP
+#define FRAGTRAP_HPP
+
+#include <string>
 #include "ClapTrap.hpp"
 
-int main( void )
+class FragTrap : public ClapTrap
 {
-	ClapTrap a;
-	ClapTrap bob = ClapTrap("Bob");
-	ClapTrap c = a;
-	ClapTrap joe = ClapTrap("Joe");
+public:
+	FragTrap( void );
+	FragTrap( std::string const & name_ );
+	FragTrap( FragTrap const & other);
+	~FragTrap( void );
 
-	a = c;
+	FragTrap & operator=( FragTrap const & other );
 
-	bob.attack("Joe");
-	joe.takeDamage(5);
-	joe.beRepaired(7);
-	joe.attack("Bob");
-	bob.takeDamage(11);
-	bob.takeDamage(11);
-	bob.beRepaired(10);
+	void highFiveGuys( void ) const;
+};
 
-	return 0;
-}
+#endif
