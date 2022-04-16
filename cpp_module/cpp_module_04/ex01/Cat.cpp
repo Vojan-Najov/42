@@ -15,16 +15,14 @@
 
 Cat::Cat(void) : Animal("Cat")
 {
-	std::cout << "Cat constructor called." << std::endl;
-	brain = new Brain;
+	std::cout << "Cat default constructor called." << std::endl;
+	brain = new Brain();
 }
 
 Cat::Cat(const Cat &other) : Animal(other)
 {
 	std::cout << "Cat copy constructor called." << std::endl;
-	brain = new Brain;
-	if (brain)
-		*brain = *other.brain;
+	brain = new Brain(*other.brain);
 }
 
 Cat::~Cat(void)

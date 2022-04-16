@@ -15,16 +15,14 @@
 
 Dog::Dog(void) : Animal("Dog")
 {
-	std::cout << "Dog constructor called." << std::endl;
+	std::cout << "Dog default constructor called." << std::endl;
 	brain = new Brain();
 }
 
 Dog::Dog(const Dog &other) : Animal(other)
 {
 	std::cout << "Dog copy constructor called." << std::endl;
-	brain = new Brain();
-	if (brain)
-		*brain = *other.brain;
+	brain = new Brain(*other.brain);
 }
 
 Dog::~Dog(void)
