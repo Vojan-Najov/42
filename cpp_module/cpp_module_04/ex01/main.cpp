@@ -39,10 +39,13 @@ int main()
 	}
 	{
 		std::cout << "___________ANIMAL_PTR___________" << std::endl;
-		Animal *ptr = new Dog();
-		ptr->makeSound();
-		delete ptr;
+		Animal *dogPtr = new Dog();
+		Animal *catPtr = new Cat();
+		dogPtr->makeSound();
+		catPtr->makeSound();
 		std::cout << "___________DESTRUCTORS___________" << std::endl;
+		delete dogPtr;
+		delete catPtr;
 	}
 	return 0;
 }
