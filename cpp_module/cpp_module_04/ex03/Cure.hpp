@@ -1,18 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Cure.hpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/17 15:03:33 by ccartman          #+#    #+#             */
+/*   Updated: 2022/04/17 15:09:28 by ccartman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CURE_HPP
 #define CURE_HPP
 
-#include "AMaterial.hpp"
+#include "AMateria.hpp"
 
-class Cure : public AMaterial
+class Cure : public AMateria
 {
-	Cure(void);
-	Cure(const Cure &other);
-	~Cure(void);
+	public:
+		Cure(void);
+		Cure(const Cure &other);
+		~Cure(void);
 
-	Cure &operator=(const Cure &other);
-
-	virtual Cure *clone(void) const;
-	virtual void use(ICharacter &target);
+		virtual Cure *clone(void) const;
+		virtual void use(ICharacter &target);
+	private:
+		Cure &operator=(const Cure &other);
 };
 
 #endif

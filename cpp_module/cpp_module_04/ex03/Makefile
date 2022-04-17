@@ -1,10 +1,11 @@
-NAME		= i_dont_want_to_set_the_world_on_fire
+NAME		= interface_recap
 
 SRCS		= main.cpp \
 			  AMateria.cpp \
-			  Cure.hpp \
-			  Ice.hpp \
-			  MateriaSource.cpp
+			  Cure.cpp \
+			  Ice.cpp \
+			  MateriaSource.cpp \
+			  Character.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 
