@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 17:21:03 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/19 21:47:42 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/19 23:40:21 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 #include <exception>
 #include <iostream>
 
-static const int lowest_grade = 150;
-static const int highest_grade = 1;
+const int lowest_grade = 150;
+const int highest_grade = 1;
+class Form;
 
 class Bureaucrat
 {
@@ -38,6 +39,7 @@ class Bureaucrat
 
 		const std::string &getName(void) const;
 		const int &getGrade(void) const;
+		void signForm(Form &form) const;
 
 		Bureaucrat &operator=(const Bureaucrat &other);
 		Bureaucrat &operator++(void);
