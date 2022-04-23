@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 17:25:50 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/19 19:47:54 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/23 12:38:49 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ const std::string &Bureaucrat::getName(void) const
 	return name;
 }
 
-const int &Bureaucrat::getGrade(void) const
+int Bureaucrat::getGrade(void) const
 {
 	return grade;
 }

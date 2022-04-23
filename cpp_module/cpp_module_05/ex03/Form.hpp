@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:38:37 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/22 16:17:09 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/23 12:41:34 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ class Form
 		};
 };
 
-#endif
-
 std::ostream &operator<<(std::ostream &out, const Form &form);
+
+#endif

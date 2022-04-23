@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:38:37 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/19 23:58:32 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/23 12:41:47 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 #include <string>
 #include "Bureaucrat.hpp"
-//extern const int lowest_grade;
-//extern const int highest_grade;
-
 
 class Form
 {
@@ -52,6 +49,6 @@ class Form
 		Form &operator=(const Form &other);
 };
 
-#endif
-
 std::ostream &operator<<(std::ostream &out, const Form &form);
+
+#endif

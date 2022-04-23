@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 17:21:03 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/19 21:47:42 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/23 12:34:54 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ class Bureaucrat
 		~Bureaucrat(void);
 
 		const std::string &getName(void) const;
-		const int &getGrade(void) const;
+		int getGrade(void) const;
 
 		Bureaucrat &operator=(const Bureaucrat &other);
 		Bureaucrat &operator++(void);

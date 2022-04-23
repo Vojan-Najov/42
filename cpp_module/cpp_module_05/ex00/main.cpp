@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:01:53 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/19 21:32:25 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/23 12:39:30 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int main(void)
 	Bureaucrat bob("Bob", 100);
 	Bureaucrat bob2 = bob;
 	
+	std::cout << "getName return " << bob.getName() << ", getGrade return ";
+	std::cout << bob.getGrade() << '\n';	
 	std::cout << bob << "\n" << std::endl;
 	{
 		try
@@ -58,6 +60,6 @@ int main(void)
 			break;
 		}
 	}
-	return 0;
 
+	return 0;
 }

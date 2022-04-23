@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 17:21:03 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/22 17:36:32 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/23 12:53:23 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ class Bureaucrat
 		~Bureaucrat(void);
 
 		const std::string &getName(void) const;
-		const int &getGrade(void) const;
+		int getGrade(void) const;
 		void signForm(Form &form) const;
 		void executeForm(const Form &form) const;
 
