@@ -18,12 +18,13 @@ class Number
 public:
 	enum e_type
 	{
+		type_unknown
 		type_char,
 		type_int,
 		type_float,
-		type_double,
-		type_unknown
+		type_double
 	};
+
 	Number(void);
 	Number(const char value);
 	Number(const int value);
@@ -33,8 +34,9 @@ public:
 
 	Number &operator=(const Number &other);
 
-	static type getType(const char *str);
+	static e_type getType(const char *str);
 	static Number *parse(const char *str);
+
 private:
 	e_type	type;
 	bool char_ok;
@@ -48,4 +50,5 @@ private:
 };
 
 std::ostream &operator<<(std::ostream &out, const Number &other);
+
 #endif
