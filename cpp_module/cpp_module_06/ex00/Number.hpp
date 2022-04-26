@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 23:14:23 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/23 23:26:03 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/26 17:23:09 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ class Number
 public:
 	enum e_type
 	{
-		type_unknown
+		type_unknown,
 		type_char,
 		type_int,
 		type_float,
@@ -26,16 +26,14 @@ public:
 	};
 
 	Number(void);
-	Number(const char value);
-	Number(const int value);
-	Number(const float value);
-	Number(const double value);
+	Number(const char *str);
 	Number(const Number &other);
 
 	Number &operator=(const Number &other);
 
+	void print(void) const;
+
 	static e_type getType(const char *str);
-	static Number *parse(const char *str);
 
 private:
 	e_type	type;
@@ -48,7 +46,5 @@ private:
 	bool double_ok;
 	double double_value;
 };
-
-std::ostream &operator<<(std::ostream &out, const Number &other);
 
 #endif
