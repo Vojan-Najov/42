@@ -6,11 +6,12 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 23:14:19 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/26 19:01:05 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/27 00:08:31 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cstdlib>
+#include <cstring>
 #include <climits>
 #include <cfloat>
 #include <cctype>
@@ -57,7 +58,9 @@ Number::Number(const char *str)
 	{
 		case type_char:
 		{
-			char c = *++str;
+			if (*str == '\'' && *(str + 1))
+				++str;
+			char c = *str;
 			char_value = c;
 			int_value = static_cast<int>(c);
 			float_value = static_cast<float>(c);
@@ -73,7 +76,7 @@ Number::Number(const char *str)
 				double_ok = float_ok = char_ok = int_ok = false;
 				break;
 			}
-			if (li > CHAR_MAX || li < CHAR_MIN)
+			if (li > SCHAR_MAX || li < SCHAR_MIN)
 				char_ok = false;
 			char_value = static_cast<char>(i);
 			int_value = static_cast<int>(i);
@@ -111,8 +114,10 @@ Number::Number(const char *str)
 			}
 			if (!is_number(d))
 				char_ok = int_ok = false;
-			else if (d - (double) FLT_MAX > 0.0 || d - (double) FLT_MIN < 0.0)
+			else if (fabs(d) - (double) FLT_MAX > 0.0)
+			{
 				char_ok = int_ok = float_ok = false;
+			}
 			else if (d - (double) INT_MAX > 0.0 || d - (double) INT_MIN < 0.0)
 				char_ok = int_ok = false;
 			else if (d - (double) CHAR_MIN < 0.0 || d - (double) CHAR_MAX > 0.0)
@@ -132,15 +137,17 @@ Number::Number(const char *str)
 
 void Number::print(void) const
 {
-	bool flag = true;
+	double	int_part, fract_part;
+	bool flag = false;
 
-	std::cout << std::setprecision(10);
 	std::cout << "char: ";
 	if (char_ok)
+	{
 		if (isprint(char_value) && !isspace(char_value))
-			std::cout <<  char_value;
+			std::cout << '\'' <<  char_value << '\'';
    		else
 			std::cout << "Non displayed";
+	}
 	else
 		std::cout << "imposible";
 	std::cout << "\nint: ";
@@ -149,16 +156,23 @@ void Number::print(void) const
 	else 
 		std::cout << "imposible";
 	std::cout << "\nfloat: ";
-	if (fabs(double_value - (double) int_value) > 1e-10)
+	fract_part = modf(double_value, &int_part);
+	if (fract_part < 1e-30)
 	{
-		flag = false;
+		flag = true;
+		std::cout << std::fixed;
+		std::cout << std::setprecision(1);
+	}
+	else
+	{
+		std::cout << std::setprecision(30);
 		std::cout << std::fixed;
 	}
 	if (float_ok)
 	{
 		std::cout << float_value;
-	   	if (is_number(float_value) && flag)
-			std::cout << ".0";
+//	   	if (is_number(float_value) && flag)
+			//std::cout << ".0";
 		std::cout << 'f';
 	}
 	else
@@ -167,8 +181,8 @@ void Number::print(void) const
 	if (double_ok)
 	{
 		std::cout << double_value;
-	   	if (is_number(double_value) && flag)
-			std::cout << ".0";
+	   	//if (is_number(double_value) && flag)
+		//	std::cout << ".0";
 	}
 	else
 		std::cout << "imposible";
@@ -191,8 +205,10 @@ Number::e_type Number::getType(const char *str)
 			break;
 		case '\'':
 		{
-			if (sign_flag || !*++str)
+			if (sign_flag)
 				break;
+			if (!*++str)
+				return type_char;
 			if (*++str == '\'' && !*++str)
 				return type_char;
 			break;
@@ -221,11 +237,15 @@ Number::e_type Number::getType(const char *str)
 		}
 		default:
 		{
+			if (!isdigit(*str) && !*(str + 1))
+				return type_char;
 			while ('0' <= *str && *str <= '9')
 				++str;
 			if (!*str)
 				return type_int;
-			if (*str++ != '.' || !*str)
+			if (*str == 'f' && !*(str + 1))
+				return type_float;
+			if (*str++ != '.' || !*str || *str == 'f')
 				break;
 			while ('0' <= *str && *str <= '9')
 				++str;
