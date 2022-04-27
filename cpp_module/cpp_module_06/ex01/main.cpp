@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 14:13:06 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/27 14:15:26 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/27 21:21:03 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void test_serialization(void)
 	Data data("***");
 
 	std::cout << "Address: " << &data << "\n";
-	std::cout << "Secret: " << data.getContent() << "\n";
+	std::cout << "Content: " << data.getContent() << "\n";
 
 	uintptr_t ptr = serialize(&data);
 	std::cout << std::hex << "Serialized: " << ptr << "\n";
@@ -33,7 +33,7 @@ void test_serialization(void)
 	else
 	{
 		std::cout << "[SUCCESS] deserialized address: " << data2 << "\n";
-		std::cout << "Secret: " << data2->getContent() << "\n";
+		std::cout << "Content: " << data2->getContent() << "\n";
 	}
 }
 
