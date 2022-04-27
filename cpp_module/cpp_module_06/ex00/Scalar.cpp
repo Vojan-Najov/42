@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Number.cpp                                         :+:      :+:    :+:   */
+/*   Scalar.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 23:14:19 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/27 00:08:31 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/27 14:41:39 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
-#include "Number.hpp"
+#include "Scalar.hpp"
 
 static bool is_number(float f);
 
 static bool is_number(double d);
 
-Number::Number(void) :
+Scalar::Scalar(void) :
 		type(type_unknown)
 {
 	
 }
 
-Number::Number(const Number &other) :
+Scalar::Scalar(const Scalar &other) :
 		type(other.type),
 		char_ok(other.char_ok),
 		char_value(other.char_value),
@@ -45,7 +45,7 @@ Number::Number(const Number &other) :
 
 }
 
-Number::Number(const char *str)
+Scalar::Scalar(const char *str)
 		: char_ok(true),
 		  int_ok(true),
 		  float_ok(true),
@@ -135,7 +135,25 @@ Number::Number(const char *str)
 	}
 }
 
-void Number::print(void) const
+Scalar &Scalar::operator=(const Scalar &other)
+{
+	if (this != &other)
+	{
+		type = other.type;
+		char_ok = other.char_ok;
+		char_value = other.char_value;
+		int_ok = other.int_ok;
+		int_value = other.int_value;
+		float_ok = other.float_ok;
+		float_value = other.float_value;
+		double_ok = other.double_ok;
+		double_value = other.double_value;
+	}
+
+	return *this;
+}
+
+void Scalar::print(void) const
 {
 	double	int_part, fract_part;
 	bool flag = false;
@@ -160,8 +178,8 @@ void Number::print(void) const
 	if (fract_part < 1e-30)
 	{
 		flag = true;
-		std::cout << std::fixed;
 		std::cout << std::setprecision(1);
+		std::cout << std::fixed;
 	}
 	else
 	{
@@ -171,25 +189,19 @@ void Number::print(void) const
 	if (float_ok)
 	{
 		std::cout << float_value;
-//	   	if (is_number(float_value) && flag)
-			//std::cout << ".0";
 		std::cout << 'f';
 	}
 	else
 		std::cout << "imposible";
 	std::cout << "\ndouble: ";
 	if (double_ok)
-	{
 		std::cout << double_value;
-	   	//if (is_number(double_value) && flag)
-		//	std::cout << ".0";
-	}
 	else
 		std::cout << "imposible";
 	std::cout << std::endl;
 }
 
-Number::e_type Number::getType(const char *str)
+Scalar::e_type Scalar::getType(const char *str)
 {
 	int	sign_flag(0);
 

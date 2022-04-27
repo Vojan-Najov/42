@@ -6,12 +6,12 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:43:17 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/26 17:22:58 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/27 14:37:04 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include "Number.hpp"
+#include "Scalar.hpp"
 
 int main(int argc, char **argv)
 {
@@ -21,7 +21,8 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	Number num(argv[1]);
-	num.print();
+	Scalar sc(argv[1]);
+	sc.print();
+
 	return (0);
 }

@@ -1,7 +1,7 @@
 NAME		= conversion_of_scalar_types
 
 SRCS		= main.cpp \
-			  Number.cpp
+			  Scalar.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 

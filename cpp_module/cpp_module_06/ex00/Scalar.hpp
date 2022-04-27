@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Number.hpp                                         :+:      :+:    :+:   */
+/*   Scalar.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 23:14:23 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/26 17:23:09 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/27 14:40:21 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NUMBER_HPP
-#define NUMBER_HPP
+#ifndef SCALAR_HPP
+#define SCALAR_HPP
 
-class Number
+class Scalar
 {
 public:
 	enum e_type
@@ -25,11 +25,11 @@ public:
 		type_double
 	};
 
-	Number(void);
-	Number(const char *str);
-	Number(const Number &other);
+	Scalar(void);
+	Scalar(const char *str);
+	Scalar(const Scalar &other);
 
-	Number &operator=(const Number &other);
+	Scalar &operator=(const Scalar &other);
 
 	void print(void) const;
 
