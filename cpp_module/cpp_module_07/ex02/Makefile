@@ -1,13 +1,13 @@
-NAME		= iter
+NAME		= Array
 
-SRCS		= main.cpp
+SRCS		= test.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 
 D_FILE		= $(SRCS:.cpp=.d)
 
 CC			= c++
-CC_FLAGS	= -Wall -Wextra -Werror -std=c++98
+CC_FLAGS	= -Wall -Wextra -Werror -std=c++98 -I ./
 
 RM			= rm -f
 
