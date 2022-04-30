@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 14:50:54 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/29 15:45:46 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/30 15:33:43 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ const T &min(const T &first, const T &second)
 
 template<typename T>
 const T &max(const T &first, const T &second)
+{
+	return first > second ? first : second;
+}
+
+template<typename T>
+T &min(T &first, T &second)
+{
+	return first < second ? first : second;
+}
+
+template<typename T>
+T &max(T &first, T &second)
 {
 	return first > second ? first : second;
 }

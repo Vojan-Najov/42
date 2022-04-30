@@ -71,6 +71,17 @@ T & Array<T>::operator[](int idx)
 }
 
 template<typename T>
+const T & Array<T>::operator[](int idx) const
+{
+	if (_n == 0)
+		throw std::length_error("Zero-length array");
+	if (idx < 0 || static_cast<unsigned int>(idx) >= _n)
+		throw std::out_of_range("Out of range");
+	
+	return _array[idx];
+}
+
+template<typename T>
 unsigned int Array<T>::size(void) const
 {
 	return _n;

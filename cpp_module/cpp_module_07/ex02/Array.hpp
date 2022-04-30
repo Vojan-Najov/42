@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 13:23:24 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/30 14:12:01 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/30 16:01:38 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ public:
 
 	Array &operator=(const Array<T> &other);
 	T &operator[](int idx);
+	const T &operator[](int idx) const;
 
 	unsigned int size(void) const;
 

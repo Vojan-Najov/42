@@ -6,13 +6,15 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 14:30:02 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/30 15:00:36 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/30 16:02:53 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <cstring>
 #include "Array.hpp"
+
+static void test_constructor(void);
 
 static void test_copy(void);
 
@@ -22,9 +24,13 @@ static void test_operator_idx(void);
 
 static int test_intra(void);
 
+static void test_const(void);
+
 int main(void)
 {
 	std::cout << "_______My test______\n";
+	test_constructor();
+	test_const();
 	test_copy();
 	test_assign();
 	test_operator_idx();
@@ -34,17 +40,35 @@ int main(void)
 	return 0;
 }
 
+static void test_constructor(void)
+{
+	Array<double> a;
+	Array<std::string> b(100);
+
+	if (a.size() != 0 || b.size() != 100)
+		std::cout << "test_constructor : KO\n";
+	else
+		std::cout << "test_constructor : OK\n";
+}
+
 static void test_copy(void)
 {
 	Array<int> a(10);
 
 	for (int i = 0; i < 10; ++i)
+	{
 		a[i] = i;
+	}
 	{
 		Array<int> b = a;
 		for (int i = 0; i < 10; ++i)
+		{
 			if (a[i] != b[i])
+			{
 				std::cout << "test_copy : KO\n";
+				return ;
+			}
+		}
 	}
 	std::cout << "test_copy : OK\n";
 }
@@ -54,15 +78,42 @@ static void test_assign(void)
 	Array<int> a(10);
 
 	for (int i = 0; i < 10; ++i)
+	{
 		a[i] = i;
+	}
 	{
 		Array<int> b;
 		b = a;
 		for (int i = 0; i < 10; ++i)
+		{
 			if (a[i] != b[i])
+			{
 				std::cout << "test_assign : KO\n";
+				return;
+			}
+		}
 	}
 	std::cout << "test_assign : OK\n";
+}
+
+static void test_const(void)
+{
+	Array<int> a(10);
+
+	for (int i = 0; i < 10; ++i)
+	{
+		a[i] = i;
+	}
+	const Array<int> b = a;
+	for (int i = 0; i < 10; ++i)
+	{
+		if (a[i] != b[i])
+		{
+			std::cout << "test_const : KO\n";
+			return;
+		}
+	}
+	std::cout << "test_const : OK\n";
 }
 
 static void test_operator_idx(void)
