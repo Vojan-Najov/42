@@ -6,7 +6,7 @@
 /*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 14:30:02 by ccartman          #+#    #+#             */
-/*   Updated: 2022/04/30 16:02:53 by ccartman         ###   ########.fr       */
+/*   Updated: 2022/04/30 18:29:34 by ccartman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,34 +128,31 @@ static void test_operator_idx(void)
 	try
 	{
 		a[100]  = "abc";
+		std::cout << "test_operator[] : KO\n";
 	}
 	catch (std::exception &e)
 	{
 		if (!strcmp(e.what(),"Out of range"))
-			std::cout << "test_operator[] : OK\n";
-		else
 			std::cout << "test_operator[] : OK\n";
 	}
 	try
 	{
 		a[-1]  = "abc";
+		std::cout << "test_operator[] : KO\n";
 	}
 	catch (std::exception &e)
 	{
 		if (!strcmp(e.what(),"Out of range"))
-			std::cout << "test_operator[] : OK\n";
-		else
 			std::cout << "test_operator[] : OK\n";
 	}
 	try
 	{
 		a[10]  = "abc";
+		std::cout << "test_operator[] : KO\n";
 	}
 	catch (std::exception &e)
 	{
 		if (!strcmp(e.what(),"Out of range"))
-			std::cout << "test_operator[] : OK\n";
-		else
 			std::cout << "test_operator[] : OK\n";
 	}
 	{
@@ -163,13 +160,12 @@ static void test_operator_idx(void)
 		try 
 		{
 			a[1] = 0;
+			std::cout << "test_operator[] : KO\n";
 		}
 		catch (std::exception &e)
 		{
 			if (!strcmp(e.what(), "Zero-length array"))
-			std::cout << "test_operator[] : OK\n";
-		else
-			std::cout << "test_operator[] : OK\n";
+				std::cout << "test_operator[] : OK\n";
 		}
 	}
 }
