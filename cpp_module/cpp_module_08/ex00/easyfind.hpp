@@ -1,0 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   easyfind.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccartman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/30 18:51:10 by ccartman          #+#    #+#             */
+/*   Updated: 2022/04/30 21:43:51 by ccartman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef EASYFIND_HPP
+#define EASYFIND_HPP
+
+#include <algorithm>
+#include <stdexcept>
+
+template<typename T>
+typename T::const_iterator easyfind(const T &container, int value)
+{
+	typename T::const_iterator it;
+   
+	it = std::find(container.begin(), container.end(), value);
+
+	if (it == container.end())
+		throw std::invalid_argument("The value not found");
+
+	return it;
+}
+
+#endif
