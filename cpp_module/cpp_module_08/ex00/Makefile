@@ -1,4 +1,4 @@
-NAME		= conversion_of_scalar_types
+NAME		= easy_find
 
 SRCS		= main.cpp
 
