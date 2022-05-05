@@ -41,6 +41,8 @@ c piscine:
 				cpp_module_07
 				cpp_module_08
 
+12. net_practice
+
 exams:
 
 1. exam02
