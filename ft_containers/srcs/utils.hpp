@@ -1,6 +1,9 @@
 /******************************************************************************/
 /*
 *ITERATOR_TRAITS
+*REVERSE_ITERATOR
+*ENABLE_IF
+*IS_INTEGRAL
 */
 /******************************************************************************/
 #ifndef FT_UTILITY_HPP
@@ -605,48 +608,231 @@ namespace ft
 	}
 
   template< typename IterL, typename IterR > inline
-	bool operator>(
-				reverse_iterator<IterL> const& lhs,
-				reverse_iterator<IterR> const& rhs)
+	bool operator>(reverse_iterator<IterL> const& lhs,
+				   reverse_iterator<IterR> const& rhs)
 	{
 		return lhs.base() < rhs.base();
 	}
 
   template< typename IterL, typename IterR > inline
-	bool operator<=(
-				reverse_iterator<IterL> const& lhs,
-				reverse_iterator<IterR> const& rhs)
+	bool operator<=(reverse_iterator<IterL> const& lhs,
+					reverse_iterator<IterR> const& rhs)
 	{
 		return lhs.base() >= rhs.base();
 	}
 
   template< typename IterL, typename IterR > inline
-	bool operator>=(
-				reverse_iterator<IterL> const& lhs,
-				reverse_iterator<IterR> const& rhs)
+	bool operator>=(reverse_iterator<IterL> const& lhs,
+					reverse_iterator<IterR> const& rhs)
 	{
 		return lhs.base() <= rhs.base();
 	}
 
   template< typename Iter > inline
-	reverse_iterator<Iter> operator+(
-							typename reverse_iterator<Iter>::defference_type n,
-							reverse_iterator<Iter> const& rev_it)
+	reverse_iterator<Iter>
+	operator+(typename reverse_iterator<Iter>::defference_type n,
+			  reverse_iterator<Iter> const& rev_it)
 	{
 		return reverse_iterator<Iter>(rev_it.base() - n);
 	}
 
-	template <typename Iter> inline
-	typename reverse_iterator<Iter>::difference_type operator-(
-										reverse_iterator<Iter> const& lhs,
-										reverse_iterator<Iter> const& rhs)
+  template <typename Iter> inline
+	typename reverse_iterator<Iter>::difference_type
+	operator-(reverse_iterator<Iter> const& lhs,
+			  reverse_iterator<Iter> const& rhs)
 	{
 		return rhs.base() - lhs.base();
 	}
 
-#ifdef T
-#else
+	/*
+	enable_if
+	This is useful to hide signatures on compile time when a particular
+	condition is not met, since in this case, the member enable_if::type will
+	not be defined and attempting to compile using it should fail.
+	*/
+
+  template< bool B, class T = void >
+	struct enable_if {};
+
+  template< class T >
+	struct enable_if<true, T> { typedef T type; };
+
+	/*
+	Is_integral
+	integral_constant. This template is designed to provide compile-time
+	constants as types.
+	true_type. Instantiation of integral_constant to represent the bool value
+	true.
+	false_type. Instantitation of integral_constant to represent the bool value
+	false.
+	remove_cv. Obtains the type T without any top-level const or volatile
+	qualification.
+	is_integral. Trait class that identifies whether T is an integral type.
+	*/
+
+  template< typename T, T val >
+	struct integral_constant
+	{
+		typedef integral_constant<T, val>	type;
+		typedef T							value_type;
+		static const T value = val;
+		operator value_type() const { return value; }
+		value_type operator()(void) const {return value; }
+	};
+
+  typedef integral_constant<bool, true>		true_type;
+  typedef integral_constant<bool, false>	false_type;
+
+  template< typename T >
+	struct remove_cv { typedef T type; };
+
+  template< typename T >
+	struct remove_cv<const T> { typedef T type; };
+
+  template< typename T >
+	struct remove_cv<volatile T> { typedef T type; };
+
+  template< typename T >
+	struct remove_cv<const volatile T> { typedef T type; };
+
+  template< typename >
+	struct _is_integral_helper : public false_type {};
+
+  template<>
+	struct _is_integral_helper<bool> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<wchar_t> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<char> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<unsigned char> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<signed char> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<short int> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<unsigned short int> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<int> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<unsigned int> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<long int> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<unsigned long int> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<long long int> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<unsigned long long int> : public true_type {};
+
+  template< typename T >
+	struct is_integral
+		: public _is_integral_helper<typename remove_cv<T>::type>::type
+	{};
+
 }
-#endif
 
 #endif
+
+namespace ft
+{
+
+  namespace rel_ops
+  {
+	template <typename T>
+	  inline bool
+	  operator!=(const T& x, const T& y)
+	  { return !(x == y); }
+
+	template <typename T>
+	  inline bool
+	  operator>(const T& x, const T& y)
+	  { return y < x; }
+
+	template <typename T>
+	  inline bool
+	  operator<=(const T& x, const T& y)
+	  { return !(y < x); }
+
+	template <typename T>
+	  inline bool
+	  operator>=(const T& x, const T& y)
+	  { return !(x < y); }
+ }
+
+
+  template <typename T1, typename T2>
+	struct pair
+	{
+		typedef T1 first_type;
+		typedef T2 second_type;
+
+		T1	first;
+		T2	second;
+	
+		pair(void) 
+			: first(), second() {}
+		pair(const T1& x, const T2& y)
+			: first(x), second(y) {}
+		template <typename U1, typename U2>
+		pair(const pair<U1, U2>& pr)
+			: first(pr.first), second(pr.second) {}
+		pair& operator=(const pair& pr) {
+			first = pr.first;
+			second = pr.second;
+			return *this;
+		}
+	};
+
+  template <typename T1, typename T2>
+	inline bool
+	operator==(const pair<T1, T2>& x, const pair<T1, T2>& y)
+	{ return x.first == y.first && x.second == y.second; }
+
+  template <typename T1, typename T2>
+	inline bool
+	operator<(const pair<T1, T2>& x, const pair<T1, T2>& y)
+	{ return x.first < y.first || (!(y.first < x.first) && x.second < y.second); }
+
+  template <typename T1, typename T2>
+	inline bool
+	operator!=(const pair<T1, T2>&x, const pair<T1, T2>& y)
+	{ return !(x == y); }
+
+  template <typename T1, typename T2>
+	inline bool
+	operator>(const pair<T1, T2>& x, const pair<T1, T2>& y)
+	{ return y < x; }
+
+  template <typename T1, typename T2>
+	inline bool
+	operator<=(const pair<T1, T2>& x, const pair<T1, T2>& y)
+	{ return !(y < x); }
+
+  template <typename T1, typename T2>
+	inline bool
+	operator>=(const pair<T1, T2>& x, const pair<T1, T2>& y)
+	{ return !(x < y); }
+
+  template <typename T1, typename T2>
+	inline pair<T1, T2>
+	make_pair(const T1& x, const T2& y)
+	{ return pair<T1, T2>(x, y); }
+
+
+	/* IS_INTEGRAL */
+
+
+}
