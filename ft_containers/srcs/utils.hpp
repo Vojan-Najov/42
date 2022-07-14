@@ -1,13 +1,15 @@
 /******************************************************************************/
 /*
-*ITERATOR_TRAITS
-*REVERSE_ITERATOR
-*ENABLE_IF
-*IS_INTEGRAL
+* ITERATOR_TRAITS
+* REVERSE_ITERATOR
+* ENABLE_IF
+* IS_INTEGRAL
+* EQUAL
 */
 /******************************************************************************/
-#ifndef FT_UTILITY_HPP
-#define FT_UTILITY_HPP
+
+#ifndef FT_UTILS_HPP
+#define FT_UTILS_HPP
 
 #include <cstddef>
 #include <iterator>
@@ -742,12 +744,86 @@ namespace ft
 		: public _is_integral_helper<typename remove_cv<T>::type>::type
 	{};
 
-}
+	/*
+	EQUAL
+	Compares the elements in the range [first1,last1) with those in the range
+	beginning at first2, and returns true if all of the elements in both ranges
+	match.
+	*/
 
-#endif
+  template< typename InputIterator1, typename InputIterator2 > inline
+	bool equal(InputIterator1 first1,
+			   InputIterator1 last1,
+			   InputIterator2 first2)
+	{
+		while (first1 != last1)
+		{
+			if (!(*first1 == *first2))
+				return false;
+			++first1;
+			++first2;
+		}
+		return true;
+	}
 
-namespace ft
-{
+  template< typename InputIterator1,
+			typename InputIterator2, 
+			typename BinaryPredicate > inline
+	bool equal(InputIterator1 first1, InputIterator1 last1,
+			   InputIterator2 first2, BinaryPredicate pred)
+	{
+		while (first1 != last1)
+		{
+			if (!pred(*first1, *first2))
+				return false;
+			++first1;
+			++first2;
+		}
+		return true;
+	}
+
+	/*
+	Lexicographical_compare
+	Returns true if the range [first1,last1) compares lexicographically less
+	than the range [first2,last2).
+	Compare -- comparison function object which returns true if the first
+	argument is less than the second. 
+	*/
+
+  template< typename InputIterator1, typename InputIterator2 > inline
+	bool lexicographical_compare(InputIterator1 first1, InputIterator2 last1,
+								 InputIterator2 first2, InputIterator2 last2)
+	{
+		while (first1 != last1)
+		{
+			if (first2 == last2 || *first2 < *first1)
+				return false;
+			else if (*first1 < *first2)
+				return true;
+			++first1;
+			++first2;
+		}
+		return first2 != last2;
+	}
+
+  template< typename InputIterator1,
+			typename InputIterator2,
+			typename Compare > inline
+	bool lexicographical_compare(InputIterator1 first1, InputIterator2 last1,
+								 InputIterator2 first2, InputIterator2 last2,
+								 Compare comp)
+	{
+		while (first1 != last1)
+		{
+			if (first2 == last2 || comp(*first2, *first1))
+				return false;
+			else if (comp(*first1, *first2))
+				return true;
+			++first1;
+			++first2;
+		}
+		return first2 != last2;
+	}
 
   namespace rel_ops
   {
@@ -831,8 +907,6 @@ namespace ft
 	make_pair(const T1& x, const T2& y)
 	{ return pair<T1, T2>(x, y); }
 
-
-	/* IS_INTEGRAL */
-
-
 }
+
+#endif
