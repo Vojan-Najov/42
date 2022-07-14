@@ -825,31 +825,34 @@ namespace ft
 		return first2 != last2;
 	}
 
-  namespace rel_ops
-  {
-	template <typename T>
-	  inline bool
-	  operator!=(const T& x, const T& y)
-	  { return !(x == y); }
+	/*
+	Relational Operators
+	This namespace declares template functions for four relational operators
+	(!=,>, <=, and >=), deriving their behavior from operator== (for !=) and
+	from operator< (for >,<=, and >=):
+	*/
 
-	template <typename T>
-	  inline bool
-	  operator>(const T& x, const T& y)
-	  { return y < x; }
+	namespace rel_ops
+	{
+	  template< typename T >
+	  	inline bool operator!=(const T& x, const T& y) { return !(x == y); }
 
-	template <typename T>
-	  inline bool
-	  operator<=(const T& x, const T& y)
-	  { return !(y < x); }
+	  template< typename T >
+		inline bool operator>(const T& x, const T& y) { return y < x; }
 
-	template <typename T>
-	  inline bool
-	  operator>=(const T& x, const T& y)
-	  { return !(x < y); }
- }
+	  template< typename T >
+		inline bool operator<=(const T& x, const T& y) { return !(y < x); }
 
+	  template< typename T >
+		inline bool operator>=(const T& x, const T& y) { return !(x < y); }
+	}
 
-  template <typename T1, typename T2>
+	/*
+	pair is a class template that provides a way to store two heterogeneous
+	objects as a single unit.
+	*/
+
+  template< typename T1, typename T2 >
 	struct pair
 	{
 		typedef T1 first_type;
@@ -859,7 +862,7 @@ namespace ft
 		T2	second;
 	
 		pair(void) 
-			: first(), second() {}
+			: first(T1()), second(T2()) {}
 		pair(const T1& x, const T2& y)
 			: first(x), second(y) {}
 		template <typename U1, typename U2>
@@ -872,39 +875,35 @@ namespace ft
 		}
 	};
 
-  template <typename T1, typename T2>
-	inline bool
-	operator==(const pair<T1, T2>& x, const pair<T1, T2>& y)
+  template< typename T1, typename T2 > inline
+	bool operator==(const pair<T1, T2>& x, const pair<T1, T2>& y)
 	{ return x.first == y.first && x.second == y.second; }
 
-  template <typename T1, typename T2>
-	inline bool
-	operator<(const pair<T1, T2>& x, const pair<T1, T2>& y)
-	{ return x.first < y.first || (!(y.first < x.first) && x.second < y.second); }
+  template< typename T1, typename T2 > inline
+	bool operator<(const pair<T1, T2>& x, const pair<T1, T2>& y)
+	{
+		return x.first < y.first || 
+			   (!(y.first < x.first) && x.second < y.second);
+	}
 
-  template <typename T1, typename T2>
-	inline bool
-	operator!=(const pair<T1, T2>&x, const pair<T1, T2>& y)
+  template< typename T1, typename T2 > inline
+	bool operator!=(const pair<T1, T2>&x, const pair<T1, T2>& y)
 	{ return !(x == y); }
 
-  template <typename T1, typename T2>
-	inline bool
-	operator>(const pair<T1, T2>& x, const pair<T1, T2>& y)
+  template< typename T1, typename T2 > inline
+	bool operator>(const pair<T1, T2>& x, const pair<T1, T2>& y)
 	{ return y < x; }
 
-  template <typename T1, typename T2>
-	inline bool
-	operator<=(const pair<T1, T2>& x, const pair<T1, T2>& y)
+  template< typename T1, typename T2 > inline
+	bool operator<=(const pair<T1, T2>& x, const pair<T1, T2>& y)
 	{ return !(y < x); }
 
-  template <typename T1, typename T2>
-	inline bool
-	operator>=(const pair<T1, T2>& x, const pair<T1, T2>& y)
+  template< typename T1, typename T2 > inline
+	bool operator>=(const pair<T1, T2>& x, const pair<T1, T2>& y)
 	{ return !(x < y); }
 
-  template <typename T1, typename T2>
-	inline pair<T1, T2>
-	make_pair(const T1& x, const T2& y)
+  template< typename T1, typename T2 > inline
+	pair<T1, T2> make_pair(const T1& x, const T2& y)
 	{ return pair<T1, T2>(x, y); }
 
 }

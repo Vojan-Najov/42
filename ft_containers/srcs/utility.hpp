@@ -88,6 +88,25 @@ namespace ft
 	make_pair(const T1& x, const T2& y)
 	{ return pair<T1, T2>(x, y); }
 
+	/* SFINAE */
+
+	template<bool B, class T = void>
+	struct enable_if {};
+
+	template <class T>
+	struct enable_if<true, T> { typedef T type};
+
+	/* IS_INTEGRAL */
+
+	template <typename T, T val>
+	struct integral_constant
+	{
+		typedef integral_constant<T, val>	type;
+		typedef T							value_type;
+		static const T value = val;
+		
+	}
+
 }
 
 #endif

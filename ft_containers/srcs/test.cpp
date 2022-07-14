@@ -20,6 +20,7 @@ void test_is_integral(void);
 void test_enable_if(void);
 void test_equal(void);
 void test_lexicograhical_compare(void);
+void test_pair(void);
 
 int main(void)
 {
@@ -30,6 +31,9 @@ int main(void)
 	test_enable_if();
 	test_equal();
 	test_lexicograhical_compare();
+	test_pair();
+
+	std::cout << "SUCCESS\n";
 
 	return 0;
 }
@@ -393,4 +397,52 @@ void test_lexicograhical_compare(void)
 	assert(lexicographical_compare(s1, s1, s2, s2 + 1, comp()) == true);
 	assert(lexicographical_compare(s1, s1 + 1, s2, s2, comp()) == false);
 	assert(lexicographical_compare(s2, s1 + 2, s1 + 3, s1 + 5, comp()) == true);
+}
+
+/*
+test class for rel_ops
+
+class Int {
+public:
+	Int (int v)
+		: val(v) {}
+	bool operator==(Int x) const
+	  {return (val == x.val); }
+	bool operator< (Int x) const
+	  {return (val < x.val); }
+private:
+	int val;
+};
+*/
+
+typedef pair<int, char> Pair_ic;
+
+void test_pair(void)
+{
+	pair<int, float> tmp1;
+	pair<int, float> tmp2(1, 2.0);
+	pair<long, double> tmp3 = tmp2;
+	pair<int, float>::first_type *ptr1 = (int *) 0;
+	pair<int, float>::second_type *ptr2 = (float *) 0;
+	tmp1 = tmp2;
+	(void) tmp1;
+	(void) tmp2;
+	(void) tmp3;
+	(void) ptr1;
+	(void) ptr2;
+
+	pair<int, char> p1;
+	pair<int, char> p2(3, 'a');
+
+	assert (p1.first == 0) ;
+	assert (p1.second == 0);
+	assert (p2.first == 3);
+	assert (p2.second = 'a');
+	assert (p2 == make_pair((Pair_ic::first_type) 3, (Pair_ic::second_type) 'a'));
+	assert (p2 < make_pair((Pair_ic::first_type) 4, (Pair_ic::second_type) 'a'));
+	assert (p2 < make_pair ((Pair_ic::first_type) 3, (Pair_ic::second_type) 'b'));
+	assert (p1 != p2);
+	assert (p2 > p1);
+	assert (p2 <= p2);
+	assert (p2 >= p2);
 }
