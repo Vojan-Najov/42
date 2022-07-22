@@ -1191,6 +1191,84 @@ namespace ft
 		return normal_iterator<Iterator, Container>(it.base() + n);
 	}
 
+	/*
+	COPY
+	Copies the elements in the range [first,last) into the range beginning at result.
+	The function returns an iterator to the end of the destination range
+	(which points to the element following the last element copied).
+	The ranges shall not overlap in such a way that result points to an element
+	in the range [first,last).
+	*/
+
+  template< typename InputIterator, typename OutputIterator >
+	OutputIterator copy(InputIterator first,
+						InputIterator last,
+						OutputIterator result)
+	{
+		while (first != last)
+		{
+			*result = *first;
+			++result;
+			++first;
+		}
+		return result;
+	}
+
+	/*
+	COPY_BACWARD
+	Copies the elements in the range [first,last) starting from the end into the
+	range terminating at result.
+	The function returns an iterator to the first element in the destination range.
+	The resulting range has the elements in the exact same order as [first,last).
+	*/
+
+  template< typename BidirectionalIterator1, typename BidirectionalIterator2 >
+	inline BidirectionalIterator2 copy_backward(BidirectionalIterator1 first,
+										 		BidirectionalIterator1 last, 
+										 		BidirectionalIterator1 result)
+	{
+		while (last != first)
+		{
+			*--result = *--last;
+		}
+		return result;
+	} 
+
+	/*
+	SWAP
+	Exchange values of two objects.
+	*/
+
+  template< typename T >
+	inline void swap(T& a, T& b)
+	{
+		T tmp = a;
+		a = b;
+		b = tmp;
+	}
+
+  template< typename T, size_t N >
+	inline void swap(T (&a)[N], T (&b)[N])
+	{
+		for (size_t i = 0; i < N; ++i)
+			ft::swap(a[i], b[i]);
+	} 
+
+	/*
+	FILL
+	Assigns val to all the elements in the range [first,last).
+	*/
+
+  template< typename ForwardIterator, typename T >
+	void fill(ForwardIterator first, ForwardIterator last, T const& value)
+	{
+		while (first != last)
+		{
+			*first = value;
+			++first;
+		}
+	}
+
 }
 
 #endif
