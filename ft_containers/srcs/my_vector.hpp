@@ -525,10 +525,55 @@ namespace ft
 		return iterator(start + n);	
 	}
 
+  template< typename T, typename A >
+	void vector<T,A>::insert(typename vector<T,A>::iterator position,
+							 typename vector<T,A>::size_type n,
+							 typename vector<T,A>::value_type const& value)
+	{
+		pointer posptr = position.base();
+		if (static_cast<size_type>(end_of_storage - finish) >= n)
+		{
+			_uninitialized_fill_n(finish, n, value);
+			pointer curptr = finish;
+			finish += n;
+			if (curptr != posptr)
+			{
+				while (curptr != finish)
+				{
+					T tmp = *posptr;
+					*posptr = *curptr;
+					*curptr = tmp;
+					++curptr;
+					++posptr;
+				}
+			}
+		}
+		else
+		{
+			const size_type old_size = size();
+			const size_type len = old_size != 0 ? 2 * old_size : n;
+			pointer new_start = allocator.allocate(len);
+			pointer new_finish = new_start;
+			try
+			{
+				new_finish = _uninitialized_copy(start, posptr, new_start);
+				_uninitialized_fill_n(new_finish, n, value);
+				new_finish += n;
+				new_finish =_uninitialized_copy(posptr, finish, new_finish);
+			}
+			catch (...)
+			{
+				_destroy(new_start, new_finish);
+				allocator.deallocate(new_start, len);
+			}
+				_destroy(start, finish);
+				allocator.deallocate(start, end_of_storage - start);
+				start = new_start;
+				finish = new_finish;
+				end_of_storage = start + len;
+		}
+	}
 /*
-		iterator	insert(iterator position, value_type const& value);
-		void 		insert(iterator position, size_type n,
-									value_type const& value);
 		template< typename InputIterator>
 		void		insert(iterator position, InputIterator first,
 											  InputIterator last)
