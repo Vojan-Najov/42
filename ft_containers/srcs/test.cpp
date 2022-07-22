@@ -1,7 +1,9 @@
 #include <iostream>
 #include <cassert>
 #include <iterator>
+#include <vector>
 #include "utils.hpp"
+#include "my_vector.hpp"
 
 #ifndef STL
 #define STL 0
@@ -17,10 +19,12 @@ void test_traits(void);
 void test_advance_and_distance(void);
 void test_reverse_iterator(void);
 void test_is_integral(void);
+void test_is_same(void);
 void test_enable_if(void);
 void test_equal(void);
 void test_lexicograhical_compare(void);
 void test_pair(void);
+void test_vector(void);
 
 int main(void)
 {
@@ -28,10 +32,12 @@ int main(void)
 	test_advance_and_distance();
 	test_reverse_iterator();
 	test_is_integral();
+	test_is_same();
 	test_enable_if();
 	test_equal();
 	test_lexicograhical_compare();
 	test_pair();
+	test_vector();
 
 	std::cout << "SUCCESS\n";
 
@@ -328,6 +334,14 @@ void test_is_integral(void)
 	assert(is_integral<const cmplx>::value == false);
 }
 
+void test_is_same(void)
+{
+	assert((is_same<int, int>::value) == true);
+	assert((is_same<double, double>::value) == true);
+	assert((is_same<int, double>::value) == false);
+	assert((is_same<int, const int>::value) == false);
+}
+
 template< typename T, typename E = void>
 struct vv
 {
@@ -437,7 +451,7 @@ void test_pair(void)
 	assert (p1.first == 0) ;
 	assert (p1.second == 0);
 	assert (p2.first == 3);
-	assert (p2.second = 'a');
+	assert (p2.second == 'a');
 	assert (p2 == make_pair((Pair_ic::first_type) 3, (Pair_ic::second_type) 'a'));
 	assert (p2 < make_pair((Pair_ic::first_type) 4, (Pair_ic::second_type) 'a'));
 	assert (p2 < make_pair ((Pair_ic::first_type) 3, (Pair_ic::second_type) 'b'));
@@ -445,4 +459,170 @@ void test_pair(void)
 	assert (p2 > p1);
 	assert (p2 <= p2);
 	assert (p2 >= p2);
+}
+
+void test_vector(void)
+{
+	std::allocator<int> alloc;
+	int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+	vector<int> v;
+	(void) v;
+	vector<int> v1(alloc);
+	(void) v1;
+	vector<int> v2(5);
+	(void) v2;
+	vector<int> v3(10, 100);
+	(void) v3;
+	vector<int> v4(6, 100, alloc);
+	(void) v4;
+	vector<int> v5(arr, arr + sizeof(arr) / sizeof(int));
+	(void) v5;
+	vector<int> v6(arr, arr + sizeof(arr) / sizeof(int), alloc);
+	(void) v6;
+	vector<int> v7 = v6;
+	(void) v7;
+
+	vector<int> vv(3);
+	vv = v5;
+	vv = v2;
+	vv = v4;
+	vv = v6;
+	
+	(void) vv;
+
+	(void) vv.get_allocator();
+
+	typedef vector<int>::iterator vIt;
+
+	vIt first = vv.begin();
+	vIt last = vv.end();
+	for (int i = 1; i < 10; ++i)
+	{
+		assert(*first == i);
+		++first;
+	}
+	assert(first == last);
+
+	const vector<int> vvc = vv;
+	typedef vector<int>::const_iterator cvIt;
+
+	cvIt cfirst = vvc.begin();
+	cvIt clast = vvc.end();
+	for (int i = 1; i < 10; ++i)
+	{
+		assert(*cfirst == i);
+		++cfirst;
+	}
+	assert(cfirst == clast);
+
+	cfirst = first;
+	//first = cfirst; // it is not compile;
+
+	typedef vector<int>::reverse_iterator vrIt;
+
+	vrIt rfirst = vv.rbegin();
+	vrIt rlast = vv.rend();
+	for (int i = 9; i > 0; --i)
+	{
+		assert(*rfirst == i);
+		++rfirst;
+	}
+	assert(rfirst == rlast);
+
+	typedef vector<int>::const_reverse_iterator cvrIt;
+
+	cvrIt crfirst = vvc.rbegin();
+	cvrIt crlast = vvc.rend();
+	for (int i = 9; i > 0; --i)
+	{
+		assert(*crfirst == i);
+		++crfirst;
+	}
+	assert(crfirst == crlast);
+
+	crfirst = rfirst;
+	//first = cfirst; // it is not compile;
+
+	assert(vv.size() == sizeof(arr) / sizeof(int));
+	std::cout << vv.max_size() << '\n';
+	std::cout << vv.capacity() << '\n';
+
+	assert(vv.empty() == false);
+	assert(v.empty() == true);
+	
+	const vector<int> cvv(10, 1);
+	//vector<int>::iterator it = cvv.begin();
+
+	vv.reserve(4);
+	assert(vv.size() == 9 && vv.capacity() == 9);
+	vv.reserve(100);
+	assert(vv.size() == 9 && vv.capacity() == 100);
+	
+	const vector<int> ctv(arr, arr + sizeof(arr) / sizeof(int));
+	assert(ctv.front() == 1);
+	assert(ctv.back() == 9);
+
+	vector<int> tv(arr, arr + sizeof(arr) / sizeof(int));
+	assert(tv.front() == 1);
+	assert(tv.back() == 9);
+
+	for(size_t i = 0; i < tv.size(); ++i)
+	{
+		assert(tv[i] == (int) (i + 1));
+	}
+
+	bool caught = false;
+	for(size_t i = 0; i < tv.size() + 1; ++i)
+	{
+		int tmp = 0;
+		try {
+			tmp = tv.at(i);
+		}
+		catch (...)
+		{
+			caught = (i == tv.size() ? true : false);
+			tmp = (int) i + 1;
+		}
+		assert(tmp == (int) (i + 1));
+	}
+	assert(caught == true);
+
+	{
+	std::vector<int> v;
+	
+	std::cout << "size = " << v.size() << "  capacity = " << v.capacity() << '\n';
+
+	v.push_back(0);
+	std::cout << "size = " << v.size() << "  capacity = " << v.capacity() << '\n';
+	v.push_back(0);
+	std::cout << "size = " << v.size() << "  capacity = " << v.capacity() << '\n';
+	v.push_back(0);
+	std::cout << "size = " << v.size() << "  capacity = " << v.capacity() << '\n';
+	v.push_back(0);
+	std::cout << "size = " << v.size() << "  capacity = " << v.capacity() << '\n';
+	v.push_back(0);
+	std::cout << "size = " << v.size() << "  capacity = " << v.capacity() << '\n';
+	v.push_back(0);
+	std::cout << "size = " << v.size() << "  capacity = " << v.capacity() << '\n';
+	}
+
+	while (!tv.empty())
+	{
+		tv.pop_back();
+	}
+	//tv.pop_back();
+
+	{
+		std::vector<int> v;
+		v.insert(v.begin(), 0);
+		assert(v.front() == 0);
+		v.insert(v.end(), 2);
+		assert(v.back() == 2);
+		v.insert(v.begin() + 1, 1);
+		v.insert(v.begin() + 2, 3);
+		v.insert(v.begin() + 1, 4);
+		assert(v[0] == 0 && v[1] == 4 && v[2] == 1 && v[3] == 3 && v[4] == 2); 
+	}
+
 }
