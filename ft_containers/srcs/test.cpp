@@ -1,9 +1,10 @@
 #include <iostream>
+#include <fstream>
 #include <cassert>
 #include <iterator>
 #include <vector>
 #include "utils.hpp"
-#include "my_vector.hpp"
+#include "vector.hpp"
 
 #ifndef STL
 #define STL 0
@@ -18,26 +19,38 @@ using namespace std;
 void test_traits(void);
 void test_advance_and_distance(void);
 void test_reverse_iterator(void);
+#if STL==0 || __cplusplus >= 201103L
 void test_is_integral(void);
 void test_is_same(void);
 void test_enable_if(void);
+#endif
 void test_equal(void);
 void test_lexicograhical_compare(void);
 void test_pair(void);
 void test_vector(void);
+void test_vector_constructor(void);
+void test_vector_operator_assign(void);
+void test_vector_assign(void);
+void test_vector_get_allocator(void);
 
 int main(void)
 {
 	test_traits();
 	test_advance_and_distance();
 	test_reverse_iterator();
-	test_is_integral();
-	test_is_same();
+#if STL==0 || __cplusplus >= 201103L
 	test_enable_if();
+	test_is_same();
+	test_is_integral();
+#endif
 	test_equal();
 	test_lexicograhical_compare();
 	test_pair();
-	test_vector();
+//	test_vector();
+	test_vector_constructor();
+	test_vector_operator_assign();
+	test_vector_assign();
+	test_vector_get_allocator();
 
 	std::cout << "SUCCESS\n";
 
@@ -294,6 +307,7 @@ void test_reverse_iterator(void)
 	assert((crit + 2) - crit == 2);
 }
 
+#if STL==0 || __cplusplus >= 201103L
 void test_is_integral(void)
 {
 	assert(is_integral<bool>::value == true);
@@ -363,6 +377,7 @@ void test_enable_if(void)
 	assert(vv<double>::v == false);
 	assert(vv<cmplx>::v == false);
 }
+#endif
 
 struct pred
 {
@@ -554,7 +569,8 @@ void test_vector(void)
 	const vector<int> cvv(10, 1);
 	//vector<int>::iterator it = cvv.begin();
 
-	vv.reserve(4);
+	//vv.reserve(4)
+
 	assert(vv.size() == 9 && vv.capacity() == 9);
 	vv.reserve(100);
 	assert(vv.size() == 9 && vv.capacity() == 100);
@@ -624,5 +640,232 @@ void test_vector(void)
 		v.insert(v.begin() + 1, 4);
 		assert(v[0] == 0 && v[1] == 4 && v[2] == 1 && v[3] == 3 && v[4] == 2); 
 	}
+	{
+		std::vector<int> v;
+		v.insert(v.begin(), 3, 0);
+		v.insert(v.begin() + 1, 2, 1);
+		v.insert(v.end(), 2, 2);
+		assert(v[0] == 0 && v[1] == 1 && v[2] == 1 && v[3] == 0 && v[4] == 0
+				&& v[5] == 2 && v[6] == 2);
+	}
+
+
 
 }
+
+struct St {
+	int a;
+	static int cout;
+	St(int a = 0) : a(a) {
+		++cout;
+		if (cout == 7)
+			throw "except";
+	}
+};
+
+int St::cout = 0;
+
+struct Svs {
+	int a;
+	static int dcout;
+	Svs(int a = 0) : a(a) {
+	}
+	~Svs(void) { ++dcout; }
+};
+
+int Svs::dcout = 0;
+
+void test_vector_constructor(void)
+{
+	St st;
+	vector<St>::value_type *vtptr = (St*) 0;
+	(void) vtptr;
+	vector<St, std::allocator<int> >::allocator_type *aptr =
+														(std::allocator<int>*) 0;
+	(void) aptr;
+	vector<St>::allocator_type *aptr2 = (std::allocator<St>*) 0;
+	(void) aptr2;
+	vector<St>::pointer pptr = (St*) 0;
+	(void) pptr;
+	vector<St>::const_pointer cpptr = (const St*) 0;
+	(void) cpptr;
+	vector<St>::reference rf = st;
+	(void) rf;
+	vector<St>::const_reference crf = st;
+	(void) crf;
+	vector<St>::size_type *stptr = (std::allocator<St>::size_type *) 0;
+	(void) stptr;
+	vector<St>::difference_type *dtptr = (std::allocator<St>::difference_type *) 0;
+	(void) dtptr;
+
+	std::allocator<int> alloc;
+	vector<int> v1;
+	vector<int> v2(alloc);
+	vector<int> v3(10);
+	vector<int> v4(10, 1);
+	vector<int> v5(10, 1, alloc);
+	vector<int> v6 = v5;
+	for (int i = 0; i < 10; ++i)
+		assert(v5[i] == 1 && v6[i] == 1);
+	assert(v5.size() == 10 && v5.capacity() == 10);
+	assert(v6.size() == 10 && v6.capacity() == 10);
+	try
+	{
+		vector<St> tmp(10);
+	}
+	catch (...) {}
+
+	{
+		vector<Svs> tmp(100, 4);
+	}
+	assert(Svs::dcout == 101);
+
+	//std::allocator<int> alloc;
+	int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	vector<int> vv(arr, arr + sizeof(arr) / sizeof(int), alloc);
+	typedef vector<int>::iterator vIt;
+	vIt first = vv.begin();
+	vIt last = vv.end();
+	for (int i = 1; i < 10; ++i)
+	{
+		assert(*first == i);
+		++first;
+	}
+	assert(first == last);
+}
+
+
+void test_vector_operator_assign(void)
+{
+	vector<int> v(100);
+	v.reserve(200);
+	for (int i = 0; i < 100; ++i)
+	{
+		v[i] = i;
+	}
+	vector<int> v1(50);
+	v.reserve(120);
+	for (int i = 0; i < 50; ++i)
+	{
+		v1[i] = 50 - i;
+	}
+	vector<int> v2(1000);
+	for (int i = 0; i < 1000; ++i)
+	{
+		v2[i] = 2 * i;
+	}
+
+	vector<int> vv;
+
+	vv = v;
+	for (int i = 0; i < 100; ++i)
+	{
+		assert(vv[i] == i);
+	}
+	assert(vv.size() == 100 && vv.capacity() == 100);
+	
+	vv = v1;
+	for (int i = 0; i < 50; ++i)
+	{
+		assert(vv[i] == 50 - i);
+	}
+	assert(vv.size() == 50 && vv.capacity() == 100);
+	vv = v2;
+	for (int i = 0; i < 1000; ++i)
+	{
+		assert(vv[i] == 2 * i);
+	}
+	assert(vv.size() == 1000 && vv.capacity() == 1000);
+}
+
+
+void test_vector_assign(void)
+{
+	vector<int> v(10, 5);
+	v.reserve(20);
+
+	v.assign(5, 3);
+	for(int i = 0; i < 5; ++i)
+	{
+		assert(v[i] == 3);
+	}
+	assert(v.size() == 5 && v.capacity() == 20);
+	v.assign(15, 4);
+	for(int i = 0; i < 15; ++i)
+	{
+		assert(v[i] == 4);
+	}
+	assert(v.size() == 15 && v.capacity() == 20);
+	v.assign(30, 6);
+	for(int i = 0; i < 30; ++i)
+	{
+		assert(v[i] == 6);
+	}
+	assert(v.size() == 30 && v.capacity() == 30);
+	v.assign(0,0);
+	assert(v.size() == 0 && v.capacity() == 30);
+	
+	int arr[100];
+	for(int i = 0; i < 100; ++i)
+		arr[i] = 2 * i;
+	vector<int> vv;
+	vv.assign(arr, arr + 100);
+	for(int i = 0; i < 100; ++i)
+	{
+		assert(vv[i] == 2 * i);
+	}
+	assert(vv.size() == 100 && vv.capacity() == 100);
+	
+	std::vector<int> tmp;
+	for(int i = 1000; i > 0; --i)
+		tmp.push_back(i);
+	vv.assign(tmp.begin(), tmp.end());
+	for(int i = 0; i < 1000; ++i)
+	{
+		assert(vv[i] == tmp[i]);
+	}
+	assert(vv.size() == tmp.size() && vv.capacity() != tmp.capacity());
+	
+
+	{
+	vector<int> vvv;
+	vvv.assign(100, 0);
+	std::fstream fs("test1.txt", std::fstream::in);
+	std::istream_iterator<int> ii(fs);
+	vvv.assign(ii, std::istream_iterator<int>());
+	for(int i = 0; i < 5; ++i)
+	{
+		assert(vvv[i] == i + 1);
+	}
+	assert(vvv.size() == 5 && vvv.capacity() == 100);
+	fs.close();
+	}
+	{
+	vector<int> vt;
+	vt.assign(1, 0);
+	std::fstream fs("test1.txt", std::fstream::in);
+	std::istream_iterator<int> ii(fs);
+	vt.assign(ii, std::istream_iterator<int>());
+	for(int i = 0; i < 5; ++i)
+	{
+		assert(vt[i] == i + 1);
+	}
+	assert(vt.size() == 5 && vt.capacity() == 8);
+	}
+}
+
+
+void test_vector_get_allocator(void)
+{
+	std::allocator<char> all;
+
+	vector<int, std::allocator<int> > v;
+	std::allocator<int> tmp1 = v.get_allocator();
+	vector<int, std::allocator<int> > v1(all);
+	std::allocator<int> tmp2 = v1.get_allocator();
+	vector<int, std::allocator<char> > v2(all);
+	std::allocator<int> tmp3 = v2.get_allocator();
+
+	int *ptr = v.get_allocator().allocate(5);
+	ptr[4] = 100;
+	v.get_allocator().deallocate(ptr, 5);}

@@ -7,6 +7,7 @@
 
 namespace ft
 {
+
   template< typename T, typename Allocator>
 	class Vector_base
 	{
@@ -21,14 +22,13 @@ namespace ft
 		Vector_base(size_type n, const allocator_type& alloc)
 			: allocator(alloc)
 		{
-			start = allocator.allocate(n);
+			start = allocate(n);
 			finish = start;
 			end_of_storage = start + n;	
 		}
 		~Vector_base(void)
 		{
-			if (start)
-				allocator.deallocate(start, end_of_storage - start);
+			deallocate(start, end_of_storage - start);
 		}
 		allocator_type get_allocator(void) const
 		{
@@ -43,6 +43,9 @@ namespace ft
 
 		pointer allocate(size_type n)
 		{
+			if (n > max_size())
+				throw std::length_error(
+						"cannot create vector larger than max_size()");
 			return allocator.allocate(n);
 		}
 		void deallocate(pointer p, size_type n)
@@ -50,44 +53,59 @@ namespace ft
 			if (p)
 				allocator.deallocate(p, n);
 		}
+		void construct(pointer p, T const& value)
+		{
+			allocator.construct(p, value);
+		}
+		void destroy(pointer p)
+		{
+			allocator.destroy(p);
+		}
+		size_type max_size(void) const
+		{
+			return allocator.max_size();
+		}
 	};
 
   template< typename T, typename Allocator = std::allocator<T> >
 	class vector : protected Vector_base<T, Allocator>
 	{
 	protected:
-		typedef Vector_base<T, Allocator>	Base;
+		typedef Vector_base<T, Allocator>		Base;
+		typedef typename Base::allocator_type	T_allocator_type;
 	public:
 		typedef T											value_type;
-		typedef typename Base::allocator_type				allocator_type;
-		typedef typename allocator_type::pointer			pointer;
-		typedef typename allocator_type::const_pointer		const_pointer;
-		typedef typename allocator_type::reference			reference;
-		typedef typename allocator_type::const_reference	const_reference;
+		typedef Allocator									allocator_type;
+		typedef typename T_allocator_type::pointer			pointer;
+		typedef typename T_allocator_type::const_pointer	const_pointer;
+		typedef typename T_allocator_type::reference		reference;
+		typedef typename T_allocator_type::const_reference	const_reference;
 		typedef normal_iterator<pointer, vector>			iterator;
 		typedef normal_iterator<const_pointer, vector>		const_iterator;
-		typedef typename allocator_type::size_type			size_type;
-		typedef typename allocator_type::difference_type	difference_type;
+		typedef typename T_allocator_type::size_type		size_type;
+		typedef typename T_allocator_type::difference_type	difference_type;
 		typedef ft::reverse_iterator<iterator>			reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 	protected:
 		using Base::allocate;
 		using Base::deallocate;
+		using Base::construct;
+		using Base::destroy;
 		using Base::start;
 		using Base::finish;
 		using Base::end_of_storage;
-		using Base::allocator;
+		using Base::allocator; // delete it later
 
 	public:
 
 		// construct/copy/destroy:
 		explicit vector(const allocator_type& alloc = allocator_type());
 		explicit vector(size_type n,
-						const T& value = T(),
-						const allocator_type& alloc = allocator_type());
+						value_type const& value = T(),
+						allocator_type const& alloc = allocator_type());
 		template< typename InputIterator >
-		  vector(InputIterator first, InputIterator last,
-				 const allocator_type& alloc = allocator_type());
+		vector(InputIterator first, InputIterator last,
+			   const allocator_type& alloc = allocator_type());
 		vector(const vector<T, Allocator>& copy);
 		~vector(void);
 		vector& operator=(vector const& other);
@@ -110,7 +128,8 @@ namespace ft
 
 		size_type 	size(void) const;
 		size_type	max_size(void) const;
-		void		resize(size_type new_size, value_type value = value_type());
+		void		resize(size_type new_size,
+						   value_type value = value_type());
 		size_type	capacity(void) const;
 		bool		empty(void) const;
 		void		reserve(size_type n);
@@ -145,10 +164,15 @@ namespace ft
 
 		pointer _uninitialized_fill_n(pointer ptr, size_type n,
 									  value_type const& value);
+
 		template<typename InputIterator>
 		pointer _uninitialized_copy(InputIterator first,
 									InputIterator last,
 									pointer ptr);
+
+		template< typename InputIterator >
+		pointer _allocate_and_copy(size_type n, InputIterator first,
+												InputIterator last);
 
 		template< typename Integer >
 		void _initialize_aux(Integer n, Integer value, true_type);
@@ -160,17 +184,31 @@ namespace ft
 
 		template< typename InputIterator >
 		void _range_initialize(InputIterator first, InputIterator last,
-							   input_iterator_tag);
+							   std::input_iterator_tag);
 
 		template< typename ForwardIterator >
 		void _range_initialize(ForwardIterator first, ForwardIterator last,
-							   forward_iterator_tag);
+							   std::forward_iterator_tag);
 
-		void _destroy(pointer first, pointer last);
+		void _fill_assign(size_type n, value_type const& value);
 
-		template< typename ForwardIterator >
-		pointer _allocate_and_copy(size_type n, ForwardIterator first,
-												ForwardIterator last);
+
+		template< typename Integral >
+		void _assign_dispatch(Integral n, Integral value, ft::true_type);
+
+
+		template< typename InputIterator>
+		void _assign_dispatch(InputIterator first,
+							  InputIterator last, ft::false_type);
+
+		template< typename InputIterator>
+		void _assign_aux(InputIterator first,
+						 InputIterator last, std::input_iterator_tag);
+
+		template< typename ForwardIterator>
+		void _assign_aux(ForwardIterator first,
+						 ForwardIterator last,
+						 std::forward_iterator_tag);
 
 		void _insert_aux(pointer ptr);
 
@@ -180,42 +218,37 @@ namespace ft
 
 		template< typename InputIterator >
 		void _insert_dispatch(iterator position, InputIterator first,
-							  InputIterator last, false_type);
+							  InputIterator last, ft::false_type);
 
 		template< typename InputIterator >
   		void _range_insert(iterator position, InputIterator first,
-						   InputIterator last, input_iterator_tag);
+						   InputIterator last, std::input_iterator_tag);
 	
 		//заменить iteratot на  pointer
    		template< typename ForwardIterator >
   		void _range_insert(iterator position, ForwardIterator first,
-						   ForwardIterator last, forward_iterator_tag);
+						   ForwardIterator last, std::forward_iterator_tag);
 
-		template< typename Integral >
-		void _assign_dispatch(Integral n, Integral value, true_type);
+		void _destroy(pointer first, pointer last);
 
-
-		void _fill_assign(size_type n, value_type const& value);
-
-		template< typename InputIterator>
-		void _assign_dispatch(InputIterator first,
-							  InputIterator last, false_type);
-
-		template< typename InputIterator>
-		void _assign_aux(InputIterator first,
-						 InputIterator last, ft::input_iterator_tag);
-
-		template< typename ForwardIterator>
-		void _assign_aux(ForwardIterator first,
-						 ForwardIterator last, ft::forward_iterator_tag);
 	};
 
-		// construct/copy/destroy:
+					// construct/copy/destroy:
+
+	/*
+	empty container constructor (default constructor)
+    Constructs an empty container, with no elements.
+	*/
 
   template< typename T, typename A >
 	vector<T, A>::vector(typename vector<T, A>::allocator_type const& alloc)
 		: Vector_base<T,A>(alloc) 
 	{}
+
+	/*
+	fill constructor
+    Constructs a container with n elements. Each element is a copy of val.
+	*/
 
   template< typename T, typename A >
 	vector<T, A>::vector(typename vector<T, A>::size_type n,
@@ -226,14 +259,27 @@ namespace ft
 		finish = _uninitialized_fill_n(start, n, value);
 	}
 
+	/*
+	range constructor
+    Constructs a container with as many elements as the range [first,last),
+	with each element constructed from its corresponding element in that range,
+	in the same order.
+	*/
+
   template< typename T, typename A >
-	template< typename InputIterator >
-	  vector<T, A>::vector(InputIterator first, InputIterator last,
-		   	  	 		   typename vector<T, A>::allocator_type const& alloc)
+   template< typename InputIterator >
+	vector<T, A>::vector(InputIterator first, InputIterator last,
+		   	  	 		 typename vector<T, A>::allocator_type const& alloc)
 			: Vector_base<T,A>(alloc)
 	  {
 		_initialize_aux(first, last, is_integral<InputIterator>());
 	  }
+
+	/*
+	copy constructor
+    Constructs a container with a copy of each of the elements in other,
+	in the same order.
+	*/
 
   template< typename T, typename A >
 	vector<T, A>::vector(const vector<T, A>& copy)
@@ -242,11 +288,30 @@ namespace ft
 		finish = _uninitialized_copy(copy.start, copy.finish, start);
 	}
 
+	/*
+	Vector destructor
+	Destroys the container object.
+	*/
+
   template< typename T, typename A >
 	vector<T, A>::~vector(void)
 	{
 		_destroy(start, finish);
 	}
+
+	/*
+	Assign content
+	Assigns new contents to the container, replacing its current contents,
+	and modifying its size accordingly.
+	The container preserves its current allocator, which is used to allocate
+	storage in case of reallocation.
+	Any elements held in the container before the call are either assigned
+	to or destroyed.
+	All iterators, references and pointers related to this container before
+	the call are invalidated.
+	Basic guarantee: if an exception is thrown, the container is in a valid
+	state.
+	*/
 
   template< typename T, typename A >
 	vector<T, A>& vector<T, A>::operator=(vector<T, A> const& other)
@@ -256,37 +321,44 @@ namespace ft
 		size_type length = other.finish - other.start;
 		if (length > static_cast<size_type>(end_of_storage - start))
 		{
-			pointer tmp = _allocate_and_copy(length, other.start, other.finish);
+			pointer tmp = _allocate_and_copy(length, other.start,
+													 other.finish);
 			_destroy(start, finish);
-			allocator.deallocate(start, end_of_storage - start);
+			deallocate(start, end_of_storage - start);
 			start = tmp;
 			end_of_storage = start + length;	
 		}
 		else if (length <= static_cast<size_type>(finish - start))
 		{
-			pointer sptr = start;
-			for (pointer osptr = other.start; osptr != other.finish; ++osptr)
-			{
-				*sptr = *osptr;
-				++sptr;
-			}
-			_destroy(sptr, finish);
+			pointer ptr = copy(other.start, other.finish, start);
+			_destroy(ptr, finish);
 		}
 		else
 		{
-			pointer sptr = start;
-			pointer osptr = other.start;
-			while (sptr != finish)
-			{
-				*sptr = *osptr;
-				++sptr;
-				++osptr;
-			}
-			_uninitialized_copy(osptr, other.finish, finish);
+			copy(other.start, other.start + size(), start);
+			_uninitialized_copy(other.start + size(), finish, finish);
 		}
 		finish = start + length;
 		return *this;
 	}
+
+	/*
+	Assign vector content
+	Assigns new contents to the vector, replacing its current contents,
+	and modifying its size accordingly.
+	In the range version, the new contents are elements constructed from
+	each of the elements in the range between first and last, in the same
+	order.
+	In the fill version, the new contents are n elements, each initialized
+	to a copy of val.
+	If a reallocation happens,the storage needed is allocated using the
+	internal allocator.
+	Any elements held in the container before the call are destroyed and
+	replaced by newly constructed elements (no assignments of elements take
+	place). This causes an automatic reallocation of the allocated storage
+	space if -and only if- the new vector size surpasses the current vector
+	capacity.
+	*/
 
   template< typename T, typename A >
 	void vector<T,A>::assign(typename vector<T,A>::size_type n,
@@ -302,13 +374,20 @@ namespace ft
 		_assign_dispatch(first, last, ft::is_integral<InputIterator>());
 	}
 
+	/*
+	Get allocator
+	Returns a copy of the allocator object associated with the vector.
+	Member type allocator_type is the type of the allocator used by the
+	container, defined in vector as an alias of its second template parameter.
+	*/
+
   template< typename T, typename A >
 	typename vector<T,A>::allocator_type vector<T,A>::get_allocator(void) const
 	{
-		return Vector_base<T,A>::get_allocator();
+		return allocator_type();
 	}
 	
-		// iterators:
+// ITERATORS:
 
   template< typename T, typename A >
 	typename vector<T,A>::iterator vector<T,A>::begin(void)
@@ -652,8 +731,9 @@ namespace ft
 	}
 
   template< typename T, typename A >
-	typename vector<T,A>::iterator vector<T,A>::erase(
-	typename vector<T,A>::iterator first, typename vector<T,A>::iterator last)
+	typename vector<T,A>::iterator
+	vector<T,A>::erase(typename vector<T,A>::iterator first,
+					   typename vector<T,A>::iterator last)
 	{
 		pointer fptr = first.base();
 		pointer lptr = last.base();
@@ -667,7 +747,7 @@ namespace ft
 	void vector<T,A>::swap(vector<T,A>& other)
 	{
 		ft::swap(start, other.start);
-		ft::swap(finish, other.swap);
+		ft::swap(finish, other.finish);
 		ft::swap(end_of_storage, other.end_of_storage);
 	}
 
@@ -678,10 +758,7 @@ namespace ft
 		finish = start;
 	}
 
-/*
-		void		clear(void);
-*/
-		// utility: 
+// UTILITY: 
 
   template< typename T, typename A >
 	typename vector<T, A>::pointer
@@ -695,7 +772,7 @@ namespace ft
 		{
 			try
 			{
-				allocator.construct(ptr, value);
+				construct(ptr, value);
 				++ptr;
 				--n;
 			}
@@ -720,7 +797,7 @@ namespace ft
 		{
 			try
 			{
-				allocator.construct(ptr, *first);
+				construct(ptr, *first);
 				++ptr;
 				++first;
 			}
@@ -734,19 +811,41 @@ namespace ft
 	}
 
   template< typename T, typename A >
+   template< typename InputIterator >
+	typename vector<T,A>::pointer
+	vector<T,A>::_allocate_and_copy(typename vector<T,A>::size_type n,
+									InputIterator first,
+									InputIterator last)
+	{
+		pointer ptr = allocate(n);
+		try
+		{
+			_uninitialized_copy(first, last, ptr);
+		}
+		catch (...)
+		{
+			deallocate(ptr, n);
+			throw;
+		}
+		return ptr;
+	}
+
+  template< typename T, typename A >
    template< typename Integer >
 	void vector<T,A>::_initialize_aux(Integer n, Integer value, ft::true_type)
 	{
-		start = allocator.allocate(n);
+		start = allocate(n);
 		end_of_storage = start + n;
-		finish = _uninitialized_fill_n(start, n, value);
+		finish = _uninitialized_fill_n(start,
+									   static_cast<size_type>(n),
+									   static_cast<value_type>(value));
 	}
 
   template< typename T, typename A >
    template< typename InputIterator >
 	void vector<T, A>::_initialize_aux(InputIterator first,
 									   InputIterator last,
-									   false_type)
+									   ft::false_type)
 	{
 		_range_initialize(first, last,
 				typename iterator_traits<InputIterator>::iterator_category());
@@ -756,7 +855,7 @@ namespace ft
    template< typename InputIterator >
 	void vector<T, A>::_range_initialize(InputIterator first,
 										 InputIterator last,
-							   			 input_iterator_tag)
+							   			 std::input_iterator_tag)
 	{
 		while (first != last)
 		{
@@ -769,47 +868,104 @@ namespace ft
    template< typename ForwardIterator >
 	void vector<T, A>::_range_initialize(ForwardIterator first,
 										 ForwardIterator last,
-										 forward_iterator_tag)
+										 std::forward_iterator_tag)
 	{
 		size_type n = distance(first, last);
-		start = allocator.allocate(n);
+		start = allocate(n);
 		end_of_storage = start + n;
 		finish = _uninitialized_copy(first, last, start);
 	}
 
   template< typename T, typename A >
-	void vector<T,A>::_destroy(typename vector<T,A>::pointer first,
-							   typename vector<T,A>::pointer last)
+	void vector<T,A>::_fill_assign(typename vector<T,A>::size_type n,
+								typename vector<T,A>::value_type const& value)
 	{
-		while (first != last)
+		if (n > capacity())
 		{
-			allocator.destroy(first);
-			++first;
+			vector<T,A> tmp(n, value, get_allocator());
+			tmp.swap(*this);
+		}
+		else if (n > size())
+		{
+			ft::fill(start, finish, value);
+			finish = _uninitialized_fill_n(finish, n - size(), value);
+		}
+		else
+		{
+			iterator ptr = ft::fill_n(begin(), n, value);
+			erase(ptr, end());
 		}
 	}
-
-  template< typename T, typename A >
-   template< typename ForwardIterator >
-	typename vector<T,A>::pointer
-	vector<T,A>::_allocate_and_copy(typename vector<T,A>::size_type n,
-									ForwardIterator first,
-									ForwardIterator last)
-	{
-		pointer ptr = allocator.allocate(n);
-		pointer curptr = ptr;
-		while (first != last)
-		{
-			allocator.construct(curptr, *first);
-			++first;
-			++curptr;
-		}
-		return ptr;
-	}
-
+  
   template< typename T, typename A >
    template< typename Integral >
+	void vector<T,A>::_assign_dispatch(Integral n, Integral value,
+												   ft::true_type)
+	{
+		_fill_assign(static_cast<size_type>(n),
+					 static_cast<value_type>(value));
+	}
+
+  template< typename T, typename A >
+   template< typename InputIterator>
+	void vector<T,A>::_assign_dispatch(InputIterator first,
+									   InputIterator last, ft::false_type)
+	{
+		_assign_aux(first, last,
+				typename iterator_traits<InputIterator>::iterator_category());
+	}
+
+  template< typename T, typename A >
+   template< typename InputIterator>
+	void vector<T,A>::_assign_aux(InputIterator first,
+								  InputIterator last,
+								  std::input_iterator_tag)
+	{
+		iterator cur = begin();
+		for (; first != last && cur != end(); ++first, ++cur)
+			*cur = *first;
+		if (first == last)
+			erase(cur, end());
+		else
+			insert(end(), first, last);
+	}
+
+  template< typename T, typename A >
+   template< typename ForwardIterator>
+	void vector<T,A>::_assign_aux(ForwardIterator first,
+								  ForwardIterator last,
+								  std::forward_iterator_tag)
+	{
+		size_type len = ft::distance(first, last);
+		if (len > capacity())
+		{
+			pointer tmp = _allocate_and_copy(len, first, last);
+			_destroy(start, finish);
+			deallocate(start, end_of_storage - start);
+			start = tmp;
+			finish = end_of_storage = start + len;			
+		}
+		else if (size() >= len)
+		{
+			pointer new_finish = ft::copy(first, last, start);
+			_destroy(new_finish, finish);
+			finish = new_finish;
+		}
+		else
+		{
+			ForwardIterator midle(first);
+			ft::advance(midle, size());
+			ft::copy(first, midle, start);
+			finish = _uninitialized_copy(midle, last, finish);
+		}
+	}
+
+    template< typename T, typename A >
+   template< typename Integral >
 	void vector<T,A>::_insert_dispatch(typename vector<T,A>::iterator position,
-							 		   Integral n, Integral value, true_type)
+							 		   Integral n,
+									   Integral value,
+									   ft::true_type)
 	{
 		//_fill_insert;
 		insert(position, static_cast<size_type>(n), static_cast<T>(value));
@@ -819,7 +975,7 @@ namespace ft
    template< typename InputIterator >
 	void vector<T,A>::_insert_dispatch(typename vector<T,A>::iterator position,
 									   InputIterator first, InputIterator last,
-									   false_type)
+									   ft::false_type)
 	{
 		_range_insert(position, first, last,
 				typename iterator_traits<InputIterator>::iterator_category());
@@ -829,7 +985,7 @@ namespace ft
    template< typename InputIterator >
   	void vector<T,A>::_range_insert(typename vector<T,A>::iterator position,
 									InputIterator first, InputIterator last,
-									input_iterator_tag)
+									std::input_iterator_tag)
 	{
 		if (position == end())
 		{
@@ -849,32 +1005,33 @@ namespace ft
   template< typename T, typename A >
    template< typename ForwardIterator >
   	void vector<T,A>::_range_insert(typename vector<T,A>::iterator position,
-									ForwardIterator first, ForwardIterator last,
-									forward_iterator_tag)
+									ForwardIterator first,
+									ForwardIterator last,
+									std::forward_iterator_tag)
 	{
 		if (first == last)
 			return;
-		size_type n = distance(first, last);
+		size_type n = ft::distance(first, last);
 		if (static_cast<size_type>(end_of_storage - finish) >= n)
 		{
-			const size_type elems_after = finish - position;
+			const size_type elems_after = finish - position.base();
 			pointer old_finish = finish;
 			if (elems_after > n)
 			{
-				_unitialized_copy(finish - n, finish, finish);
+				_uninitialized_copy(finish - n, finish, finish);
 				finish += n;
-				copy_backward(position.base(), old_finish - n, old_finish);
-				copy(first, last, position);
+				ft::copy_backward(position.base(), old_finish - n, old_finish);
+				ft::copy(first, last, position);
 			}
 			else
 			{
 				ForwardIterator midle = first;
-				advance(midle, elems_after);
+				ft::advance(midle, elems_after);
 				_uninitialized_copy(midle, last, finish);
 				finish += n - elems_after;
 				_uninitialized_copy(position.base(), old_finish, finish);
 				finish += elems_after;
-				copy(first, midle, position);
+				ft::copy(first, midle, position);
 			}
 		}
 		else
@@ -903,84 +1060,13 @@ namespace ft
 	}
 
   template< typename T, typename A >
-	void vector<T,A>::_fill_assign(typename vector<T,A>::size_type n,
-								typename vector<T,A>::value_type const& value)
+	void vector<T,A>::_destroy(typename vector<T,A>::pointer first,
+							   typename vector<T,A>::pointer last)
 	{
-		if (n > capacity())
+		while (first != last)
 		{
-			vector<T,A> tmp(n, value, get_allocator());
-			tmp.swap(*this);
-		}
-		else if (n > size())
-		{
-			ft::fill(start, finish, value);
-			finish = uninitialized_fill_n(finish, n - size(), value);
-		}
-		else
-		{
-			pointer ptr = fill_n(start, n, value);
-			erase(ptr, finish);
-		}
-	}
-
-  template< typename T, typename A >
-   template< typename Integral >
-	void vector<T,A>::_assign_dispatch(Integral n, Integral value, true_type)
-	{
-		_fill_assign(static_cast<size_type>(n), static_cast<value_type>(value));
-	}
-
-  template< typename T, typename A >
-   template< typename InputIterator>
-	void vector<T,A>::_assign_dispatch(InputIterator first,
-									   InputIterator last, false_type)
-	{
-		_assign_aux(first, last,
-				typename iterator_traits<InputIterator>::iterator_category());
-	}
-
-  template< typename T, typename A >
-   template< typename InputIterator>
-	void vector<T,A>::_assign_aux(InputIterator first,
-								  InputIterator last,
-								  ft::input_iterator_tag)
-	{
-		iterator cur = begin();
-		for (; first != last && cur != end(); ++first, ++cur)
-			*cur = *first;
-		if (first == last)
-			erase(cur, end());
-		else
-			insert(end(), first, last);
-	}
-
-  template< typename T, typename A >
-   template< typename ForwardIterator>
-	void vector<T,A>::_assign_aux(ForwardIterator first,
-								  ForwardIterator last,
-								  ft::forward_iterator_tag)
-	{
-		size_type len = distance(first, last);
-		if (len > capacity())
-		{
-			pointer tmp = allocate_and_copy(len, first, last);
-			_destroy(start, finish);
-			deallocate(start, end_of_storage - start);
-			start = tmp;
-			finish = end_of_storage = start + len;			
-		}
-		else if (size() >= len)
-		{
-			pointer new_finish = copy(first, last, start);
-			_destroy(new_finish, finish);
-			finish = new_finish;
-		}
-		else
-		{
-			ForwardIterator midle(first);
-			advance(midle, size());
-			copy(first, midle, start);
-			finish = _uninitialized_copy(midle, last, finish);
+			allocator.destroy(first);
+			++first;
 		}
 	}
 

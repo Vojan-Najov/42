@@ -41,7 +41,8 @@ namespace ft
 		*a++
 	*/
 
-  struct output_iterator_tag : public std::output_iterator_tag {};
+ // struct output_iterator_tag : public std::output_iterator_tag {};
+	using std::output_iterator_tag;
 
 	/*
 	Input iterators are iterators that can be used in sequential input opera-
@@ -68,7 +69,8 @@ namespace ft
 	5) Its value type does not need to be assignable.
 	*/
 
-  struct input_iterator_tag : public std::input_iterator_tag {};
+  //struct input_iterator_tag : public std::input_iterator_tag {};
+	using std::input_iterator_tag;
 
 	/*
 	Forward iterators are iterators that can be used to access the sequence of
@@ -104,8 +106,9 @@ namespace ft
 		*a++
 	*/
 
-  struct forward_iterator_tag : public input_iterator_tag,
-								public std::forward_iterator_tag {};
+  //struct forward_iterator_tag : public input_iterator_tag,
+  //								public std::forward_iterator_tag {};
+	using std::forward_iterator_tag;
 
 	/*
 	Bidirectional iterators are iterators that can be used to access the
@@ -142,8 +145,9 @@ namespace ft
 		*a--
 	*/
 
-  struct bidirectional_iterator_tag : public forward_iterator_tag,
-									  public std::bidirectional_iterator_tag {};
+  //struct bidirectional_iterator_tag : public forward_iterator_tag,
+	//								  public std::bidirectional_iterator_tag {};
+	using std::bidirectional_iterator_tag;
 
 	/*
 	Random-access iterators are iterators that can be used to access elements
@@ -195,8 +199,9 @@ namespace ft
 		a[n]
 	*/
 
-  struct random_access_iterator_tag : public bidirectional_iterator_tag,
-									  public std::random_access_iterator_tag {};
+  //struct random_access_iterator_tag : public bidirectional_iterator_tag,
+	//								  public std::random_access_iterator_tag {};
+	using std::random_access_iterator_tag;
 
 	/*
 	This is a base class template that can be used to derive iterator classes
@@ -231,20 +236,20 @@ namespace ft
   template< typename T >
 	struct iterator_traits< T* >
 	{
-		typedef random_access_iterator_tag	iterator_category;
-		typedef T							value_type;
-		typedef ptrdiff_t					difference_type;
-		typedef T*							pointer;
-		typedef T&							reference;
+		typedef std::random_access_iterator_tag	iterator_category;
+		typedef T								value_type;
+		typedef ptrdiff_t						difference_type;
+		typedef T*								pointer;
+		typedef T&								reference;
 	};
 
   template< typename T >
 	struct iterator_traits< const T* > {
-		typedef random_access_iterator_tag	iterator_category;
-		typedef T							value_type;
-		typedef ptrdiff_t					difference_type;
-		typedef const T*					pointer;
-		typedef const T&					reference;
+		typedef std::random_access_iterator_tag	iterator_category;
+		typedef T								value_type;
+		typedef ptrdiff_t						difference_type;
+		typedef const T*						pointer;
+		typedef const T&						reference;
 	};
 
 	/*
@@ -254,7 +259,7 @@ namespace ft
 
   template< typename Iterator > inline
 	typename iterator_traits<Iterator>::difference_type
-	_distance(Iterator first, Iterator last, input_iterator_tag)
+	_distance(Iterator first, Iterator last, std::input_iterator_tag)
 	{
 		typename iterator_traits<Iterator>::difference_type n = 0;
 		while (first != last)
@@ -267,7 +272,7 @@ namespace ft
 
   template< typename Iterator > inline
 	typename iterator_traits<Iterator>::difference_type
-	_distance(Iterator first, Iterator last, random_access_iterator_tag)
+	_distance(Iterator first, Iterator last, std::random_access_iterator_tag)
 	{
 		return last - first;
 	}
@@ -288,7 +293,7 @@ namespace ft
   template< typename Iterator > inline 
 	void _advance(Iterator& it,
 				  typename iterator_traits<Iterator>::difference_type n,
-				  input_iterator_tag)
+				  std::input_iterator_tag)
 	{
 		while (n > 0)
 		{
@@ -300,7 +305,7 @@ namespace ft
   template< typename Iterator > inline
 	void _advance(Iterator& it,
 				  typename iterator_traits<Iterator>::difference_type n,
-				  bidirectional_iterator_tag)
+				  std::bidirectional_iterator_tag)
 	{
 		while (n > 0)
 		{
@@ -317,7 +322,7 @@ namespace ft
   template< typename Iterator > inline
 	void _advance(Iterator& it,
 				  typename iterator_traits<Iterator>::differnce_type n,
-				  random_access_iterator_tag)
+				  std::random_access_iterator_tag)
 	{
 		it += n;
 	}
@@ -1193,7 +1198,8 @@ namespace ft
 
 	/*
 	COPY
-	Copies the elements in the range [first,last) into the range beginning at result.
+	Copies the elements in the range [first,last) into the range beginning
+	at result.
 	The function returns an iterator to the end of the destination range
 	(which points to the element following the last element copied).
 	The ranges shall not overlap in such a way that result points to an element
@@ -1218,14 +1224,15 @@ namespace ft
 	COPY_BACWARD
 	Copies the elements in the range [first,last) starting from the end into the
 	range terminating at result.
-	The function returns an iterator to the first element in the destination range.
-	The resulting range has the elements in the exact same order as [first,last).
+	The function returns an iterator to the first element in the destination
+	range. The resulting range has the elements in the exact same order as
+	[first,last).
 	*/
 
   template< typename BidirectionalIterator1, typename BidirectionalIterator2 >
 	inline BidirectionalIterator2 copy_backward(BidirectionalIterator1 first,
 										 		BidirectionalIterator1 last, 
-										 		BidirectionalIterator1 result)
+										 		BidirectionalIterator2 result)
 	{
 		while (last != first)
 		{
@@ -1269,6 +1276,23 @@ namespace ft
 		}
 	}
 
+	/*
+	FILL_N
+	Fill sequence with value
+	Assigns val to the first n elements of the sequence pointed by first.
+	*/
+
+  template< typename OutputIterator, typename Size, typename T >
+	OutputIterator fill_n(OutputIterator first, Size n, T const& value)
+	{
+		while (n > 0)
+		{
+			*first = value;
+			--n;
+			++first;
+		}
+		return first;
+	}
 }
 
 #endif
