@@ -115,6 +115,7 @@ namespace ft
 		allocator_type get_allocator(void) const;
 
 		// iterators:
+
 		iterator				begin(void);
 		iterator				end(void);
 		const_iterator			begin(void) const;
@@ -210,7 +211,9 @@ namespace ft
 						 ForwardIterator last,
 						 std::forward_iterator_tag);
 
-		void _insert_aux(pointer ptr);
+		void _insert_aux(pointer position, value_type const& val);
+
+		void _insert_fill(pointer position, size_type n, value_type const& val);
 
 		template< typename Integral >
 		void _insert_dispatch(iterator position, Integral n,
@@ -389,16 +392,16 @@ namespace ft
 	
 // ITERATORS:
 
+	/*
+	Returns an iterator pointing to the first element in the vector.
+	If the vector object is const-qualified, the function returns a
+	const_iterator.
+	*/
+
   template< typename T, typename A >
 	typename vector<T,A>::iterator vector<T,A>::begin(void)
 	{
 		return iterator(start);
-	}
-
-  template< typename T, typename A >
-	typename vector<T,A>::iterator vector<T,A>::end(void)
-	{
-		return iterator(finish);
 	}
 
   template< typename T, typename A >
@@ -407,11 +410,34 @@ namespace ft
 		return const_iterator(start);
 	}
 
+	/*
+	Returns an iterator referring to the past-the-end element in the vector
+	container. The past-the-end element is the theoretical element that would
+	follow the last element in the vector. It does not point to any element,
+	and thus shall not be dereferenced. If the vector object is const-qualified,
+	the function returns a const_iterator. Otherwise, it returns an iterator.
+	*/
+
+  template< typename T, typename A >
+	typename vector<T,A>::iterator vector<T,A>::end(void)
+	{
+		return iterator(finish);
+	}
+
   template< typename T, typename A >
 	typename vector<T,A>::const_iterator vector<T,A>::end(void) const
 	{
 		return const_iterator(finish);
 	}
+
+	/*
+	Returns a reverse iterator pointing to the last element in the vector
+	(i.e., its reverse beginning).
+	Reverse iterators iterate backwards: increasing them moves them towards
+	the beginning of the container.
+	If the vector object is const-qualified, the function returns a
+	const_reverse_iterator. Otherwise, it returns a reverse_iterator.
+	*/
 
   template< typename T, typename A >
 	typename vector<T,A>::reverse_iterator vector<T,A>::rbegin(void)
@@ -419,25 +445,38 @@ namespace ft
 		return reverse_iterator(iterator(finish));
 	}
 
+template< typename T, typename A >
+	typename vector<T,A>::const_reverse_iterator vector<T,A>::rbegin(void) const
+	{
+		return const_reverse_iterator(iterator(finish));
+	}
+
+	/*
+	Returns a reverse iterator pointing to the theoretical element preceding
+	the first element in the vector (which is considered its reverse end).
+	If the vector object is const-qualified, the function returns a
+	const_reverse_iterator. Otherwise, it returns a reverse_iterator.
+	*/
+
   template< typename T, typename A >
 	typename vector<T,A>::reverse_iterator vector<T,A>::rend(void)
 	{
 		return reverse_iterator(iterator(start));
 	}
 
-  template< typename T, typename A >
-	typename vector<T,A>::const_reverse_iterator vector<T,A>::rbegin(void) const
-	{
-		return const_reverse_iterator(iterator(finish));
-	}
-
-  template< typename T, typename A >
+    template< typename T, typename A >
 	typename vector<T,A>::const_reverse_iterator vector<T,A>::rend(void) const
 	{
 		return const_reverse_iterator(const_iterator(start));
 	}
 
-	// capacity:
+// CAPACITY:
+
+	/*
+	Returns the number of elements in the vector.
+	This is the number of actual objects held in the vector, which is not
+	necessarily equal to its storage capacity.
+	*/
 
   template< typename T, typename A >
 	typename vector<T,A>::size_type vector<T,A>::size(void) const
@@ -445,11 +484,31 @@ namespace ft
 		return static_cast<size_type>(finish - start);
 	}
 
+	/*
+	Returns the maximum number of elements that the vector can hold.
+	This is the maximum potential size the container can reach due to known
+	system or library implementation limitations, but the container is by no
+	means guaranteed to be able to reach that size: it can still fail to
+	allocate storage at any point before that size is reached
+	*/
+
   template< typename T, typename A >
 	typename vector<T,A>::size_type vector<T,A>::max_size(void) const
 	{
-		return allocator.max_size();
+		return Base::max_size();
 	}
+
+	/*
+	Resizes the container so that it contains n elements.
+	If n is smaller than the current container size, the content is reduced
+	to its first n elements, removing those beyond (and destroying them).
+	If n is greater than the current container size, the content is expanded
+	by inserting at the end as many elements as needed to reach a size of n.
+	If val is specified, the new elements are initialized as copies of val,
+	otherwise, they are value-initialized.
+	If n is also greater than the current container capacity, an automatic
+	reallocation of the allocated storage space takes place.
+	*/
 
   template< typename T, typename A >
 	void vector<T,A>::resize(typename vector<T,A>::size_type new_size,
@@ -457,10 +516,18 @@ namespace ft
 	{
 		const size_type size = static_cast<size_type>(finish - start);
 		if (new_size < size)
-			erase(start + new_size, finish);
+			erase(iterator(start + new_size), end());
 		else
-			insert(finish, new_size - size, value);
+			insert(end(), new_size - size, value);
 	}
+
+	/*
+	Returns the size of the storage space currently allocated for the vector,
+	expressed in terms of elements.
+	This capacity is not necessarily equal to the vector size. It can be equal
+	or greater, with the extra space allowing to accommodate for growth
+	without the need to reallocate on each insertion.
+	*/
 
   template< typename T, typename A >
 	typename vector<T,A>::size_type vector<T,A>::capacity(void) const
@@ -468,129 +535,176 @@ namespace ft
 		return static_cast<size_type>(end_of_storage - start);
 	}
 
+	/*
+	Returns whether the vector is empty (i.e. whether its size is 0).
+	*/
+
   template< typename T, typename A >
 	bool vector<T,A>::empty(void) const
 	{
 		return start == finish;
 	}
+
+	/*
+	Requests that the vector capacity be at least enough to contain n elements.
+	If n is greater than the current vector capacity, the function causes the
+	container to reallocate its storage increasing its capacity to n
+	(or greater). In all other cases, the function call does not cause a
+	reallocation and the vector capacity is not affected.
+	*/
 	
   template< typename T, typename A >
 	void vector<T,A>::reserve(typename vector<T,A>::size_type n)
 	{
-		if (n > max_size())
-		{
-			throw std::length_error(
-							"cannot create vector larger than max_size()");
-		}
 		if (capacity() < n)
 		{
 			const size_type old_size = size();
 			pointer tmp = _allocate_and_copy(n, start, finish);
 			_destroy(start, finish);
-			allocator.deallocate(start, end_of_storage - start);
+			deallocate(start, end_of_storage - start);
 			start = tmp;
 			finish = tmp + old_size;
 			end_of_storage = start + n;
 		}
 	}
 
-	// element_access:
+// ELEMENT_ACCESS:
+
+	/*
+	Returns a reference to the element at position n in the vector container.
+	If the vector object is const-qualified, the function returns a
+	const_reference. Otherwise, it returns a reference.
+	*/
 
   template< typename T, typename A >
-	typename vector<T,A>::reference
+   typename vector<T,A>::reference
 	vector<T,A>::operator[](typename vector<T,A>::size_type n)
 	{
 		return *(start + n);
 	}	
 
   template< typename T, typename A >
-	typename vector<T,A>::const_reference
+   typename vector<T,A>::const_reference
 	vector<T,A>::operator[](typename vector<T,A>::size_type n) const
 	{
 		return *(start + n);
 	}	
 
+	/*
+	Returns a reference to the element at position n in the vector.
+	The function automatically checks whether n is within the bounds of valid
+	elements in the vector, throwing an out_of_range exception if it is not
+	(i.e., if n is greater than, or equal to, its size).
+	If the vector object is const-qualified, the function returns a
+	const_reference. Otherwise, it returns a reference.
+	*/
+
   template<typename T, typename A >
-	typename vector<T,A>::reference
+   typename vector<T,A>::reference
 	vector<T,A>::at(typename vector<T,A>::size_type n)
 	{
 		if (n >= size())
-			throw std::range_error("Index is out of range");
+			throw std::out_of_range("Index is out of range");
 		return *(start + n);
 	}
 	
   template<typename T, typename A >
-	typename vector<T,A>::const_reference
+   typename vector<T,A>::const_reference
 	vector<T,A>::at(typename vector<T,A>::size_type n) const
 	{
 		if (n >= size())
-			throw std::range_error("Index is out of range");
+			throw std::out_of_range("Index is out of range");
 		return *(start + n);
 	}
 
+	/*
+	Returns a reference to the first element in the vector.
+	If the vector object is const-qualified, the function returns a
+	const_reference. Otherwise, it returns a reference.
+	*/
+
   template< typename T, typename A >
-	typename vector<T,A>::reference
+   typename vector<T,A>::reference
 	vector<T,A>::front(void)
 	{
 		return *start;
 	}	
 
   template< typename T, typename A >
-	typename vector<T,A>::const_reference
+   typename vector<T,A>::const_reference
 	vector<T,A>::front(void) const
 	{
 		return *start;
 	}	
 
+	/*
+	Returns a reference to the last element in the vector.
+	If the vector object is const-qualified, the function returns a
+	const_reference. Otherwise, it returns a reference.
+	*/
+
   template< typename T, typename A >
-	typename vector<T,A>::reference
+   typename vector<T,A>::reference
 	vector<T,A>::back(void)
 	{
 		return *(finish - 1);
 	}	
 
   template< typename T, typename A >
-	typename vector<T,A>::const_reference
+   typename vector<T,A>::const_reference
 	vector<T,A>::back(void) const
 	{
 		return *(finish - 1);
 	}
 
-		// modifiers:
+// MODIFIERS:
+
+	/*
+	 Adds a new element at the end of the vector, after its current last
+	element. The content of val is copied (or moved) to the new element.
+	This effectively increases the container size by one, which causes an
+	automatic reallocation of the allocated storage space if -and only if- the
+	new vector size surpasses the current vector capacity.
+	*/
 
   template< typename T, typename A >
 	void vector<T,A>::push_back(typename vector<T,A>::value_type const& value)
 	{
 		if (finish != end_of_storage)
 		{
-			allocator.construct(finish, value);
+			construct(finish, value);
 			++finish;
 		}
 		else
 		{
-			//_insert_aux(value);
 			const size_type old_size = size();
 			const size_type len = old_size != 0 ? 2 * old_size : 1;
-			pointer new_start = allocator.allocate(len);
+			pointer new_start = allocate(len);
 			pointer new_finish = new_start;
 			try
 			{
 				new_finish = _uninitialized_copy(start, finish, new_start);
-				allocator.construct(new_finish, value);
+				construct(new_finish, value);
 				++new_finish;
 			}
 			catch (...)
 			{
-				allocator.deallocate(new_start, len);
+				deallocate(new_start, len);
 				throw;
 			}
 			_destroy(start, finish);
-			allocator.deallocate(start, end_of_storage - start);
+			deallocate(start, end_of_storage - start);
 			start = new_start;
 			finish = new_finish;
 			end_of_storage = new_start + len;
 		}
 	}
+
+	/*
+	Removes the last element in the vector, effectively reducing the container
+	size by one.
+	This destroys the removed element.
+	*/
 
   template< typename T, typename A >
 	void vector<T,A>::pop_back(void)
@@ -599,8 +713,15 @@ namespace ft
 		allocator.destroy(finish);
 	}
 
+	/*
+	Insert elements
+	The vector is extended by inserting new elements before the element at the
+	specified position, effectively increasing the container size by the number
+	of elements inserted.
+	This causes an automatic reallocation of the allocated storage space
+	if -and only if- the new vector size surpasses the current vector capacity.
+	*/
 
-// insert(position, 1, value);
   template< typename T, typename A >
 	typename vector<T,A>::iterator vector<T,A>::insert(
 								typename vector<T,A>::iterator position,
@@ -610,50 +731,11 @@ namespace ft
 		size_type n = posptr - start;
 		if (finish != end_of_storage && posptr == finish)
 		{
-			allocator.construct(finish);
+			construct(finish, value);
 			++finish;
-		}
-		else if (finish != end_of_storage)
-		{
-			allocator.construct(finish, *(finish - 1));
-			++finish;
-			pointer curpos = finish - 2;
-			while (curpos != posptr)
-			{
-				T tmp = *curpos;
-				*curpos = *(curpos - 1);
-				--curpos;
-				*curpos = tmp;
-			}
-			*curpos = value;
 		}
 		else
-		{
-			const size_type old_size = size();
-			const size_type len = old_size != 0 ? 2 * old_size : 1;
-			pointer new_start = allocator.allocate(len);
-			pointer new_finish = new_start;
-			pointer except_ptr = new_start;
-			try
-			{
-				new_finish = _uninitialized_copy(start, posptr, new_start);
-				except_ptr = new_finish;
-				new_finish = _uninitialized_fill_n(new_finish, 1, value);
-				except_ptr = new_finish;
-				new_finish = _uninitialized_copy(posptr, finish, new_finish);
-			}
-			catch (...)
-			{
-				_destroy(new_start, new_finish);
-				allocator.deallocate(new_start, len);
-				throw;
-			}
-			_destroy(start, finish);
-			allocator.deallocate(start, end_of_storage - start);
-			start = new_start;
-			finish = new_finish;
-			end_of_storage = new_start + len;
-		}
+			_insert_aux(posptr, value);
 
 		return iterator(start + n);	
 	}
@@ -663,51 +745,8 @@ namespace ft
 							 typename vector<T,A>::size_type n,
 							 typename vector<T,A>::value_type const& value)
 	{
-		pointer posptr = position.base();
-		if (static_cast<size_type>(end_of_storage - finish) >= n)
-		{
-			_uninitialized_fill_n(finish, n, value);
-			pointer curptr = finish;
-			finish += n;
-			if (curptr != posptr)
-			{
-				while (curptr != finish)
-				{
-					T tmp = *posptr;
-					*posptr = *curptr;
-					*curptr = tmp;
-					++curptr;
-					++posptr;
-				}
-			}
-		}
-		else
-		{
-			const size_type old_size = size();
-			const size_type len = old_size != 0 ? 2 * old_size : n;
-			pointer new_start = allocator.allocate(len);
-			pointer new_finish = new_start;
-			pointer except_ptr = new_start;
-			try
-			{
-				new_finish = _uninitialized_copy(start, posptr, new_start);
-				except_ptr = new_finish;
-				new_finish = _uninitialized_fill_n(new_finish, n, value);
-				except_ptr = new_finish;
-				new_finish =_uninitialized_copy(posptr, finish, new_finish);
-			}
-			catch (...)
-			{
-				+destroy(new_start, except_ptr);
-				allocator.deallocate(new_start, len);
-				throw;
-			}
-				_destroy(start, finish);
-				allocator.deallocate(start, end_of_storage - start);
-				start = new_start;
-				finish = new_finish;
-				end_of_storage = start + len;
-		}
+		if (n != 0)
+			_insert_fill(position.base(), n, value);
 	}
 
   template< typename T, typename A >
@@ -718,6 +757,13 @@ namespace ft
 		_insert_dispatch(position, first, last, is_integral<InputIterator>());
 	}
 
+	/*
+	Erase elements
+	Removes from the vector either a single element (position) or a range of
+	elements ([first,last)). This effectively reduces the container size by
+	the number of elements removed, which are destroyed.
+	*/
+
   template< typename T, typename A >
 	typename vector<T,A>::iterator
 	vector<T,A>::erase(typename vector<T,A>::iterator position)
@@ -726,7 +772,7 @@ namespace ft
 		if (posptr + 1 != finish)
 			copy(posptr + 1, finish, posptr);
 		--finish;
-		allocator.destroy(finish);
+		destroy(finish);
 		return position;
 	}
 
@@ -743,6 +789,11 @@ namespace ft
 		return first;
 	}
 
+	/*
+	Exchanges the content of the container by the content of x,
+	which is another vector object of the same type. Sizes may differ.
+	*/
+
   template< typename T, typename A >
 	void vector<T,A>::swap(vector<T,A>& other)
 	{
@@ -750,6 +801,11 @@ namespace ft
 		ft::swap(finish, other.finish);
 		ft::swap(end_of_storage, other.end_of_storage);
 	}
+
+	/*
+	Removes all elements from the vector (which are destroyed),
+	leaving the container with a size of 0.
+	*/
 
   template<typename T, typename A>
 	void vector<T,A>::clear(void)
@@ -870,7 +926,7 @@ namespace ft
 										 ForwardIterator last,
 										 std::forward_iterator_tag)
 	{
-		size_type n = distance(first, last);
+		size_type n = ft::distance(first, last);
 		start = allocate(n);
 		end_of_storage = start + n;
 		finish = _uninitialized_copy(first, last, start);
@@ -960,15 +1016,112 @@ namespace ft
 		}
 	}
 
-    template< typename T, typename A >
+  template< typename T, typename A >
+	void vector<T,A>::_insert_aux(typename vector<T, A>::pointer position,
+								  typename vector<T,A>::value_type const& val)
+	{
+		if (finish != end_of_storage)
+		{
+			value_type val_copy = val;
+			construct(finish, *(finish - 1));
+			++finish;
+			ft::copy_backward(position, finish - 2, finish - 1);
+			*position = val_copy;
+		}
+		else
+		{
+			const size_type old_size = size();
+			const size_type len = old_size == 0 ? 1 : 2 * old_size;
+			pointer new_start = allocate(len);
+			pointer new_finish = new_start;
+			pointer except_ptr = new_start;
+			try
+			{
+				new_finish = _uninitialized_copy(start, position, new_start);
+				except_ptr = new_finish;
+				*new_finish = val;
+				++new_finish;
+				++except_ptr;
+				new_finish = _uninitialized_copy(position, finish, new_finish);
+			}
+			catch (...)
+			{
+				_destroy(new_start, except_ptr);
+				deallocate(new_start, len);
+				throw;
+			}
+			_destroy(start, finish);
+			deallocate(start, end_of_storage - start);
+			start = new_start;
+			finish = new_finish;
+			end_of_storage = start + len;
+		}
+	}
+
+template< typename T, typename A >
+	void vector<T,A>::_insert_fill(typename vector<T,A>::pointer position,
+								   typename vector<T,A>::size_type n,
+								   typename vector<T,A>::value_type const& val)
+	{
+		if (static_cast<size_type>(end_of_storage - finish) >= n)
+		{
+			value_type val_copy = val;
+			pointer old_finish = finish;
+			size_type elements_after_pos = finish - position;
+			if (elements_after_pos > n)
+			{
+				finish = _uninitialized_copy(finish - n, finish, finish);
+				ft::copy_backward(position, old_finish - n , old_finish);
+				ft::fill(position, position + n, val_copy);
+			}
+			else
+			{
+				finish = _uninitialized_fill_n(finish, n - elements_after_pos,
+																	val_copy);
+				finish = _uninitialized_copy(position, old_finish, finish);
+				ft::fill(position, old_finish, val_copy);
+			}
+		}
+		else
+		{
+			size_type old_size = size();
+			size_type len = old_size + (old_size < n ? n : old_size);
+			pointer new_start = allocate(len);
+			pointer new_finish = new_start;
+			pointer except_ptr = new_start;
+			try
+			{
+				new_finish = _uninitialized_copy(start, position, new_finish);
+				except_ptr = new_finish;
+				new_finish = _uninitialized_fill_n(new_finish, n, val);
+				except_ptr = new_finish;
+				new_finish = _uninitialized_copy(position, finish, new_finish);
+			}
+			catch (...)
+			{
+				_destroy(new_start, except_ptr);
+				deallocate(new_start, len);
+				throw;
+			}
+			_destroy(start, finish);
+			deallocate(start, end_of_storage - start);
+			start = new_start;
+			finish = new_finish;
+			end_of_storage = start + len;
+		}
+	}
+
+  template< typename T, typename A >
    template< typename Integral >
 	void vector<T,A>::_insert_dispatch(typename vector<T,A>::iterator position,
 							 		   Integral n,
 									   Integral value,
 									   ft::true_type)
 	{
-		//_fill_insert;
-		insert(position, static_cast<size_type>(n), static_cast<T>(value));
+		if (n != 0)
+			_insert_fill(position.base(),
+						 static_cast<size_type>(n),
+						 static_cast<value_type>(value));
 	}
 
   template< typename T, typename A >
@@ -1012,25 +1165,23 @@ namespace ft
 		if (first == last)
 			return;
 		size_type n = ft::distance(first, last);
+		pointer posptr = position.base();
 		if (static_cast<size_type>(end_of_storage - finish) >= n)
 		{
-			const size_type elems_after = finish - position.base();
+			const size_type elems_after = finish - posptr;
 			pointer old_finish = finish;
 			if (elems_after > n)
 			{
-				_uninitialized_copy(finish - n, finish, finish);
-				finish += n;
-				ft::copy_backward(position.base(), old_finish - n, old_finish);
+				finish = _uninitialized_copy(finish - n, finish, finish);
+				ft::copy_backward(posptr, old_finish - n, old_finish);
 				ft::copy(first, last, position);
 			}
 			else
 			{
 				ForwardIterator midle = first;
 				ft::advance(midle, elems_after);
-				_uninitialized_copy(midle, last, finish);
-				finish += n - elems_after;
-				_uninitialized_copy(position.base(), old_finish, finish);
-				finish += elems_after;
+				finish = _uninitialized_copy(midle, last, finish);
+				finish = _uninitialized_copy(posptr, old_finish, finish);
 				ft::copy(first, midle, position);
 			}
 		}
@@ -1040,19 +1191,23 @@ namespace ft
 			const size_type len = old_size + (old_size > n ? old_size : n);
 			pointer new_start = allocate(len);
 			pointer new_finish = new_start;
+			pointer except_ptr = new_start;
 			try
 			{
-				pointer posptr = position.base();
 				new_finish = _uninitialized_copy(start, posptr, new_start);
+				except_ptr = new_finish;
 				new_finish = _uninitialized_copy(first, last, new_finish);
+				except_ptr = new_finish;
 				new_finish = _uninitialized_copy(posptr, finish, new_finish);
 			}
 			catch (...)
 			{
-				allocator.deallocate(new_start, len);
+				_destroy(new_start, new_finish);
+				deallocate(new_start, len);
 				throw;
 			}
 			_destroy(start, finish);
+			deallocate(start, end_of_storage - start);
 			start = new_start;
 			finish = new_finish;
 			end_of_storage = start + len;
@@ -1065,7 +1220,7 @@ namespace ft
 	{
 		while (first != last)
 		{
-			allocator.destroy(first);
+			destroy(first);
 			++first;
 		}
 	}

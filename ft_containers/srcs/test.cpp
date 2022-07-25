@@ -32,6 +32,17 @@ void test_vector_constructor(void);
 void test_vector_operator_assign(void);
 void test_vector_assign(void);
 void test_vector_get_allocator(void);
+void test_vector_get_iterators(void);
+void test_vector_resize(void);
+void test_vector_reserve(void);
+void test_vector_at(void);
+void test_vector_push_back(void);
+void test_vector_pop_back(void);
+void test_vector_insert(void);
+void test_vector_insert2(void);
+void test_vector_insert3(void);
+void test_vector_insert4(void);
+void test_vector_erase(void);
 
 int main(void)
 {
@@ -51,6 +62,17 @@ int main(void)
 	test_vector_operator_assign();
 	test_vector_assign();
 	test_vector_get_allocator();
+	test_vector_get_iterators();
+	test_vector_resize();
+	test_vector_reserve();
+	test_vector_at();
+	test_vector_push_back();
+	test_vector_pop_back();
+	test_vector_insert();
+	test_vector_insert2();
+	test_vector_insert3();
+	test_vector_insert4();
+	test_vector_erase();
 
 	std::cout << "SUCCESS\n";
 
@@ -732,6 +754,23 @@ void test_vector_constructor(void)
 		++first;
 	}
 	assert(first == last);
+
+	{
+	std::vector<int> sv;
+	for(int i = 0; i < 1000; ++i)
+		sv.push_back(i);
+	vector<int> v(sv.begin(), sv.end());
+	for(int i = 0; i < 1000; ++i)
+		assert(v[i] == i);
+	}
+	{
+	std::fstream f("test1.txt", std::fstream::in);
+	std::istream_iterator<int> start(f);
+	std::istream_iterator<int> end;
+	vector<int> v(start, end);
+	for (int i = 0; i < 5; ++i)
+		assert(v[i] == i + 1);
+	}
 }
 
 
@@ -868,4 +907,460 @@ void test_vector_get_allocator(void)
 
 	int *ptr = v.get_allocator().allocate(5);
 	ptr[4] = 100;
-	v.get_allocator().deallocate(ptr, 5);}
+	v.get_allocator().deallocate(ptr, 5);
+}
+
+void test_vector_get_iterators(void)
+{
+	int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	vector<int> vv(arr, arr + sizeof(arr) / sizeof(int));
+	typedef vector<int>::iterator vIt;
+
+	vIt first = vv.begin();
+	vIt last = vv.end();
+	std::vector<int> tmp(first, last);
+	for (int i = 1; i < 10; ++i)
+	{
+		assert(*first == i);
+		assert(tmp[i - 1]  == i);
+		++first;
+	}
+	assert(first == last);
+
+	const vector<int> vvc = vv;
+	typedef vector<int>::const_iterator cvIt;
+
+	cvIt cfirst = vvc.begin();
+	cvIt clast = vvc.end();
+	std::vector<int> tmp1(cfirst, clast);
+	for (int i = 1; i < 10; ++i)
+	{
+		assert(*cfirst == i);
+		assert(tmp1[i - 1]  == i);
+		++cfirst;
+	}
+	assert(cfirst == clast);
+
+	cfirst = first;
+//	first = cfirst; // it is not compile;
+
+	typedef vector<int>::reverse_iterator vrIt;
+
+	vrIt rfirst = vv.rbegin();
+	vrIt rlast = vv.rend();
+	std::vector<int> tmp3(rfirst, rlast);
+	for (int i = 9; i > 0; --i)
+	{
+		assert(*rfirst == i);
+		assert(tmp3[9 - i]  == i);
+		++rfirst;
+	}
+	assert(rfirst == rlast);
+
+	typedef vector<int>::const_reverse_iterator cvrIt;
+
+	cvrIt crfirst = vvc.rbegin();
+	cvrIt crlast = vvc.rend();
+	std::vector<int> tmp4(crfirst, crlast);
+	for (int i = 9; i > 0; --i)
+	{
+		assert(*crfirst == i);
+		assert(tmp4[9 - i]  == i);
+		++crfirst;
+	}
+	assert(crfirst == crlast);
+	assert(tmp4.size() == 9);
+
+	crfirst = rfirst;
+	//first = cfirst; // it is not compile;
+
+	{
+		vIt first = vv.begin();
+		vIt last = vv.end();
+		vIt tmp = first;
+		assert(tmp == first);
+		while (tmp != last)
+		{
+			assert(tmp < last);
+			++tmp;
+		}
+		assert(tmp == last);
+		while (tmp != first)
+		{
+			assert(tmp > first);
+			--tmp;
+		}
+		while (tmp != last)
+		{
+			assert(tmp <= last);
+			tmp++;
+		}
+		assert(tmp == last);
+		while (tmp != first)
+		{
+			assert(tmp >= first);
+			tmp--;
+		}
+		tmp += 2;
+		assert(tmp - 2 == first);
+		tmp -= 5;
+		assert(tmp + 3 == first);
+		tmp += 1;
+		assert(2 + tmp == first);
+		tmp += 2;
+		assert(static_cast<vector<int>::size_type>(last - first) == vv.size());
+	} 
+
+}
+
+void test_vector_resize(void)
+{
+	ft::vector<double> dv1;
+	std::vector<double> dv2;
+	assert(dv1.max_size() == dv2.max_size());
+
+	vector<int> v;
+	assert(v.size() == 0 && v.capacity() == 0);
+	v.resize(10, 1);
+	assert(v.size() == 10 && v.capacity() == 10);
+	v.resize(8);
+	assert(v.size() == 8 && v.capacity() == 10);
+	v.resize(14, 1);
+	assert(v.size() == 14 && v.capacity() == 16);
+	v.resize(1000, 10);
+	assert(v.size() == 1000 && v.capacity() == 1000);
+	int i = 0;
+	for(; i < 14; ++i)
+	{
+		assert(v[i] == 1);
+	}
+	for(; i < 1000; ++i)
+	{
+		assert(v[i] == 10);
+	}
+	v.resize(1000, 2);
+	assert(v.size() == 1000 && v.capacity() == 1000);
+	for(i = 0; i < 14; ++i)
+	{
+		assert(v[i] == 1);
+	}
+	for(; i < 1000; ++i)
+	{
+		assert(v[i] == 10);
+	}
+	
+}
+
+void test_vector_reserve(void)
+{
+	vector<int> v;
+	
+	v.reserve(0);
+	assert(v.size() == 0 && v.capacity() == 0);
+	v.reserve(1000);
+	assert(v.size() == 0 && v.capacity() == 1000);
+	v.assign(1000, 1);
+	assert(v.size() == 1000 && v.capacity() == 1000);
+	v.reserve(2000);
+	for(int i = 0; i < 1000; ++i)
+		assert(v[i] == 1);
+	assert(v.size() == 1000 && v.capacity() == 2000);
+	v.reserve(200);
+	for(int i = 0; i < 1000; ++i)
+		assert(v[i] == 1);
+	assert(v.size() == 1000 && v.capacity() == 2000);
+}
+
+void test_vector_at(void)
+{
+	int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	vector<int> tv(arr, arr + sizeof(arr) / sizeof(int));
+	assert(tv.front() == 1);
+	assert(tv.back() == 9);
+	tv.front() = 1;
+	tv.back() = 9;
+
+	for(size_t i = 0; i < tv.size(); ++i)
+	{
+		assert(tv[i] == (int) (i + 1));
+	}
+
+	bool caught = false;
+	for(size_t i = 0; i < tv.size() + 1; ++i)
+	{
+		int tmp = 0;
+		try {
+			tmp = tv.at(i);
+		}
+		catch (std::out_of_range &)
+		{
+			caught = (i == tv.size() ? true : false);
+			tmp = (int) i + 1;
+		}
+		assert(tmp == (int) (i + 1));
+	}
+	assert(caught == true);
+
+	vector<std::string> tmp;
+	tmp.front();
+	tmp.back();
+
+	const vector<int> ctv(tv.begin(), tv.end());
+	assert(ctv.front() == 1);
+	assert(ctv.back() == 9);
+}
+
+void test_vector_push_back(void)
+{
+	std::vector<float> sv(10);
+	vector<float> v(10);
+	for(float i = 0; i < 1000.; i += 1)
+	{
+		sv.push_back(i);
+		v.push_back(i);
+		assert(sv.size() == v.size() && sv.capacity() == v.capacity());
+		assert(sv.back() == v.back());
+		assert(sv.front() == v.front());
+	}
+	for (vector<int>::size_type i = 0; i < sv.size(); ++i)
+		assert(sv[i] == v[i]);
+}
+
+
+void test_vector_pop_back(void)
+{
+	vector<int> v;
+	for(int i = 0; i < 1000; ++i)
+		v.push_back(i);
+	for(int i = 0; i < 1000; ++i)
+		v.pop_back();
+	assert(v.size() == 0);
+
+}
+
+void test_vector_insert(void)
+{
+	typedef vector<int>::iterator vIt;
+	vector<int> v;
+	v.reserve(10);
+
+	vIt it = v.insert(v.begin(), 1);
+	assert(v.front() == 1 && v.back() == 1);
+	assert(it == v.begin());
+	v.insert(v.end(), 3);
+	v.insert(v.end() - 1, 2);
+	assert(v[0] == 1 && v[1] == 2 && v[2] == 3);
+	for(int i = 4; i < 11; ++i)
+		v.insert(v.end(), i);
+	for(int i = 0; i < 10; ++i)
+		assert(v[i] == i + 1);
+	for(int i = 0; i < 30; ++i)
+		v.insert(v.begin() + 5, i);
+	for(int i = 0; i < 5; ++i)
+		assert(v[i] == i + 1);
+	for(int i = 0; i < 30; ++i)
+		assert(v[5 + i] == 30 - 1 - i);
+	for(int i = 35, j = 6; j < 11; ++j, ++i)
+		assert(v[i] == j);
+
+	{
+	vector<int> v;
+	v.reserve(11);
+	v.insert(v.begin(), 5, 5);
+	assert(v.size() == 5);
+	for(int i(0); i < 5; ++i)
+		assert(v[i] == 5);
+	v.insert(v.begin() + 1, 5, 10);
+	assert(v.size() == 10);
+	assert(v.front() == 5);
+	for(int i(1); i <= 5; ++i)
+		assert(v[i] == 10);
+	for(int i(6); i < 10; ++i)
+		assert(v[i] == 5);
+	v.reserve(15);
+	v.insert(v.end() - 2, 4, 30);
+	assert(v.front() == 5);
+	for(int i(1); i <= 5; ++i)
+		assert(v[i] == 10);
+	for(int i(6); i < 8; ++i)
+		assert(v[i] == 5);
+	for(int i(8); i < 12; ++i)
+		assert(v[i] == 30);
+	for(int i(12); i < 14; ++i)
+		assert(v[i] == 5);
+	assert(v.size() == 14);
+	v.insert(v.begin() + 4, 1000, 1);
+	assert(v.size() == 1014);
+	assert(v.front() == 5);
+	assert(v[1] == 10);
+	assert(v[2] == 10);
+	assert(v[3] == 10);
+	for(int i(4); i < 1004; ++i)
+		assert(v[i] == 1);
+	assert(v[1004] == 10);
+	assert(v[1005] == 10);
+	assert(v[1006] == 5);
+	assert(v[1007] == 5);
+	for(int i(1008); i < 1012; ++i)
+		assert(v[i] == 30);
+	assert(v[1012] == 5);
+	assert(v[1013] == 5);
+	}
+
+}
+
+void test_vector_insert2(void)
+{
+	typedef vector<std::string>::iterator vIt;
+	vector<std::string> v;
+	v.reserve(10);
+	vIt it = v.insert(v.begin(), "1");
+	assert(it == v.begin());
+	assert(v.front() == "1" && v.back() == "1");
+	v.insert(v.end(), "3");
+	v.insert(v.end() - 1, "2");
+	assert(v[0] == "1" && v[1] == "2" && v[2] == "3");
+
+	{
+	vector<std::string> v;
+	v.reserve(11);
+	v.insert(v.begin(), 5, "5");
+	assert(v.size() == 5);
+	for(int i(0); i < 5; ++i)
+		assert(v[i] == "5");
+	v.insert(v.begin() + 1, 5, "10");
+	assert(v.size() == 10);
+	assert(v.front() == "5");
+	for(int i(1); i <= 5; ++i)
+		assert(v[i] == "10");
+	for(int i(6); i < 10; ++i)
+		assert(v[i] == "5");
+	v.reserve(15);
+	v.insert(v.end() - 2, 4, "30");
+	assert(v.front() == "5");
+	for(int i(1); i <= 5; ++i)
+		assert(v[i] == "10");
+	for(int i(6); i < 8; ++i)
+		assert(v[i] == "5");
+	for(int i(8); i < 12; ++i)
+		assert(v[i] == "30");
+	for(int i(12); i < 14; ++i)
+		assert(v[i] == "5");
+	assert(v.size() == 14);
+	v.insert(v.begin() + 4, 1000, "1");
+	assert(v.size() == 1014);
+	assert(v.front() == "5");
+	assert(v[1] == "10");
+	assert(v[2] == "10");
+	assert(v[3] == "10");
+	for(int i(4); i < 1004; ++i)
+		assert(v[i] == "1");
+	assert(v[1004] == "10");
+	assert(v[1005] == "10");
+	assert(v[1006] == "5");
+	assert(v[1007] == "5");
+	for(int i(1008); i < 1012; ++i)
+		assert(v[i] == "30");
+	assert(v[1012] == "5");
+	assert(v[1013] == "5");
+	}
+
+}
+
+void test_vector_insert3(void)
+{
+	vector<int> v;
+	v.reserve(9);
+	std::fstream f("test1.txt", std::fstream::in);
+	std::istream_iterator<int> it(f);
+	v.insert(v.begin(), 0);
+	v.insert(v.begin(), 0);
+	v.insert(v.begin() + 1, it, std::istream_iterator<int>());
+	assert(v.front() == 0);
+	assert(v.back() == 0);
+	for(int i(1); i < 6; ++i)
+		assert(v[i] == i);
+	f.close();
+	std::fstream f2("test1.txt", std::fstream::in);
+	std::istream_iterator<int> it2(f2);
+	v.insert(v.end(), it2, std::istream_iterator<int>());
+	assert(v.front() == 0);
+	for(int i(1); i < 6; ++i)
+		assert(v[i] == i);
+	assert(v[6] == 0);
+	for(int i(1); i < 6; ++i)
+		assert(v[6 + i] == i);
+}
+
+void test_vector_insert4(void)
+{
+	std::vector<std::string> s;
+	s.push_back("1");
+	s.push_back("2");
+	s.push_back("3");
+	s.push_back("4");
+	s.push_back("5");
+	std::vector<std::string>::iterator f = s.begin();
+	std::vector<std::string>::iterator l = s.end();
+
+	
+	vector<std::string> v;
+	v.reserve(10);
+	v.insert(v.end(), f, l);
+	v.insert(v.begin() + 1, f, f + 2);
+	assert(v[0] == "1");
+	assert(v[1] == "1");
+	assert(v[2] == "2");
+	assert(v[3] == "2");
+	assert(v[4] == "3");
+	assert(v[5] == "4");
+	assert(v[6] == "5");
+	v.insert(v.end() - 2, f, l);
+	assert(v[0] == "1");
+	assert(v[1] == "1");
+	assert(v[2] == "2");
+	assert(v[3] == "2");
+	assert(v[4] == "3");
+	assert(v[5] == "1");
+	assert(v[6] == "2");
+	assert(v[7] == "3");
+	assert(v[8] == "4");
+	assert(v[9] == "5");
+	assert(v[10] == "4");
+	assert(v[11] == "5");
+}
+
+void test_vector_erase(void)
+{
+	vector<double> v;
+	v.assign(100, 1.);
+
+	for(int i(0); i < 50; ++i)
+		v.erase(v.end() - 1);
+	for(int i(0); i < 50; ++i)
+		v.erase(v.begin());
+	assert(v.size() == 0);
+	v.push_back(1.);
+	v.push_back(2.);
+	v.push_back(3.);
+	v.erase(v.begin());
+	assert(v[0] == 2.);
+	assert(v[1] == 3.);
+	v.erase(v.begin(), v.end());
+	assert(v.size() == 0);
+	v.push_back(1.);
+	v.push_back(2.);
+	v.push_back(3.);
+	v.push_back(4.);
+	v.push_back(5.);
+	vector<double>::iterator it = v.erase(v.begin() + 1, v.end() - 1);
+	assert(*it == 5.);
+	assert(v[0] == 1.);
+	assert(v[1] == 5.);
+	assert(v.size() == 2);
+	v.erase(v.begin(), v.begin() + 1);
+	v.erase(v.end() - 1,  v.end());
+	assert(v.size() == 0);
+
+	
+}
