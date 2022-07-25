@@ -43,6 +43,7 @@ void test_vector_insert2(void);
 void test_vector_insert3(void);
 void test_vector_insert4(void);
 void test_vector_erase(void);
+void test_vector_relops_swap(void);
 
 int main(void)
 {
@@ -73,6 +74,7 @@ int main(void)
 	test_vector_insert3();
 	test_vector_insert4();
 	test_vector_erase();
+	test_vector_relops_swap();
 
 	std::cout << "SUCCESS\n";
 
@@ -1363,4 +1365,24 @@ void test_vector_erase(void)
 	assert(v.size() == 0);
 
 	
+}
+
+void test_vector_relops_swap(void)
+{
+	vector<int> v1(10, 1);
+	vector<int> v2(10, 1);
+
+	assert(v1 == v2);
+	v2[6] = 2;
+	assert(v1 != v2);
+	assert(v1 < v2);
+	v1.swap(v2);
+	assert(v1 > v2);
+	assert(v1 >= v2);
+	swap(v1, v2);
+	assert(v1 <= v2);
+	v2[6] = 1;
+	v2.push_back(1);
+	assert(v1 != v2);
+	assert(v1 < v2);
 }

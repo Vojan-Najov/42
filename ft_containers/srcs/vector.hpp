@@ -1225,6 +1225,69 @@ template< typename T, typename A >
 		}
 	}
 
+/*
+Performs the appropriate comparison operation between the vector containers
+lhs and rhs.
+The equality comparison (operator==) is performed by first comparing sizes, and
+if they match, the elements are compared sequentially using operator==,
+stopping at the first mismatch (as if using algorithm equal).
+
+The less-than comparison (operator<) behaves as if using algorithm
+lexicographical_compare, which compares the elements sequentially using
+operator< in a reciprocal manner (i.e., checking both a<b and b<a) and stopping
+at the first occurrence.
+*/
+
+  template< typename T, typename Allocator > inline
+	bool operator==(vector<T, Allocator> const& lhs,
+					vector<T, Allocator> const& rhs)
+	{
+		return lhs.size() == rhs.size() &&
+			   ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+	}
+
+  template< typename T, typename Allocator > inline
+	bool operator!=(vector<T, Allocator> const& lhs,
+					vector<T, Allocator> const& rhs)
+	{
+		return !(lhs == rhs);
+	}
+
+  template< typename T, typename Allocator > inline
+	bool operator<(vector<T, Allocator> const& lhs,
+				   vector<T, Allocator> const& rhs)
+	{
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(),
+										   rhs.begin(), rhs.end());
+	}
+
+  template< typename T, typename Allocator > inline
+	bool operator>(vector<T, Allocator> const& lhs,
+				   vector<T, Allocator> const& rhs)
+	{
+		return rhs < lhs;
+	}
+
+  template< typename T, typename Allocator > inline
+	bool operator<=(vector<T, Allocator> const& lhs,
+					vector<T, Allocator> const& rhs)
+	{
+		return !(rhs < lhs);
+	}
+
+  template< typename T, typename Allocator > inline
+	bool operator>=(vector<T, Allocator> const& lhs,
+					vector<T, Allocator> const& rhs)
+	{
+		return !(lhs < rhs);
+	}
+
+  template< typename T, typename Allocator > inline
+	void swap(vector<T, Allocator>& x, vector<T, Allocator>& y)
+	{
+		x.swap(y);
+	}
+
 }
 
 #endif
