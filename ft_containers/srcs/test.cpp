@@ -3,8 +3,10 @@
 #include <cassert>
 #include <iterator>
 #include <vector>
+#include <stack>
 #include "utils.hpp"
 #include "vector.hpp"
+#include "stack.hpp"
 
 #ifndef STL
 #define STL 0
@@ -44,6 +46,7 @@ void test_vector_insert3(void);
 void test_vector_insert4(void);
 void test_vector_erase(void);
 void test_vector_relops_swap(void);
+void test_stack(void);
 
 int main(void)
 {
@@ -75,6 +78,7 @@ int main(void)
 	test_vector_insert4();
 	test_vector_erase();
 	test_vector_relops_swap();
+	test_stack();
 
 	std::cout << "SUCCESS\n";
 
@@ -704,6 +708,7 @@ void test_vector_constructor(void)
 	St st;
 	vector<St>::value_type *vtptr = (St*) 0;
 	(void) vtptr;
+#if __cplusplus < 201103L
 	vector<St, std::allocator<int> >::allocator_type *aptr =
 														(std::allocator<int>*) 0;
 	(void) aptr;
@@ -721,6 +726,7 @@ void test_vector_constructor(void)
 	(void) stptr;
 	vector<St>::difference_type *dtptr = (std::allocator<St>::difference_type *) 0;
 	(void) dtptr;
+#endif
 
 	std::allocator<int> alloc;
 	vector<int> v1;
@@ -902,11 +908,12 @@ void test_vector_get_allocator(void)
 
 	vector<int, std::allocator<int> > v;
 	std::allocator<int> tmp1 = v.get_allocator();
+#if __cplusplus < 201103L
 	vector<int, std::allocator<int> > v1(all);
 	std::allocator<int> tmp2 = v1.get_allocator();
 	vector<int, std::allocator<char> > v2(all);
 	std::allocator<int> tmp3 = v2.get_allocator();
-
+#endif
 	int *ptr = v.get_allocator().allocate(5);
 	ptr[4] = 100;
 	v.get_allocator().deallocate(ptr, 5);
@@ -1385,4 +1392,39 @@ void test_vector_relops_swap(void)
 	v2.push_back(1);
 	assert(v1 != v2);
 	assert(v1 < v2);
+}
+
+void test_stack(void)
+{
+	vector<std::string> v;
+	v.push_back("1");
+	v.push_back("2");
+	v.push_back("3");
+	v.push_back("4");
+	stack<std::string, vector<std::string> > s;
+	const stack<std::string, vector<std::string> > ss(v);
+	
+	assert(s.empty() == true);
+	assert(ss.empty() == false);
+
+	s.push("1");
+	s.push("2");
+	s.push("3");
+	s.push("4");
+
+	
+	assert(s.size() == 4);
+	assert(ss.size() == 4);
+
+	assert(s.top() == "4");
+	assert(ss.top() == "4");
+
+	assert(ss == s);
+	s.pop();
+	s.push("3");
+	assert(s != ss);
+	assert(s < ss);
+	assert(ss > s);
+	assert(s <= ss);
+	assert(ss >= s);
 }
