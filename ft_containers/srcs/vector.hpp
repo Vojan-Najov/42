@@ -94,7 +94,6 @@ namespace ft
 		using Base::start;
 		using Base::finish;
 		using Base::end_of_storage;
-		using Base::allocator; // delete it later
 
 	public:
 
@@ -710,7 +709,7 @@ template< typename T, typename A >
 	void vector<T,A>::pop_back(void)
 	{
 		--finish;
-		allocator.destroy(finish);
+		destroy(finish);
 	}
 
 	/*

@@ -1293,6 +1293,39 @@ namespace ft
 		}
 		return first;
 	}
+
+	/*
+	This is a base class for standard binary function objects.
+	Generically, function objects are instances of a class with member function operator() defined.
+	This member function allows the object to be used with the same syntax as a regular function
+	call, and therefore its type can be used as template parameter when a generic function type is
+	expected.
+	*/
+
+  template< typename Arg1, typename Arg2, typename Result >
+	struct binary_function
+	{
+		typedef Arg1	first_argument_type;
+		typedef Arg2	second_argument_type;
+		typedef Result	result_type;
+	};
+
+	/*
+	Function object class for less-than inequality comparison
+	Binary function object class whose call returns whether the its first argument compares less
+	than the second (as returned by operator <).
+	*/
+
+  template< typename T >
+	struct less : public ft::binary_function<T, T, bool>
+	{
+		typedef T		first_argument_type;
+		typedef T		second_argument_type;
+		typedef bool	result_type;
+
+		bool operator()(T const& lhs, T const& rhs) const { return lhs < rhs; }
+	};
+
 }
 
 #endif
