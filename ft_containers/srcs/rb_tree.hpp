@@ -61,10 +61,25 @@ namespace ft
 		Value	value_field;
 	};
 
+  template< typename T, typename Allocator >
+	struct Rb_tree_base;
+
+  template< class Key, class Value, class KeyOfValue, class Compare,
+			class Allocator = std::allocator<Value> >
+	class Rb_tree;
+
+  template< typename T >
+	struct Rb_tree_const_iterator;
+
 	//RB_TREE_BASE_ITERATOR
 
 	struct Rb_tree_base_iterator 
 	{
+  		template< class Key, class Val, class KeyOfValue, class Compare,
+				  class Allocator >
+		friend class Rb_tree;
+
+
 	protected:
 		typedef Rb_tree_node_base::Base_ptr				Base_ptr;
 		typedef Rb_tree_node_base::Const_Base_ptr		Const_Base_ptr;
@@ -126,6 +141,9 @@ namespace ft
   template< typename Value >
 	struct Rb_tree_iterator : public Rb_tree_base_iterator
 	{
+		template< typename T >
+		friend struct Rb_tree_const_iterator;
+
 		typedef Value							value_type;
 		typedef value_type&						reference;
 		typedef value_type*						pointer;
@@ -186,6 +204,7 @@ namespace ft
 
 	// RB_TREE_CONST_ITERATOR
 
+
   template< typename Value >
 	struct Rb_tree_const_iterator : public Rb_tree_base_iterator
 	{
@@ -198,6 +217,7 @@ namespace ft
 		typedef Rb_tree_node<Value>*					Link_type;
 		typedef Rb_tree_base_iterator::Base_ptr			Base_ptr;
 		typedef Rb_tree_const_iterator<Value>			Self;
+		typedef Rb_tree_iterator<Value>					iterator;
 
 		Rb_tree_const_iterator(void) {}
 		explicit Rb_tree_const_iterator(Base_ptr node)
@@ -205,6 +225,8 @@ namespace ft
 		explicit Rb_tree_const_iterator(Link_type node)
 			: Rb_tree_base_iterator(static_cast<Base_ptr>(node)) {}
 		Rb_tree_const_iterator(const Rb_tree_const_iterator& it)
+			: Rb_tree_base_iterator(it.node) {}
+		Rb_tree_const_iterator(const iterator& it)
 			: Rb_tree_base_iterator(it.node) {}
 
 		reference	operator*(void) const
@@ -577,14 +599,13 @@ namespace ft
 	RB_TREE
 	*/
 
-  template< class Key, class Value, class KeyOfValue, class Compare,
-			class Allocator = std::allocator<Value> >
+  template< typename Key, typename Value, typename KeyOfValue,
+			typename Compare, typename Allocator >
 	class Rb_tree : protected Rb_tree_base<Value, Allocator>
 	{
 		typedef Rb_tree_base<Value, Allocator> Base;
 	protected:
 		typedef Rb_tree_node_base*	Base_ptr;
-		//typedef Rb_tree_node<Value>	Rb_tree_node;
 		typedef Rb_tree_color_type	Color_type;
 	public:
 		typedef Key										key_type;
@@ -614,64 +635,6 @@ namespace ft
 		size_type	node_count;
 		Compare		key_compare;
 
-		// UTILS
-	protected:
-		Link_type create_node(const value_type& val);
-
-		Link_type clone_node(Link_type node);
-		
-		void destroy_node(Link_type node);
-		
-		Link_type& root(void) const
-		{ return reinterpret_cast<Link_type&>(header->parent); }
-
-		Link_type& leftmost(void) const
-		{ return reinterpret_cast<Link_type&>(header->left); }
-
-		Link_type& rightmost(void) const
-		{ return reinterpret_cast<Link_type&>(header->right); }
-
-		static Link_type& left(Link_type x)
-		{ return reinterpret_cast<Link_type&>(x->left); }
-
-		static Link_type& right(Link_type x)
-		{ return reinterpret_cast<Link_type&>(x->right); }
-
-		static Link_type& parent(Link_type x)
-		{ return static_cast<Link_type&>(x->parent); }
-
-		static reference value(Link_type x)
-		{ return x->value_field; }
-
-		static const Key& key(Link_type x)
-		{ return KeyOfValue()(value(x)); }
-
-		static Color_type& color(Link_type x)
-		{ return (Color_type&)(x->color); }
-		
-		static Link_type& left(Base_ptr x)
-		{ return static_cast<Link_type&>(x->left); }
-
-		static Link_type& right(Base_ptr x)
-		{ return static_cast<Link_type&>(x->right); }
-
-		static Link_type& parent(Base_ptr x)
-		{ return static_cast<Link_type&>(x->parent); }
-
-		static reference value(Base_ptr x)
-		{ return (static_cast<Link_type>(x))->value_field; }
-
-		static const Key& key(Base_ptr x)
-		{ return KeyOfValue()(value(x)); }
-
-		static Color_type& color(Base_ptr x)
-		{ return (Color_type&)(x->color); }
-
-		static Link_type minimum(Link_type x)
-		{ return static_cast<Link_type>(Rb_tree_node_base::minimum(x)); }
-
-		static Link_type maximum(Link_type x)
-		{ return static_cast<Link_type>(Rb_tree_node_base::maximum(x)); }
 
 		//COPY/ASSIGN/DESTROY:
 	public:
@@ -735,14 +698,92 @@ namespace ft
 		template< typename InputIterator >
 		void insert_unique(InputIterator first, InputIterator last);
 
+		void erase(iterator position);
+		size_type erase(const key_type& x);
+		void erase(iterator first, iterator last);
+		void erase(const key_type* first, const key_type* last);
 		void clear(void); 
 
+		// SET OPERATIONS
+	public:
+		iterator					find(const key_type& x);
+		const_iterator				find(const key_type& x) const;
+		size_type					count(const key_type& x) const;
+		iterator					lower_bound(const key_type& x);
+		const_iterator				lower_bound(const key_type& x) const;
+		iterator 					upper_bound(const key_type& x);
+		const_iterator				upper_bound(const key_type& x) const;
+		pair<iterator,iterator>		equal_range(const key_type& x);
+		pair<const_iterator, const_iterator>
+									equal_range(const key_type& x) const;
+
+		// UTILS
+	protected:
+		Link_type create_node(const value_type& val);
+
+		Link_type clone_node(Link_type node);
+		
+		void destroy_node(Link_type node);
+		
+		Link_type& root(void) const
+		{ return reinterpret_cast<Link_type&>(header->parent); }
+
+		Link_type& leftmost(void) const
+		{ return reinterpret_cast<Link_type&>(header->left); }
+
+		Link_type& rightmost(void) const
+		{ return reinterpret_cast<Link_type&>(header->right); }
+
+		static Link_type& left(Link_type x)
+		{ return reinterpret_cast<Link_type&>(x->left); }
+
+		static Link_type& right(Link_type x)
+		{ return reinterpret_cast<Link_type&>(x->right); }
+
+		static Link_type& parent(Link_type x)
+		{ return reinterpret_cast<Link_type&>(x->parent); }
+
+		static reference value(Link_type x)
+		{ return x->value_field; }
+
+		static const Key& key(Link_type x)
+		{ return KeyOfValue()(value(x)); }
+
+		static Color_type& color(Link_type x)
+		{ return (Color_type&)(x->color); }
+		
+		static Link_type& left(Base_ptr x)
+		{ return reinterpret_cast<Link_type&>(x->left); }
+
+		static Link_type& right(Base_ptr x)
+		{ return reinterpret_cast<Link_type&>(x->right); }
+
+		static Link_type& parent(Base_ptr x)
+		{ return reinterpret_cast<Link_type&>(x->parent); }
+
+		static reference value(Base_ptr x)
+		{ return (static_cast<Link_type>(x))->value_field; }
+
+		static const Key& key(Base_ptr x)
+		{ return KeyOfValue()(value(x)); }
+
+		static Color_type& color(Base_ptr x)
+		{ return (Color_type&)(x->color); }
+
+		static Link_type minimum(Link_type x)
+		{ return static_cast<Link_type>(Rb_tree_node_base::minimum(x)); }
+
+		static Link_type maximum(Link_type x)
+		{ return static_cast<Link_type>(Rb_tree_node_base::maximum(x)); }
 	private:
 		void 		_empty_initialize(void);
 		Link_type	_copy(Link_type x, Link_type p);
 		void		_erase(Link_type x);
 		iterator	_insert(Base_ptr _x, Base_ptr _y, const value_type& v);
 
+		// DEBUG
+	public:
+		bool 		_verify(void) const;
 	};
 
 	//COPY/ASSIGN
@@ -883,7 +924,7 @@ namespace ft
 		while (x)
 		{
 			y = x;
-			comp = key_compare(KeyOfValue(v), key(x));
+			comp = key_compare(KeyOfValue()(v), key(x));
 			x = comp ? left(x) : right(x);
 		}
 		iterator j = iterator(y);
@@ -945,13 +986,14 @@ namespace ft
 	{
 		while (first != last)
 		{
-			insert_equal(*first);
+			insert_unique(*first);
 			++first;
 		}
 	}
 
 
 	// ERASE:
+
   template< typename Key, typename Value,
 			typename KeyOfValue, typename Compare, typename Alloc >
 	void Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::_erase
@@ -968,6 +1010,67 @@ namespace ft
 
   template< typename Key, typename Value,
 			typename KeyOfValue, typename Compare, typename Alloc >
+	void Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::erase
+	(typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator pos)
+	{
+		Link_type y =
+		static_cast<Link_type>(Rb_tree_rebalance_for_erase(pos.node,
+														   header->parent,
+														   header->left,
+														   header->right));
+		destroy_node(y);
+		--node_count;
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::size_type
+	Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::erase
+  (const typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::key_type& x)
+	{
+		ft::pair<iterator, iterator> p = equal_range(x);
+		size_type n = 0;
+		distance(p.first, p.second, n);
+		erase(p.first, p.second);
+		return n;	
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	void Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::erase
+	(typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator first,
+	 typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator last)
+	{
+		if (first == begin() && last == end())
+			clear();
+		else
+		{
+			while (first != last)
+			{
+				erase(*first);
+				++first;
+			}
+		}
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	void Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::erase
+	(const typename Rb_tree<Key, Value, KeyOfValue,
+							Compare, Alloc>::key_type* first,
+	 const typename Rb_tree<Key, Value, KeyOfValue,
+							Compare, Alloc>::key_type* last)
+	{
+		while (first != last)
+		{
+			erase(*first);
+			++first;
+		}
+	}
+	
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
 	void Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::clear(void)
 	{
 		if (node_count != 0)
@@ -979,6 +1082,189 @@ namespace ft
 			node_count = 0;
 		}
 	}
+
+	// SET OPERATIONS
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator
+	Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::find
+	(const typename Rb_tree<Key, Value, KeyOfValue,
+							Compare, Alloc>::key_type& k)
+	{
+		Link_type y = header;	// Last node which is not less than k.
+		Link_type x = root();	// Current node.
+
+		while (x)
+		{
+			if (!key_compare(key(x), k))
+			{
+				y = x;
+				x = left(x);
+			}
+			else
+				x = right(x);
+		}
+		iterator it = iterator(y);
+		return (it == end() || key_compare(k, key(it.node))) ? end() : it;
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::const_iterator
+	Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::find
+	(const typename Rb_tree<Key, Value, KeyOfValue,
+							Compare, Alloc>::key_type& k) const
+	{
+		Link_type y = header;	// Last node which is not less than k.
+		Link_type x = root();	// Current node.
+
+		while (x)
+		{
+			if (!key_compare(key(x), k))
+			{
+				y = x;
+				x = left(x);
+			}
+			else
+				x = right(x);
+		}
+		const_iterator it = iterator(y);
+		return (it == end() || key_compare(k, key(it.node))) ? end() : it;
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::size_type
+	Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::count
+	(const typename Rb_tree<Key, Value, KeyOfValue,
+							Compare, Alloc>::key_type& k) const
+	{
+		ft::pair<const_iterator, const_iterator> p = equal_range(k);
+		size_type n = 0;
+		distance(p.first, p.second, n);
+		return n;
+	}
+
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator
+	Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::lower_bound
+	(const typename Rb_tree<Key, Value, KeyOfValue,
+							Compare, Alloc>::key_type& k)
+	{
+		Link_type y = header;
+		Link_type x = root();
+
+		while (x)
+		{
+			if (!key_compare(key(x), k))
+			{
+				y = x;
+				x = left(x);
+			}
+			else
+				x = right(x);
+		}
+
+		return iterator(y);
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::const_iterator
+	Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::lower_bound
+	(const typename Rb_tree<Key, Value, KeyOfValue,
+							Compare, Alloc>::key_type& k) const
+	{
+		Link_type y = header;
+		Link_type x = root();
+
+		while (x)
+		{
+			if (!key_compare(key(x), k))
+			{
+				y = x;
+				x = left(x);
+			}
+			else
+				x = right(x);
+		}
+
+		return const_iterator(y);
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator
+	Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::upper_bound
+	(const typename Rb_tree<Key, Value, KeyOfValue,
+							Compare, Alloc>::key_type& k)
+	{
+		Link_type y = header; // Last node which is greater than k.
+		Link_type x = root(); // Current node.
+
+		while (x)
+		{
+			if (key_compare(k, key(x)))
+			{
+				y = x;
+				x = left(x);
+			}
+			else
+				x = right(x);
+		}
+		return iterator(y);
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::const_iterator
+	Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::upper_bound
+	(const typename Rb_tree<Key, Value, KeyOfValue,
+							Compare, Alloc>::key_type& k) const
+	{
+		Link_type y = header; // Last node which greater than k.
+		Link_type x = root(); // Current node.
+
+		while (x)
+		{
+			if (key_compare(k, key(x)))
+			{
+				y = x;
+				x = left(x);
+			}
+			else
+				x = right(x);
+		}
+		return const_iterator(y);
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	ft::pair<typename Rb_tree<Key,Value,KeyOfValue,Compare,Alloc>::iterator,
+			 typename Rb_tree<Key,Value,KeyOfValue,Compare,Alloc>::iterator>
+	Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::equal_range
+	(const typename Rb_tree<Key, Value, KeyOfValue,
+							Compare, Alloc>::key_type& k)
+	{
+		return pair<iterator, iterator>(lower_bound(k), upper_bound(k));
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	ft::pair<typename Rb_tree<Key,Value,KeyOfValue,Compare,Alloc>
+			 ::const_iterator,
+			 typename Rb_tree<Key,Value,KeyOfValue,Compare,Alloc>
+			 ::const_iterator>
+	Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::equal_range
+	(const typename Rb_tree<Key, Value, KeyOfValue,
+							Compare, Alloc>::key_type& k) const
+	{
+		return pair<const_iterator,
+					const_iterator>(lower_bound(k), upper_bound(k));
+	}	
 
 	// UTILS:
 
@@ -1034,6 +1320,129 @@ namespace ft
 		root() = 0;
 		leftmost() = header;
 		rightmost() = header;
+	}
+
+	inline int _black_count(Rb_tree_node_base* node,
+							Rb_tree_node_base* root)
+	{
+		if (!node)
+			return 0;
+		else
+		{
+			int bc = node->color == rb_tree_black ? 1 : 0;
+			if (node == root)
+				return bc;
+			else
+				return bc + _black_count(node->parent, root);
+		}
+	}
+
+	// DEBUG
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	bool Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::_verify(void) const
+	{
+		if (node_count == 0 || begin() == end())
+			return (node_count == 0 && begin() == end() &&
+					header->left == header && header->right == header);
+
+		int len = black_count(leftmost(), root());
+		for (const_iterator it = begin(); it != end(); ++it)
+		{
+			Link_type x = static_cast<Link_type>(it.node);
+			Link_type L = left(x);
+			Link_type R = right(x);
+
+			if (x->color == rb_tree_red)
+			{
+				if ((L && L->color == rb_tree_red) ||
+					(R && R->color == rb_tree_red))
+					return false;
+			}
+			if (L && key_compare(key(x), key(L)))
+				return false;
+			if (R && key_compare(key(R), ket(x)))
+				return false;
+			if (!L & !R && _black_count(x, root()) != len)
+				return false;
+		}
+
+		if (leftmost() != Rb_tree_node_base::minimum(root()))
+			return false;
+		if (rightmost() != Rb_tree_node_base::maximum(root()))
+			return false;
+
+		return true;
+	}
+
+	// RELATION OPERATORS
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	inline bool
+	operator==(const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& lhs,
+			   const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& rhs)
+	{
+		return lhs.size() == rhs.size() &&
+			   equal(lhs.begin(), lhs.end(), rhs.begin());
+	}
+  
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	inline bool
+	operator<(const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& lhs,
+			  const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& rhs)
+	{
+		return lexicographical_compare(lhs.begin(), lhs.end(),
+									   rhs.begin(), rhs.end());
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	inline bool
+	operator!=(const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& lhs,
+			   const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& rhs)
+	{
+		return !(lhs == rhs);
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	inline bool
+	operator>(const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& lhs,
+			   const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& rhs)
+	{
+		return rhs < lhs;
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	inline bool
+	operator<=(const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& lhs,
+			   const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& rhs)
+	{
+		return !(rhs < lhs);
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	inline bool
+	operator>=(const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& lhs,
+			   const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& rhs)
+	{
+		return !(lhs < rhs);
+	}
+
+	// SWAP OVERLOAD
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	inline void
+	swap(const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& lhs,
+		 const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& rhs)
+	{
+		lhs.swap(rhs);
 	}
 
 }

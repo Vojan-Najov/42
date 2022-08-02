@@ -4,9 +4,11 @@
 #include <iterator>
 #include <vector>
 #include <stack>
+#include <map>
 #include "utils.hpp"
 #include "vector.hpp"
 #include "stack.hpp"
+#include "map.hpp"
 
 #ifndef STL
 #define STL 0
@@ -14,8 +16,18 @@
 
 #if STL==0
 using namespace ft;
+
+void greet(void)
+{
+	std::cout << "Test FT\n";
+}
 #else
 using namespace std;
+
+void greet(void)
+{
+	std::cout << "Test STD\n";
+}
 #endif
 
 void test_traits(void);
@@ -47,9 +59,12 @@ void test_vector_insert4(void);
 void test_vector_erase(void);
 void test_vector_relops_swap(void);
 void test_stack(void);
+void test_map_constructors(void);
+void test_map_iterator(void);
 
 int main(void)
 {
+	greet();
 	test_traits();
 	test_advance_and_distance();
 	test_reverse_iterator();
@@ -79,6 +94,8 @@ int main(void)
 	test_vector_erase();
 	test_vector_relops_swap();
 	test_stack();
+	test_map_constructors();
+	test_map_iterator();
 
 	std::cout << "SUCCESS\n";
 
@@ -1427,4 +1444,189 @@ void test_stack(void)
 	assert(ss > s);
 	assert(s <= ss);
 	assert(ss >= s);
+}
+
+bool fncomp (char lhs, char rhs) {return lhs<rhs;}
+
+struct classcomp {
+  bool operator() (const char& lhs, const char& rhs) const
+  {return lhs<rhs;}
+};
+
+
+void test_map_constructors(void)
+{
+	map<std::string, int> m1;
+	map<char, int, bool (*)(char, char)> m2(fncomp);
+	map<char, int, classcomp> m3;
+	classcomp cc;
+	map<char, int, classcomp> m4(cc);
+	std::allocator<pair<char, int> >  al;
+	map<char, int, bool (*)(char, char)> m5(fncomp, al);
+	map<char, int, classcomp> m6(cc, al);
+
+	map<std::string,int> first;
+
+  first["one"]=10;
+  first["two"]=20;
+  first["three"]=30;
+  first["four"]=40;
+  first["five"]=50;
+
+	map<std::string,int> second (first.begin(),first.end());
+	map<std::string,int> third (second);
+
+	map<std::string, int>::iterator fit = first.begin();
+	map<std::string, int>::iterator sit = second.begin();
+	map<std::string, int>::iterator tit = third.begin();
+	
+	while (fit != first.end())
+	{
+		assert(*fit == *sit && *sit == *tit);
+		++fit;
+		++sit;
+		++tit;
+	}
+	assert( sit == second.end() && tit == third.end());
+}
+
+void test_map_iterator(void)
+{
+	map<std::string,int> m;
+	std::map<std::string,int> stdm;
+
+  	m["one"]=10;
+  	stdm["one"]=10;
+	m["two"]=20;
+	stdm["two"]=20;
+	m["three"]=30;
+	stdm["three"]=30;
+	m["four"]=40;
+	stdm["four"]=40;
+	m["five"]=50;
+	stdm["five"]=50;
+	m["six"]=60;
+	stdm["six"]=60;
+	m["seven"]=70;
+	stdm["seven"]=70;
+	m["eight"]=80;
+	stdm["eight"]=80;
+	m["nine"]=90;
+	stdm["nine"]=90;
+
+	map<std::string, int>::iterator it = m.begin();
+	std::map<std::string, int>::iterator stdit = stdm.begin();
+
+	while (stdit != stdm.end())
+	{
+		assert((*stdit).first == (*it).first && (*stdit).second == (*it).second);
+		++stdit;
+		++it;
+	}
+	assert(it == m.end());
+
+	it = m.begin();
+	stdit = stdm.begin();
+	while (stdit != stdm.end())
+	{
+		assert((*stdit).first == (*it).first && (*stdit).second == (*it).second);
+		stdit++;
+		it++;
+	}
+	assert(it == m.end());
+	
+	it = m.end();
+	stdit = stdm.end();
+	while (stdit != stdm.begin())
+	{
+		--stdit;
+		--it;
+		assert((*stdit).first == (*it).first && (*stdit).second == (*it).second);
+	}
+	assert(it == m.begin());
+	assert((*stdit).first == (*it).first && (*stdit).second == (*it).second);
+	
+	it = m.end();
+	stdit = stdm.end();
+	while (stdit != stdm.begin())
+	{
+		stdit--;
+		it--;
+		assert(stdit->first == it->first && stdit->second == it->second);
+	}
+	assert(it == m.begin());
+	assert((*stdit).first == (*it).first && (*stdit).second == (*it).second);
+
+	const map<std::string, int> cm(m.begin(), m.end());
+	const std::map<std::string, int> cstdm(stdm.begin(), stdm.end());
+
+	map<std::string, int>::const_iterator cit = cm.begin();
+	std::map<std::string, int>::const_iterator cstdit = cstdm.begin();
+
+	while (cstdit != cstdm.end())
+	{
+		assert((*cstdit).first == (*cit).first &&
+				(*cstdit).second == (*cit).second);
+		++cstdit;
+		++cit;
+	}
+	assert(cit == cm.end());
+
+	cit = cm.begin();
+	cstdit = cstdm.begin();
+	while (cstdit != cstdm.end())
+	{
+		assert(cstdit->first == cit->first &&
+				cstdit->second == cit->second);
+		cstdit++;
+		cit++;
+	}
+	assert(cit == cm.end());
+
+	cit = cm.end();
+	cstdit = cstdm.end();
+	while (cstdit != cstdm.begin())
+	{
+		cstdit--;
+		cit--;
+		assert(cstdit->first == cit->first &&
+				cstdit->second == cit->second);
+	}
+	assert(cstdit->first == cit->first && cstdit->second == cit->second);
+	assert(cit == cm.begin());
+
+	cit = cm.end();
+	cstdit = cstdm.end();
+	while (cstdit != cstdm.begin())
+	{
+		--cstdit;
+		--cit;
+		assert(cstdit->first == cit->first &&
+				cstdit->second == cit->second);
+	}
+	assert(cstdit->first == cit->first && cstdit->second == cit->second);
+	assert(cit == cm.begin());
+
+	map<std::string, int>::reverse_iterator rit = m.rbegin();
+	std::map<std::string, int>::reverse_iterator rstdit = stdm.rbegin();
+	while (rstdit != stdm.rend())
+	{
+		assert(rstdit->first == rit->first &&
+				rstdit->second == rit->second);
+		++rit;
+		++rstdit;
+	}
+	assert(rit == m.rend());
+	
+	map<std::string, int>::const_reverse_iterator crit = m.rbegin();
+	std::map<std::string, int>::const_reverse_iterator crstdit = stdm.rbegin();
+	while (crstdit != stdm.rend())
+	{
+		assert(crstdit->first == crit->first &&
+				crstdit->second == crit->second);
+		++crit;
+		++crstdit;
+	}
+	assert(crit == m.rend());
+	
 }

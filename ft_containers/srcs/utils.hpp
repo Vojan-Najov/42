@@ -1295,6 +1295,58 @@ namespace ft
 	}
 
 	/*
+	Unary function object base class
+	This is a base class for standard unary function objects.
+	Generically, function objects are instances of a class with member function operator() defined.
+	This member function allows the object to be used with the same syntax as a regular function
+	call, and therefore its type can be used as template parameter when a generic function type is
+	expected.
+	*/
+
+  template< typename Arg, typename Result >
+	struct unary_function
+	{
+		typedef Arg		argument_type;
+		typedef Result	result_type;
+	};
+
+  template< typename T >
+	struct Identity : public unary_function<T, T>
+	{
+		T& operator()(T& x) const { return x; }
+		const T& operator()(const T& x) const { return x; }
+	};
+
+  template< typename Pair >
+	struct Select1st : public unary_function<Pair, typename Pair::first_type>
+	{
+		typename Pair::first_type& operator()(Pair& x) const
+		{
+			return x.first;
+		}
+
+		const typename Pair::first_type& operator()(const Pair& x) const
+		{
+			return x.first;
+		}
+	};
+
+  template< typename Pair >
+	struct Select2nd : public unary_function<Pair, typename Pair::second_type>
+	{
+		typename Pair::second_type& operator()(Pair& x) const
+		{
+			return x.second;
+		}
+
+		const typename Pair::second_type& operator()(const Pair& x) const
+		{
+			return x.second;
+		}
+	};
+
+
+	/*
 	This is a base class for standard binary function objects.
 	Generically, function objects are instances of a class with member function operator() defined.
 	This member function allows the object to be used with the same syntax as a regular function

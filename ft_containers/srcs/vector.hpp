@@ -212,7 +212,8 @@ namespace ft
 
 		void _insert_aux(pointer position, value_type const& val);
 
-		void _insert_fill(pointer position, size_type n, value_type const& val);
+		void _insert_fill(pointer position, size_type n,
+						  value_type const& val);
 
 		template< typename Integral >
 		void _insert_dispatch(iterator position, Integral n,
