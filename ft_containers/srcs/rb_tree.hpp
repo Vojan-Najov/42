@@ -61,6 +61,8 @@ namespace ft
 		Value	value_field;
 	};
 
+	// FORWARD DECLARATIONS
+
   template< typename T, typename Allocator >
 	struct Rb_tree_base;
 

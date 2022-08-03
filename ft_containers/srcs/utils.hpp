@@ -871,8 +871,11 @@ namespace ft
 	objects as a single unit.
 	*/
 
+	template< typename U1, typename U2 >
+	class pair_base {};
+
   template< typename T1, typename T2 >
-	struct pair
+	struct pair : pair_base<T1,T2>
 	{
 		typedef T1 first_type;
 		typedef T2 second_type;
@@ -888,6 +891,12 @@ namespace ft
 		pair(const pair<U1, U2>& pr)
 			: first(pr.first), second(pr.second) {}
 		pair& operator=(const pair& pr) {
+			first = pr.first;
+			second = pr.second;
+			return *this;
+		}
+		template< typename U1, typename U2 >
+		pair& operator=(const pair<U1, U2>& pr) {
 			first = pr.first;
 			second = pr.second;
 			return *this;
@@ -922,7 +931,7 @@ namespace ft
 	{ return !(x < y); }
 
   template< typename T1, typename T2 > inline
-	pair<T1, T2> make_pair(const T1& x, const T2& y)
+	pair<T1, T2> make_pair(T1 x, T2 y)
 	{ return pair<T1, T2>(x, y); }
 
 	/*

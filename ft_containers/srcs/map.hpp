@@ -146,7 +146,68 @@ namespace ft
 
 		pair<iterator,iterator> equal_range(const key_type& k) const
 		{ return rbt.equal_range(k); }
+
+		// Relation operators
+		template< typename K1, typename T1, typename C1, typename A1 >
+		friend bool operator==(const map<K1,T1,C1,A1>& lhs,
+							   const map<K1,T1,C1,A1>& rhs);
 		
+		template< typename K1, typename T1, typename C1, typename A1 >
+		friend bool operator<(const map<K1,T1,C1,A1>& lhs,
+							   const map<K1,T1,C1,A1>& rhs);
 	};
+
+  // Relation operators
+  template< typename Key, typename T, typename Compare, typename Alloc >
+	inline bool operator==(const map<Key,T,Compare,Alloc>& lhs,
+						   const map<Key,T,Compare,Alloc>& rhs)
+	{
+		return lhs.rbt == rhs.rbt;
+	}
+
+  template< typename Key, typename T, typename Compare, typename Alloc >
+	inline bool operator!=(const map<Key,T,Compare,Alloc>& lhs,
+						   const map<Key,T,Compare,Alloc>& rhs)
+	{
+		return !(lhs == rhs);
+	}
+
+  template< typename Key, typename T, typename Compare, typename Alloc >
+	inline bool operator<(const map<Key,T,Compare,Alloc>& lhs,
+						  const map<Key,T,Compare,Alloc>& rhs)
+	{
+		return lhs.rbt < rhs.rbt;
+	}
+
+  template< typename Key, typename T, typename Compare, typename Alloc >
+	inline bool operator>(const map<Key,T,Compare,Alloc>& lhs,
+						  const map<Key,T,Compare,Alloc>& rhs)
+	{
+		return rhs < lhs;
+	}
+
+  template< typename Key, typename T, typename Compare, typename Alloc >
+	inline bool operator<=(const map<Key,T,Compare,Alloc>& lhs,
+						   const map<Key,T,Compare,Alloc>& rhs)
+	{
+		return !(rhs < lhs);
+	}
+
+  template< typename Key, typename T, typename Compare, typename Alloc >
+	inline bool operator>=(const map<Key,T,Compare,Alloc>& lhs,
+						   const map<Key,T,Compare,Alloc>& rhs)
+	{
+		return !(lhs < rhs);
+	}
+
+  // Swap specialization
+  template< typename Key, typename T, typename Compare, typename Alloc >
+	inline void swap(const map<Key,T,Compare,Alloc>& lhs,
+					 const map<Key,T,Compare,Alloc>& rhs)
+	{
+		lhs.swap(rhs);
+	}
+
+  
 
 }

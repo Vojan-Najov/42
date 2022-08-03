@@ -41,6 +41,7 @@ void test_enable_if(void);
 void test_equal(void);
 void test_lexicograhical_compare(void);
 void test_pair(void);
+//vector
 void test_vector(void);
 void test_vector_constructor(void);
 void test_vector_operator_assign(void);
@@ -58,9 +59,17 @@ void test_vector_insert3(void);
 void test_vector_insert4(void);
 void test_vector_erase(void);
 void test_vector_relops_swap(void);
+void test_vector_swap(void);
+void test_vector_iterator_comp(void);
+//stack
 void test_stack(void);
+//map
 void test_map_constructors(void);
 void test_map_iterator(void);
+void test_map_capacity(void);
+void test_map_access(void);
+void test_map_insert_value(void);
+void test_map_insert_position(void);
 
 int main(void)
 {
@@ -93,9 +102,17 @@ int main(void)
 	test_vector_insert4();
 	test_vector_erase();
 	test_vector_relops_swap();
+	test_vector_iterator_comp();
+	test_vector_swap();
+// stack
 	test_stack();
+// map
 	test_map_constructors();
 	test_map_iterator();
+	test_map_capacity();
+	test_map_access();
+	test_map_insert_value();
+	test_map_insert_position();
 
 	std::cout << "SUCCESS\n";
 
@@ -1411,6 +1428,54 @@ void test_vector_relops_swap(void)
 	assert(v1 < v2);
 }
 
+void test_vector_swap(void)
+{
+	vector<int> v1;
+	vector<int> v2;
+
+	for (int i = 0; i < 10; ++i)
+	{
+		v1.push_back(i);
+		v2.push_back(9 - i);
+	}
+
+	vector<int>::iterator i11, i12, i13, i21, i22, i23;
+	i11 = v1.begin();
+	i12 = v1.begin() + 3;
+	i13 = --v1.end();
+	i21 = v2.begin();
+	i22 = v2.begin() + 3;
+	i23 = --v2.end();
+
+	assert(*i11 == 0 && *i12 == 3 && *i13 == 9);	
+	assert(*i21 == 9 && *i22 == 6 && *i23 == 0);	
+
+	swap(v1, v2);
+	assert(*i11 == 0 && *i12 == 3 && *i13 == 9);	
+	assert(*i21 == 9 && *i22 == 6 && *i23 == 0);	
+	assert(i11 == v2.begin() && i12 == v2.begin() + 3 && i13 == --v2.end());
+	assert(i21 == v1.begin() && i22 == v1.begin() + 3 && i23 == --v1.end());
+}
+
+void test_vector_iterator_comp(void)
+{
+	vector<std::string> v;
+	v.push_back("1");
+	v.push_back("2");
+	v.push_back("3");
+	v.push_back("4");
+
+	vector<std::string>::iterator it = v.begin();
+	vector<std::string>::const_iterator cit = v.begin();
+	assert( it == cit);
+	++it;
+	assert(it > cit);
+	++cit; ++cit;
+	assert(it < cit);
+	++it;
+	assert(*it == *cit);
+}
+
 void test_stack(void)
 {
 	vector<std::string> v;
@@ -1628,5 +1693,147 @@ void test_map_iterator(void)
 		++crstdit;
 	}
 	assert(crit == m.rend());
+	
+}
+
+void test_map_capacity(void)
+{
+	typedef map<char, int>::size_type sz_t;
+	map<char, int> m;
+
+	assert(m.empty() == true);
+	assert(m.size() == 0);
+	m['a'] = 1;
+	assert(m.empty() == false);
+	assert(m.size() == 1);
+	for (char c = 'a', i = 1; c <= 'z'; c += 1, i += 1)
+	{
+		m[c] = i;
+		assert(m.empty() == false);
+		assert(m.size() == sz_t(i));
+	}
+
+	assert(m.max_size() > m.size());
+}
+
+void test_map_access(void)
+{
+	map<char, int> m;
+	for (char c = 'a', i = 1; c <= 'z'; c += 1, i += 1)
+	{
+		m[c] = i;
+	}
+	assert(m['a'] == 1 && m['z'] == 26 && m['c'] == 3);
+	m['c'] = 6;
+	assert(m['c'] == 6);
+}
+
+void test_map_insert_value(void)
+{
+
+	typedef map<std::string, int>::iterator mit;
+	map<std::string, int> m;
+	pair<mit, bool> p;
+	pair<std::string, int> v;
+	
+	assert(m.size() == 0);
+	v = make_pair("1", 1);
+	m.insert(v);
+	assert(m.size() == 1);
+	v = make_pair("2", 2);
+	p = m.insert(v);
+	assert(p.first->first == "2" && p.second == true);
+	v = make_pair("0", 0);
+	p = m.insert(v);
+	assert(p.first->second == 0 && p.second == true);
+	v = make_pair("0", 10);
+	p = m.insert(v);
+	assert(p.first->second == 0 && p.second == false);
+	v = make_pair("2", 10);
+	p = m.insert(v);
+	assert(p.first->first == "2" && p.second == false);
+
+	mit tmp = p.first;
+
+	v = make_pair("6", 6);
+	p = m.insert(v);
+	assert(p.first->first == "6" && p.second == true);
+	v = make_pair("4", 4);
+	p = m.insert(v);
+	assert(p.first->first == "4" && p.second == true);
+	v = make_pair("5", 5);
+	p = m.insert(v);
+	assert(p.first->first == "5" && p.second == true);
+	v = make_pair("3", 3);
+	p = m.insert(v);
+	assert(p.first->first == "3" && p.second == true);
+
+	assert(tmp->first == "2" && tmp->second == 2);
+	
+	v = make_pair("!", 5);
+	p = m.insert(v);
+	assert(p.first->first == "!" && p.second == true);
+	v = make_pair("$", 3);
+	p = m.insert(v);
+	assert(p.first->first == "$" && p.second == true);
+
+	assert(tmp->first == "2" && tmp->second == 2);
+}
+
+void test_map_insert_position(void)
+{
+	typedef map<std::string, int>::iterator mit;
+	map<std::string, int> m;
+	pair<std::string, int> v;
+	mit it;
+	mit p;
+
+	v = make_pair("0", 0);
+	it = m.insert(m.begin(), v);
+	assert(it->first == "0" && it->second == 0);
+
+	v = make_pair("1", 1);
+	it = m.insert(m.begin(), v);
+	assert(it->first == "1" && it->second == 1);
+	assert(m.begin()->first == "0" && m.begin()->second == 0);
+
+	v = make_pair("!", 1);
+	it = m.insert(m.begin(), v);
+	assert(it->first == "!" && it->second == 1);
+	assert(m.begin()->first == "!" && m.begin()->second == 1);
+	
+	p = it;
+
+	v = make_pair("8", 8);
+	it = m.insert(m.end(), v);
+	assert(it->first == "8" && it->second == 8);
+	assert((--m.end())->first == "8" && (--m.end())->second == 8);
+
+	v = make_pair("7", 7);
+	it = m.insert(m.end(), v);
+	assert(it->first == "7" && it->second == 7);
+	assert((--m.end())->first == "8" && (--m.end())->second == 8);
+
+	assert(p->first == "!" && p->second == 1);
+	p = it;
+
+	v = make_pair("8", 8);
+	it = m.insert(m.end(), v);
+	assert(it->first == "8" && it->second == 8);
+
+
+	v = make_pair("6", 6);
+	mit tmp = m.end();
+	--tmp; --tmp; --tmp;
+	it = m.insert(tmp, v);
+	assert(it->first == "6" && it->second == 6);
+	
+	v = make_pair("6", 6);
+	tmp = m.begin();
+	++tmp;
+	it = m.insert(tmp, v);
+	assert(it->first == "6" && it->second == 6);
+	
+	assert(p->first == "7" && p->second == 7);
 	
 }

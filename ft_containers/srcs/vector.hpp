@@ -1202,7 +1202,7 @@ template< typename T, typename A >
 			}
 			catch (...)
 			{
-				_destroy(new_start, new_finish);
+				_destroy(new_start, except_ptr);
 				deallocate(new_start, len);
 				throw;
 			}
