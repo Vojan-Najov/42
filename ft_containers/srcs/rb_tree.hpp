@@ -110,15 +110,15 @@ namespace ft
 				node = tmp;
 				tmp = tmp->parent;
 			}
-			if (node->right != tmp)
+			if (node->right != tmp)  // for end.increment != root
 				node = tmp;
 		}
 	}
 
 	void Rb_tree_base_iterator::decrement(void)
 	{
-		if (node->color == rb_tree_red && node->parent->parent == node)
-			node = node->right;
+		if (node->color == rb_tree_red && node->parent->parent == node) // end
+			node = node->right; // rightmost
 		else if (node->left)
 		{
 			Base_ptr tmp = node->left;
@@ -317,13 +317,14 @@ namespace ft
 								  Rb_tree_node_base*& root)
 	{
 		x->color = rb_tree_red;
-		while (x != root && x->parent->color == rb_tree_red)
+		while (x != root && x->parent->color == rb_tree_red) // x->p->p exist
 		{
 			if (x->parent == x->parent->parent->left)
 			{
-				Rb_tree_node_base* y = x->parent->parent->right;
+				Rb_tree_node_base* y = x->parent->parent->right; // uncle
 				if (y && y->color == rb_tree_red)
 				{
+					// x->parent->parent is black
 					x->parent->color = rb_tree_black;
 					y->color = rb_tree_black;
 					x->parent->parent->color = rb_tree_red;
@@ -331,21 +332,24 @@ namespace ft
 				}
 				else
 				{
+					// x is right son
 					if (x == x->parent->right)
 					{
 						x = x->parent;
 						Rb_tree_rotate_left(x, root);
 					}
+					// now x - left son
 					x->parent->color = rb_tree_black;
 					x->parent->parent->color = rb_tree_red;
 					Rb_tree_rotate_right(x->parent->parent, root);
 				}
 			}
-			else
+			else // x->parent == x->parent->parent->right
 			{
-				Rb_tree_node_base* y = x->parent->parent->left;
+				Rb_tree_node_base* y = x->parent->parent->left; // uncle
 				if (y && y->color == rb_tree_red)
 				{
+					// x->parent->parent is black
 					x->parent->color = rb_tree_black;
 					y->color = rb_tree_black;
 					x->parent->parent->color = rb_tree_red;
@@ -353,11 +357,13 @@ namespace ft
 				}
 				else
 				{
+					// x - is right son
 					if (x == x->parent->left)
 					{
 						x = x->parent;
 						Rb_tree_rotate_right(x, root);
 					}
+					// now x is left son
 					x->parent->color = rb_tree_black;
 					x->parent->parent->color = rb_tree_red;
 					Rb_tree_rotate_left(x->parent->parent, root);
@@ -949,21 +955,21 @@ namespace ft
 	(Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator position,
 	 const Value& v)
 	{
-		if (position.node == header->left) // begin
+		if (position.node == header->left)								// begin
 		{
 			if (size() > 0 && key_compare(KeyOfValue()(v), key(position.node)))
 				return _insert(position.node, position.node, v);
 			else
 				return insert_unique(v).first;
 		}
-		else if (position.node == header) // end
+		else if (position.node == header)								// end
 		{
 			if (key_compare(key(rightmost()), KeyOfValue()(v)))
 				return _insert(0, rightmost(), v);
 			else
 				return insert_unique(v).first;
 		}
-		else
+		else															// midle
 		{
 			iterator before = position;
 			--before;

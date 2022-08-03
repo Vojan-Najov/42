@@ -70,6 +70,7 @@ void test_map_capacity(void);
 void test_map_access(void);
 void test_map_insert_value(void);
 void test_map_insert_position(void);
+void test_map_insert_range(void);
 
 int main(void)
 {
@@ -113,6 +114,7 @@ int main(void)
 	test_map_access();
 	test_map_insert_value();
 	test_map_insert_position();
+	test_map_insert_range();
 
 	std::cout << "SUCCESS\n";
 
@@ -1836,4 +1838,30 @@ void test_map_insert_position(void)
 	
 	assert(p->first == "7" && p->second == 7);
 	
+}
+
+void test_map_insert_range(void)
+{
+	pair<int, int> arr[1000];
+
+	for (int i = 0; i < 1000; ++i)
+		arr[i] = make_pair(i, 2 * i);
+
+	map<int, int> m;
+
+	m.insert(arr + 100, arr + 400);
+	m.insert(arr + 600, arr + 1000);
+	m.insert(arr, arr + 100);
+	m.insert(arr + 400, arr + 600);
+
+	pair<int, int> *start = arr;
+	pair<int, int> *finish = arr + 1000;
+	map<int, int>::iterator it = m.begin();
+
+	for(; start != finish; ++it, ++start)
+	{
+		assert(it->second == start->second);
+	}
+	assert(it == m.end());
+
 }
