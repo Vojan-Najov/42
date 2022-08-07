@@ -144,7 +144,7 @@ namespace ft
 		pair<iterator,iterator> equal_range(const key_type& k)
 		{ return rbt.equal_range(k); }
 
-		pair<iterator,iterator> equal_range(const key_type& k) const
+		pair<const_iterator,const_iterator> equal_range(const key_type& k) const
 		{ return rbt.equal_range(k); }
 
 		// Relation operators
@@ -207,7 +207,5 @@ namespace ft
 	{
 		lhs.swap(rhs);
 	}
-
-  
 
 }

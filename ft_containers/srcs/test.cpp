@@ -65,12 +65,26 @@ void test_vector_iterator_comp(void);
 void test_stack(void);
 //map
 void test_map_constructors(void);
+void test_map_assign(void);
 void test_map_iterator(void);
 void test_map_capacity(void);
 void test_map_access(void);
 void test_map_insert_value(void);
 void test_map_insert_position(void);
 void test_map_insert_range(void);
+void test_map_erase(void);
+void test_map_erase_iter(void);
+void test_map_erase_range(void);
+void test_map_clear(void);
+void test_map_swap(void);
+void test_map_find(void);
+void test_map_count(void);
+void test_map_lower_bound(void);
+void test_map_upper_bound(void);
+void test_map_equal_range(void);
+void test_map_compare(void);
+void test_map_relops(void);
+void test_swap(void);
 
 int main(void)
 {
@@ -115,6 +129,19 @@ int main(void)
 	test_map_insert_value();
 	test_map_insert_position();
 	test_map_insert_range();
+	test_map_lower_bound();
+	test_map_upper_bound();
+	test_map_erase();
+	test_map_erase_iter();
+	test_map_erase_range();
+	test_map_clear();
+	test_map_swap();
+	test_map_find();
+	test_map_count();
+	test_map_equal_range();
+	test_map_compare();
+	test_map_relops();
+	test_map_assign();
 
 	std::cout << "SUCCESS\n";
 
@@ -1864,4 +1891,491 @@ void test_map_insert_range(void)
 	}
 	assert(it == m.end());
 
+}
+
+void test_map_lower_bound(void)
+{
+	pair<int, char> arr[5];
+	pair<int, char>* start = arr;;
+	pair<int, char>* finish = start + 5;
+
+	arr[0] = make_pair(1, 'a');
+	arr[1] = make_pair(3, 'b');
+	arr[2] = make_pair(6, 'c');
+	arr[3] = make_pair(7, 'd');
+	arr[4] = make_pair(10, 'e');
+
+	map<int, char> m(start, finish);
+	
+	assert(m.lower_bound(-121)->second == 'a');
+	assert(m.lower_bound(1)->second == 'a');
+	assert(m.lower_bound(2)->second == 'b');
+	assert(m.lower_bound(3)->second == 'b');
+	assert(m.lower_bound(4)->second == 'c');
+	assert(m.lower_bound(5)->second == 'c');
+	assert(m.lower_bound(6)->second == 'c');
+	assert(m.lower_bound(7)->second == 'd');
+	assert(m.lower_bound(8)->second == 'e');
+	assert(m.lower_bound(9)->second == 'e');
+	assert(m.lower_bound(10)->second == 'e');
+	assert(m.lower_bound(11) == m.end());
+
+	{
+	const map<int, char> m(start, finish);
+	
+	assert(m.lower_bound(-121)->second == 'a');
+	assert(m.lower_bound(1)->second == 'a');
+	assert(m.lower_bound(2)->second == 'b');
+	assert(m.lower_bound(3)->second == 'b');
+	assert(m.lower_bound(4)->second == 'c');
+	assert(m.lower_bound(5)->second == 'c');
+	assert(m.lower_bound(6)->second == 'c');
+	assert(m.lower_bound(7)->second == 'd');
+	assert(m.lower_bound(8)->second == 'e');
+	assert(m.lower_bound(9)->second == 'e');
+	assert(m.lower_bound(10)->second == 'e');
+	assert(m.lower_bound(11) == m.end());
+	assert(m.lower_bound(110001) == m.end());
+	}
+
+	{
+	//empty
+	map<int, char> m;
+	assert(m.lower_bound(11) == m.end());
+	
+	}
+}
+
+void test_map_upper_bound(void)
+{
+	pair<int, char> arr[5];
+	pair<int, char>* start = arr;;
+	pair<int, char>* finish = start + 5;
+
+	arr[0] = make_pair(1, 'a');
+	arr[1] = make_pair(3, 'b');
+	arr[2] = make_pair(6, 'c');
+	arr[3] = make_pair(7, 'd');
+	arr[4] = make_pair(10, 'e');
+
+	map<int, char> m(start, finish);
+	
+	assert(m.upper_bound(-121)->second == 'a');
+	assert(m.upper_bound(1)->second == 'b');
+	assert(m.upper_bound(2)->second == 'b');
+	assert(m.upper_bound(3)->second == 'c');
+	assert(m.upper_bound(4)->second == 'c');
+	assert(m.upper_bound(5)->second == 'c');
+	assert(m.upper_bound(6)->second == 'd');
+	assert(m.upper_bound(7)->second == 'e');
+	assert(m.upper_bound(8)->second == 'e');
+	assert(m.upper_bound(9)->second == 'e');
+	assert(m.upper_bound(10) == m.end());
+	assert(m.upper_bound(100) == m.end());
+
+	{
+	const map<int, char> m(start, finish);
+	
+	assert(m.upper_bound(-121)->second == 'a');
+	assert(m.upper_bound(1)->second == 'b');
+	assert(m.upper_bound(2)->second == 'b');
+	assert(m.upper_bound(3)->second == 'c');
+	assert(m.upper_bound(4)->second == 'c');
+	assert(m.upper_bound(5)->second == 'c');
+	assert(m.upper_bound(6)->second == 'd');
+	assert(m.upper_bound(7)->second == 'e');
+	assert(m.upper_bound(8)->second == 'e');
+	assert(m.upper_bound(9)->second == 'e');
+	assert(m.upper_bound(10) == m.end());
+	assert(m.upper_bound(100) == m.end());
+	}
+
+	{
+	//empty
+	map<int, char> m;
+	assert(m.lower_bound(11) == m.end());
+	}
+}
+
+void test_map_erase(void)
+{
+	map<int, int> m;
+	std::map<int, int> stdm;
+	pair<int,int> v;
+	map<int, int>::iterator it;
+	std::map<int, int>::iterator stdit;
+
+	for (int i = 0; i < 1000; ++i)
+	{
+		m.insert(make_pair(i, 10 * i));
+		stdm.insert(std::make_pair(i, 10 * i));
+	}
+	it = m.lower_bound(600);
+	stdit = stdm.lower_bound(600);
+	
+
+	for (int i = -99; i < 0 ; i += 2)
+	{
+		assert(m.erase(i) == 0);
+		assert(stdm.erase(i) == 0);
+	}
+	for (int i = 333; i < 666 ; i += 2)
+	{
+		assert(m.erase(i) == 1);
+		assert(stdm.erase(i) == 1);
+	}
+	for (int i = 1; i < 333 ; i += 2)
+	{
+		assert(m.erase(i) == 1);
+		assert(stdm.erase(i) == 1);
+	}
+	for (int i = 666; i < 1000 ; i += 2)
+	{
+		assert(m.erase(i) == 1);
+		assert(stdm.erase(i) == 1);
+	}
+	for (int i = 1000; i < 0 ; i += 2)
+	{
+		assert(m.erase(i) == 0);
+		assert(stdm.erase(i) == 0);
+	}
+
+	assert(it->first == 600 && it->second == 6000);
+	assert(stdit->first == 600 && stdit->second == 6000);
+	assert(m.size() == stdm.size());
+	
+	stdit = stdm.begin();
+	for (it = m.begin(); it != m.end(); ++it, ++stdit)
+		assert(it->first == stdit->first && it->second == stdit->second);
+
+	assert(stdit == stdm.end());
+	
+}
+
+void test_map_erase_iter(void)
+{
+	map<int, int> m;
+	std::map<int, int> stdm;
+	pair<int,int> v;
+	map<int, int>::iterator it;
+	std::map<int, int>::iterator stdit;
+
+	for (int i = 0; i < 1000; ++i)
+	{
+		m.insert(make_pair(i, 10 * i));
+		stdm.insert(std::make_pair(i, 10 * i));
+	}
+	it = m.lower_bound(600);
+	stdit = stdm.lower_bound(600);
+
+	for (int i = 333; i < 666; i+=2)
+	{
+		m.erase(m.lower_bound(i));
+		stdm.erase(stdm.lower_bound(i));
+	}
+
+	assert(it->first == 600 && it->second == 6000);
+	assert(stdit->first == 600 && stdit->second == 6000);
+	assert(m.size() == stdm.size());
+	
+	stdit = stdm.begin();
+	for (it = m.begin(); it != m.end(); ++it, ++stdit)
+		assert(it->first == stdit->first && it->second == stdit->second);
+
+	assert(stdit == stdm.end());
+	
+}
+
+void test_map_erase_range(void)
+{
+	map<int, int> m;
+	std::map<int, int> stdm;
+	pair<int,int> v;
+	map<int, int>::iterator it;
+	std::map<int, int>::iterator stdit;
+
+	for (int i = 0; i < 1000; ++i)
+	{
+		m.insert(make_pair(i, 10 * i));
+		stdm.insert(std::make_pair(i, 10 * i));
+	}
+	it = m.lower_bound(50);
+	stdit = stdm.lower_bound(50);
+
+
+	m.erase(m.lower_bound(100), m.lower_bound(900));
+	stdm.erase(stdm.lower_bound(100), stdm.lower_bound(900));
+
+	assert(it->first == 50 && it->second == 500);
+	assert(stdit->first == 50 && stdit->second == 500);
+	assert(m.size() == stdm.size());
+	
+	stdit = stdm.begin();
+	for (it = m.begin(); it != m.end(); ++it, ++stdit)
+		assert(it->first == stdit->first && it->second == stdit->second);
+
+	assert(stdit == stdm.end());
+	
+}
+
+void test_map_clear(void)
+{
+
+	map<int, int> m;
+
+	m.clear();
+	assert(m.size() == 0 && m.begin() == m.end());
+	for (int i = 0; i < 1000; ++i)
+	{
+		m.insert(make_pair(i, 10 * i));
+	}
+
+	m.clear();
+	assert(m.size() == 0 && m.begin() == m.end());
+	for (int i = 0; i < 1000; ++i)
+	{
+		m.insert(make_pair(i, 10 * i));
+	}
+	m.clear();
+	assert(m.size() == 0 && m.begin() == m.end());
+	m.clear();
+	assert(m.size() == 0 && m.begin() == m.end());
+}
+
+void test_map_swap(void)
+{
+	map<std::string, int> m1;
+	map<std::string, int>::iterator it1;
+	map<std::string, int>::iterator it2;
+
+	{
+		map<std::string, int> m2;
+
+		m1.insert(make_pair("1", 1));
+		m1.insert(make_pair("2", 2));
+		m1.insert(make_pair("3", 3));
+
+		m1.swap(m2);
+
+		assert(m1.size() == 0 && m1.begin() == m1.end());
+		assert(m2.size() == 3 && m2.begin()->first == "1" && (--m2.end())->second == 3);
+
+		m1.insert(make_pair("4", 4));
+		m1.insert(make_pair("5", 5));
+
+		m1.swap(m2);
+
+		assert(m1.size() == 3 && m1.begin()->first == "1" && (--m1.end())->second == 3);
+		assert(m2.size() == 2 && m2.begin()->first == "4" && (--m2.end())->second == 5);
+	}
+
+	assert(m1.size() == 3 && m1.begin()->first == "1" && (--m1.end())->second == 3);
+}
+
+void test_map_find(void)
+{
+	map<int, int> m;
+	map<int, int>::iterator it;
+
+	assert(m.size() == 0 && m.begin() == m.end());
+	for (int i = 0; i < 1000; ++i)
+	{
+		m.insert(make_pair(i, 10 * i));
+	}
+
+	it = m.find(10);
+	assert(it->first == 10 && it->second == 100);
+	assert((++it)->first == 11 && it->second == 110);
+	
+	it = m.find(111);
+	assert(it->first == 111 && it->second == 1110);
+	assert((++it)->first == 112 && it->second == 1120);
+
+	it = m.find(-100);
+	assert(it == m.end());
+
+	it = m.find(0);
+	assert(it == m.begin());
+	
+	it = m.find(10000);
+	assert(it == m.end());
+
+	
+	m.erase(10);
+	it = m.find(10);
+	assert(it == m.end());
+	
+	m.insert(make_pair(10, 10));
+	it = m.find(10);
+	assert(it->first == 10);
+
+	m.insert(make_pair(10, 20));
+	it = m.find(10);
+	assert(it->first == 10 && it->second == 10);
+
+	{
+		const map<int, int> cm(m.begin(), m.end());
+		map<int, int>::const_iterator it;
+
+		it = m.find(10);
+		assert(it->first == 10 && it->second == 10);
+		assert((++it)->first == 11 && it->second == 110);
+	
+		it = m.find(111);
+		assert(it->first == 111 && it->second == 1110);
+		assert((++it)->first == 112 && it->second == 1120);
+
+		it = m.find(-100);
+		assert(it == m.end());
+
+		it = m.find(0);
+		assert(it == m.begin());
+	
+		it = m.find(10000);
+		assert(it == m.end());
+	}
+}
+
+void test_map_count(void)
+{
+	map<int, int> m;
+	map<int, int>::iterator it;
+
+	assert(m.size() == 0 && m.begin() == m.end());
+	for (int i = 0; i < 1000; ++i)
+	{
+		m.insert(make_pair(i, 10 * i));
+	}
+	const map<int, int> cm(m.begin(), m.end());
+
+	for(int i = -100; i < 0; ++i)
+		assert(cm.count(i) == 0);
+	for(int i = 0; i < 100; ++i)
+		assert(cm.count(i) == 1);
+	for(int i = 1000; i < 1100; ++i)
+		assert(cm.count(i) == 0);
+
+}
+
+void test_map_equal_range(void)
+{
+	map<int, int> m;
+	map<int, int>::iterator it;
+
+	assert(m.size() == 0 && m.begin() == m.end());
+	for (int i = 0; i < 1000; ++i)
+	{
+		m.insert(make_pair(i, 10 * i));
+	}
+	const map<int, int> cm(m.begin(), m.end());
+
+	pair<map<int,int>::iterator, map<int,int>::iterator> p;
+	pair<map<int,int>::const_iterator, map<int,int>::const_iterator> cp;
+
+	for(int i = -100; i < 0; ++i)
+	{
+		p = m.equal_range(i);
+		assert(p.first == m.begin() && p.second == m.begin());
+	}
+	for(int i = 0; i < 100; ++i)
+	{
+		p = m.equal_range(i);
+		assert(p.first->first == i && p.second->first != i);
+		assert(distance(p.first, p.second) == 1);
+	}
+	for(int i = 1000; i < 1100; ++i)
+	{
+		p = m.equal_range(i);
+		assert(p.first == m.end() && p.second == m.end());
+	}
+
+
+	for(int i = -100; i < 0; ++i)
+	{
+		cp = cm.equal_range(i);
+		assert(cp.first == cm.begin() && cp.second == cm.begin());
+	}
+	for(int i = 0; i < 100; ++i)
+	{
+		cp = cm.equal_range(i);
+		assert(cp.first->first == i && cp.second->first != i);
+		assert(distance(cp.first, cp.second) == 1);
+	}
+	for(int i = 1000; i < 1100; ++i)
+	{
+		cp = cm.equal_range(i);
+		assert(cp.first == cm.end() && cp.second == cm.end());
+	}
+
+}
+
+void test_map_compare(void)
+{
+	map<std::string, int>::key_compare kp;
+	map<std::string, int> m;
+
+	m["123"] = 1;
+	m["94123"] = 3;
+
+	const map<std::string, int> cm(m.begin(), m.end());
+
+	kp = cm.key_comp(); 
+	assert(kp(cm.begin()->first, (++(cm.begin()))->first) == true);
+
+	map<std::string, int>::value_compare vp = cm.value_comp();
+	assert(vp(*cm.begin(), *++cm.begin()));
+	
+}
+
+void test_map_relops(void)
+{
+	map<std::string, int> m1, m2;
+
+	m1["1"] = 1;
+	m1["2"] = 2;
+	m2["1"] = 1;
+	m2["2"] = 2;
+	
+	assert(m1 == m2);
+	assert(m1 <= m2);
+	assert(m1 >= m2);
+
+	m2.erase("2");
+	m2["3"] = 3;
+
+	assert(m1 != m2);
+	assert(m1 < m2); 
+	assert(m2 > m1); 
+	assert(m1 <= m2); 
+	assert(m2 >= m2); 
+}
+
+void test_swap(void)
+{
+	map<std::string, int> m1, m2;
+
+	m1["1"] = 1;
+	m1["2"] = 2;
+	m2["3"] = 1;
+	m2["4"] = 2;
+	
+	ft::swap(m1, m2);
+	assert(m1.begin()->first == "3");
+	assert(m2.begin()->first == "1");
+}
+
+void test_map_assign(void)
+{
+	map<std::string, int> m1;
+
+	m1["1"] = 1;
+	m1["2"] = 2;
+	{
+		map<std::string, int> m2;
+		m2["3"] = 1;
+		m2["4"] = 2;
+		m1 = m2;
+	}
+	assert(m1.begin()->first == "3");
+	assert((++m1.begin())->first == "4");
 }

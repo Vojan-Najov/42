@@ -374,7 +374,6 @@ namespace ft
 	}
 
 	// REBALANCE_FOR_ERASE
-
 	inline Rb_tree_node_base*
 	Rb_tree_rebalance_for_erase(Rb_tree_node_base* z,
 								Rb_tree_node_base*& root,
@@ -384,71 +383,66 @@ namespace ft
 		Rb_tree_node_base* y = z;
 		Rb_tree_node_base* x = 0;
 		Rb_tree_node_base* x_parent = 0;
-		if (y->left == 0)
-			x = y->right;
+		if (y->left == 0) // z has at most one non-null child (y == z)
+			x = y->right; // x might be null
 		else
 		{
-			if (y->right == 0)
-				x = y->left;
-			else
+			if (y->right == 0) // z has exactly one non-null child (y == z)
+				x = y->left;   // x is not null
+			else			   // z has two non-null children
 			{
-				y = y->right;
+				y = y->right;  // set y to z's successor.
 				while (y->left)
 					y = y->left;
-				x = y->right;
+				x = y->right;  // x might be null
 			}
 		}
-		if (y != z)
+		if (y != z)			   // relink y in place of z. y is z's successor
 		{
-			z->left->parent = y;
+			z->left->parent = y;  // z has two non-null child
 			y->left = z->left;
 			if (y != z->right)
 			{
 				x_parent = y->parent;
 				if (x)
 					x->parent = y->parent;
-				y->parent->left = x;
+				y->parent->left = x;  // y must be a left child
 				y->right = z->right;
 				z->right->parent = y;
 			}
 			else
-			{
 				x_parent = y;
-				if (root == z)
-					root = y;
-				else if (z->parent->left == z)
-				{
-					z->parent->left = y;
-				}
-				else
-					z->parent->left = y;
-				y->parent = z->parent;
-				ft::swap(y->color, z->color);
-				y = z;
-			}
+
+			if (root == z)
+				root = y;
+			else if (z->parent->left == z)
+				z->parent->left = y;
+			else
+				z->parent->right = y;
+			y->parent = z->parent;
+			ft::swap(y->color, z->color);
+			y = z; // y now points to node to be actually deleted
 		}
-		else
+		else	   // y == z
 		{
 			x_parent = y->parent;
 			if (x)
 				x->parent = y->parent;
 			if (root == z)
 				root = x;
+			else if (z->parent->left == z)
+				z->parent->left = x;
 			else
-			{
-				if (z->parent->left == z)
-					z->parent->left = x;
-				else
-					z->parent->right = x;
-			}	
-			if (leftmost == z)
+				z->parent->right = x;
+
+			if (leftmost == z) // z->left must be null
 			{
 				if (z->right == 0)
 					leftmost = z->parent;
 				else
 					leftmost = Rb_tree_node_base::minimum(x);
 			}
-			if (rightmost == z)
+			if (rightmost == z)  // z->right must be null
 			{
 				if (z->left == 0)
 					rightmost = z->parent;
@@ -456,7 +450,7 @@ namespace ft
 					rightmost = Rb_tree_node_base::maximum(x);
 			}
 		}
-		if (y->color != rb_tree_red)
+		if (y->color == rb_tree_black) // rebalance
 		{
 			while (x != root && (x == 0 || x->color == rb_tree_black))
 			{
@@ -870,8 +864,8 @@ namespace ft
 			else
 			{
 				root() = _copy(other.root(), header);
-				leftmost() = minimium(root());
-				rightmost() = maximun(root());
+				leftmost() = minimum(root());
+				rightmost() = maximum(root());
 				node_count = other.node_count;
 			}
 		}
@@ -1038,7 +1032,7 @@ namespace ft
 	{
 		ft::pair<iterator, iterator> p = equal_range(x);
 		size_type n = 0;
-		distance(p.first, p.second, n);
+		n = ft::distance(p.first, p.second);
 		erase(p.first, p.second);
 		return n;	
 	}
@@ -1053,10 +1047,8 @@ namespace ft
 			clear();
 		else
 		{
-			while (first != last)
-			{
-				erase(*first);
-				++first;
+			while (first != last) {
+				erase(first++);
 			}
 		}
 	}
@@ -1162,7 +1154,7 @@ namespace ft
 	(const typename Rb_tree<Key, Value, KeyOfValue,
 							Compare, Alloc>::key_type& k)
 	{
-		Link_type y = header;
+		Link_type y = header; // Last node which is not less than k
 		Link_type x = root();
 
 		while (x)
@@ -1186,7 +1178,7 @@ namespace ft
 	(const typename Rb_tree<Key, Value, KeyOfValue,
 							Compare, Alloc>::key_type& k) const
 	{
-		Link_type y = header;
+		Link_type y = header; // Last node which is not less than k
 		Link_type x = root();
 
 		while (x)
@@ -1393,7 +1385,7 @@ namespace ft
 			   const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& rhs)
 	{
 		return lhs.size() == rhs.size() &&
-			   equal(lhs.begin(), lhs.end(), rhs.begin());
+			   ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 	}
   
   template< typename Key, typename Value,
@@ -1402,7 +1394,7 @@ namespace ft
 	operator<(const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& lhs,
 			  const Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>& rhs)
 	{
-		return lexicographical_compare(lhs.begin(), lhs.end(),
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(),
 									   rhs.begin(), rhs.end());
 	}
 
