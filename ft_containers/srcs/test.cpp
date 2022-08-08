@@ -5,10 +5,12 @@
 #include <vector>
 #include <stack>
 #include <map>
+#include <set>
 #include "utils.hpp"
 #include "vector.hpp"
 #include "stack.hpp"
 #include "map.hpp"
+#include "set.hpp"
 
 #ifndef STL
 #define STL 0
@@ -85,6 +87,13 @@ void test_map_equal_range(void);
 void test_map_compare(void);
 void test_map_relops(void);
 void test_swap(void);
+//set
+void test_set_constructors(void);
+void test_set_assign(void);
+void test_set_iterators(void);
+void test_set_capacity(void);
+void test_set_insert(void);
+void test_set_insert_position(void);
 
 int main(void)
 {
@@ -142,6 +151,13 @@ int main(void)
 	test_map_compare();
 	test_map_relops();
 	test_map_assign();
+// set
+	test_set_constructors();
+	test_set_assign();
+	test_set_iterators();
+	test_set_capacity();
+	test_set_insert();
+	test_set_insert_position();
 
 	std::cout << "SUCCESS\n";
 
@@ -2378,4 +2394,160 @@ void test_map_assign(void)
 	}
 	assert(m1.begin()->first == "3");
 	assert((++m1.begin())->first == "4");
+}
+
+bool fncomp (std::string lhs, std::string rhs) {return lhs<rhs;}
+
+void test_set_constructors(void)
+{
+	set<std::string> s1;
+
+	less<std::string> comp;
+	set<std::string> s2(comp);
+	set<std::string, bool (*)(std::string, std::string)> s3(fncomp);
+
+	std::allocator<std::string> al;
+	set<std::string> s4(comp, al);
+
+
+	std::string arr[] = {"1", "5", "4", "3", "6", "2" };
+	set<std::string> s5(arr, arr + sizeof(arr) / sizeof(std::string));
+	set<std::string> s6(arr, arr + sizeof(arr) / sizeof(std::string), comp);
+	set<std::string> s7(arr, arr + sizeof(arr) / sizeof(std::string), comp, al);
+}
+
+void test_set_iterators(void)
+{
+	std::string arr[] = {"1", "5", "4", "3", "6", "2" };
+	set<std::string> s(arr, arr + sizeof(arr) / sizeof(std::string));
+	set<std::string>::iterator it;
+
+	it = s.begin();
+	assert(*it == "1");
+	++it;
+	assert(*it++ == "2");
+	assert(*it == "3");
+	++it; ++it; ++it; --it;
+	assert(*it-- == "5");
+	assert(*it-- == "4");
+	assert(*(--s.end()) == "6");
+
+	const set<std::string> cs(s.begin(), s.end());
+	set<std::string>::iterator cit;
+	cit = cs.begin();
+	assert(*cit == "1");
+	++cit;
+	assert(*cit++ == "2");
+	assert(*cit == "3");
+	++cit; ++cit; ++cit; --cit;
+	assert(*cit-- == "5");
+	assert(*cit-- == "4");
+	assert(*(--cs.end()) == "6");
+
+	set<std::string>::reverse_iterator rit;
+	rit = s.rbegin();
+	assert(*rit == "6");
+	assert(*--s.rend() == "1");
+
+	set<std::string>::const_reverse_iterator crit;
+	crit = cs.rbegin();
+	assert(*crit == "6");
+	assert(*--cs.rend() == "1");
+}
+
+void test_set_assign(void)
+{
+	int arr1[] = { 10, 2, 5, 8, 7};
+	int arr2[] = { 4, 100, -15};
+	set<int> s1(arr1, arr1 + sizeof(arr1) / sizeof(int));
+
+	{
+		set<int> s2(arr2, arr2 + sizeof(arr2) / sizeof(int));
+
+		assert(s1.size() != s2.size());
+		assert(s1 != s2);
+		
+		s1 = s2;
+		assert(s1.size() == s2.size());
+		assert(s1 == s2);
+		assert(s1.begin() != s2.begin());
+		assert(*s1.begin() == *s2.begin());
+	}
+	assert(*s1.begin() == -15 && *--s1.end() == 100);
+}
+
+void test_set_capacity(void)
+{
+	int arr[] = { 10, 2, 5, 8, 7};
+
+	const set<int> ces;
+	assert(ces.empty() == true);
+	assert(ces.size() == 0);
+
+	const set<int> cs(arr, arr + sizeof(arr) / sizeof(int));
+
+	assert(cs.empty() == false);
+	assert(cs.size() == sizeof(arr) / sizeof(int));
+	
+	assert(cs.max_size() > cs.size());
+}
+
+void test_set_insert(void)
+{
+	set<int> s;
+	typedef set<int>::iterator sIt;
+	sIt tmp1, tmp2, tmp3;
+	pair<sIt, bool> p;
+	
+	for (int i = 20; i < 40; ++i)
+	{
+		p = s.insert(i);
+		assert(p.second == true);
+		assert(p.first == s.begin() || p.first == --s.end() ||
+			   *p.first < *++p.first);
+	}
+	tmp1 = s.begin();
+	assert(*tmp1 == 20);
+
+	tmp2 = s.insert(80).first;
+	for (int i = 81; i < 100; ++i)
+	{
+		p = s.insert(i);
+		assert(p.second == true);
+		assert(p.first == s.begin() || p.first == --s.end() ||
+			   *p.first > *--p.first);
+	}
+	assert(*tmp2 == 80);
+
+	for (int i = 0; i < 20; ++i)
+	{
+		p = s.insert(i);
+		assert(p.second == true);
+		assert(p.first == s.begin() || p.first == --s.end() ||
+			   *p.first < *++p.first);
+	}
+	tmp3 = s.begin();
+	assert(*tmp3 == 0);
+
+	for (int i = 40; i < 80; ++i)
+	{
+		p = s.insert(i);
+		assert(p.second == true);
+		assert(p.first == s.begin() || p.first == --s.end() ||
+			   *p.first > *--p.first);
+	}
+
+	for (int i = 0; i < 100; ++i)
+	{
+		p = s.insert(i);
+		assert(p.second == false);
+		assert(*p.first == i);
+	}
+
+	assert(*tmp1 == 20 && *tmp2 == 80 && *tmp3 == 0);
+}
+
+void test_set_insert_position(void)
+{
+
 }
