@@ -94,6 +94,13 @@ void test_set_iterators(void);
 void test_set_capacity(void);
 void test_set_insert(void);
 void test_set_insert_position(void);
+void test_set_insert_range(void);
+void test_set_erase_position(void);
+void test_set_erase(void);
+void test_set_erase_range(void);
+void test_set_swap(void);
+void test_set_clear(void);
+void test_set_find(void);
 
 int main(void)
 {
@@ -158,6 +165,12 @@ int main(void)
 	test_set_capacity();
 	test_set_insert();
 	test_set_insert_position();
+	test_set_insert_range();
+	test_set_erase_position();
+	test_set_erase();
+	test_set_erase_range();
+	test_set_swap();
+	test_set_clear();
 
 	std::cout << "SUCCESS\n";
 
@@ -2549,5 +2562,225 @@ void test_set_insert(void)
 
 void test_set_insert_position(void)
 {
+	set<int> s;
+	set<int>::iterator it, tmp1, tmp2;
 
+	for (int i = 20; i < 30; ++i)
+	{
+		it = s.insert(s.begin(), i);
+		assert(*it == i);
+	}
+	tmp1 = ++s.begin();
+	assert(*tmp1 == 21);
+	for (int i = 0; i < 10; ++i)
+	{
+		it = s.insert(--s.end(), i);
+		assert(*it == i);
+	}
+	tmp2 = s.begin();
+	std::advance(tmp2, 15);
+	assert(*tmp2 == 25);
+	for (int i = 10; i < 20; ++i)
+	{
+		it = s.begin();
+		std::advance(it, i);
+		it = s.insert(it, i);
+		assert(*it == i);
+	}
+
+	assert(*tmp1 == 21);
+	assert(*tmp2 == 25);
+
+	for (int i = 0; i < 30; ++i)
+	{
+		it = s.begin();
+		advance(it, i);
+		it = s.insert(it, i);
+		assert(*it == i);
+	}
+
+	assert(*tmp1 == 21);
+	assert(*tmp2 == 25);
+}
+
+void test_set_insert_range(void)
+{
+	int arr1[] = { 19, 4, 0, 5, 17, 1};
+	int arr2[] = {18, 2, 15, 16, 3, 11, 12, 7, 6, 10, 8, 13,14, 9};
+
+	set<int> s;
+	set<int>::iterator it;
+
+	s.insert(arr1, arr1 + sizeof(arr1) / sizeof(int));
+	it = s.begin();
+	advance(it, 4);
+	assert(*it == 17);
+
+	s.insert(arr2, arr2 + sizeof(arr2) / sizeof(int));
+	assert(*it == 17);
+
+	it = s.begin();
+	for (int i = 0; i < 20; ++it, ++i)
+		assert(*s.find(i) == i);
+}
+
+void test_set_erase_position(void)
+{
+	std::set<int> ss;
+
+	for(int i = 0; i < 100; ++i)
+		ss.insert(i);
+
+	set<int> s(ss.begin(), ss.end());
+
+	set<int>::iterator it, tmp1, tmp2;
+	std::set<int>::iterator sit;
+
+	tmp1 = s.find(33);
+	tmp2 = s.find(58);
+
+	for (int i = 0; i < 100; i += 7)
+	{
+		it = s.find(i);
+		sit = ss.find(i);
+		s.erase(it);
+		ss.erase(sit);
+	}
+
+	assert(*tmp1 == 33);
+	assert(*tmp2 == 58);
+
+	it = s.begin();
+	sit = ss.begin();
+	for (; it != s.end(); ++it, ++sit)
+		assert(*it == *sit);
+	assert(sit == ss.end());
+}
+
+void test_set_erase(void)
+{
+	set<int> s;
+	std::set<int> ss;
+
+	for (int i = 0; i < 1000; ++i)
+	{
+		s.insert(i);
+		ss.insert(i);
+	}
+
+	set<int>::iterator it = s.begin();
+	advance(it, 777);
+	set<int>::const_iterator cit = s.begin();
+	advance(cit, 333);
+
+	for (int i = 0; i < 1000; i += 2)
+	{
+		s.erase(i);
+		ss.erase(i);
+	}
+
+	assert(*it == 777);
+	assert(*cit == 333);
+
+	it = s.begin();
+	std::set<int>::iterator sit = ss.begin();
+
+	for(; sit != ss.end(); ++sit, ++it)
+		assert(*it == *sit);
+	assert(ss.size() == s.size());
+}
+
+void test_set_erase_range(void)
+{
+	set<int> s;
+	std::set<int> ss;
+
+	for (int i = 0; i < 1000; ++i)
+	{
+		s.insert(i);
+		ss.insert(i);
+	}
+
+	set<int>::iterator start, finish, tmp;
+	start = s.begin();
+	std::advance(start, 444);
+	finish = s.begin();
+	std::advance(finish, 777);
+	tmp = s.begin();
+	std::advance(tmp, 123);
+	assert(*tmp == 123);
+
+	std::set<int>::iterator sstart, sfinish;
+	sstart = ss.begin();
+	std::advance(sstart, 444);
+	sfinish = ss.begin();
+	std::advance(sfinish, 777);
+
+	s.erase(start, finish);
+	ss.erase(sstart, sfinish);
+
+	assert(*tmp == 123);
+
+	start = s.begin();
+	sstart = ss.begin();
+	for(; start != s.end(); ++start, ++sstart)
+		assert(*start == *sstart);
+	assert(sstart == ss.end());
+
+}
+
+void test_set_swap(void)
+{
+	set<int> lhs;
+
+	for(int i = 0; i < 100; ++i)
+		lhs.insert(i);
+	{
+		set<int> rhs;
+		for(int i = 1000; i < 1200; ++i)
+			rhs.insert(i);
+		
+		lhs.swap(rhs);
+		for(int i = 0; i < 100; ++i)
+			assert(rhs.insert(i).second == false);
+	}
+	for(int i = 1000; i < 1200; ++i)
+		assert(lhs.insert(i).second == false);
+
+	set<int> rhs;
+	lhs.swap(rhs);
+	assert(lhs.size() == 0);
+}
+
+void test_set_clear(void)
+{
+	set<int> s;
+
+	s.clear();
+	assert(s.size() == 0 && s.empty() == true);
+	assert(s.begin() == s.end());
+	for(int i = 0; i < 100; ++i)
+		s.insert(i);
+	assert(s.size() != 0 && s.empty() == false);
+	assert(s.begin() != s.end());
+	s.clear();
+	assert(s.size() == 0 && s.empty() == true);
+	assert(s.begin() == s.end());
+}
+
+void test_set_find(void)
+{
+	set<int> s;
+
+	for(int i = 0; i < 100; ++i)
+		s.insert(2 * i);
+
+	for (int i = -10; i < 0; ++i)
+		assert(s.find(i) == s.end());
+	for (int i = 1; i < 200; i += 2)
+		assert(s.find(i) == s.end());
+	for (int i = 0; i < 200; i += 2)
+		assert(*s.find(i) == i);
+	for (int i = 200; i < 250; i += 2)
+		assert(s.find(i) == s.end());
 }

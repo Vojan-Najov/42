@@ -697,12 +697,15 @@ namespace ft
 	public:
 		ft::pair<iterator, bool> insert_unique(const value_type& x);
 		iterator insert_unique(iterator position, const value_type& x);
+		iterator insert_unique(const_iterator position, const value_type& x);
 		template< typename InputIterator >
 		void insert_unique(InputIterator first, InputIterator last);
 
 		void erase(iterator position);
+		void erase(const_iterator position);
 		size_type erase(const key_type& x);
 		void erase(iterator first, iterator last);
+		void erase(const_iterator first, const_iterator last);
 		void erase(const key_type* first, const key_type* last);
 		void clear(void); 
 
@@ -982,6 +985,17 @@ namespace ft
 
   template< typename Key, typename Value,
 			typename KeyOfValue, typename Compare, typename Alloc >
+	typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator
+	Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_unique
+	(Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::const_iterator position,
+	 const Value& v)
+	{
+		return insert_unique(iterator(position.node), v);
+	}
+
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
    template< typename InputIterator>
 	void Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_unique
 	(InputIterator first, InputIterator last)
@@ -1026,6 +1040,14 @@ namespace ft
 
   template< typename Key, typename Value,
 			typename KeyOfValue, typename Compare, typename Alloc >
+	void Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::erase
+	(typename Rb_tree<Key,Value,KeyOfValue,Compare,Alloc>::const_iterator pos)
+	{
+		erase(iterator(pos.node));
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
 	typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::size_type
 	Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::erase
   (const typename Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::key_type& x)
@@ -1051,6 +1073,15 @@ namespace ft
 				erase(first++);
 			}
 		}
+	}
+
+  template< typename Key, typename Value,
+			typename KeyOfValue, typename Compare, typename Alloc >
+	void Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::erase
+	(typename Rb_tree<Key,Value,KeyOfValue,Compare,Alloc>::const_iterator first,
+	 typename Rb_tree<Key,Value,KeyOfValue,Compare,Alloc>::const_iterator last)
+	{
+		erase(iterator(first.node), iterator(last.node));
 	}
 
   template< typename Key, typename Value,
