@@ -848,7 +848,7 @@ template< typename T, typename A >
 									  InputIterator last,
 									  typename vector<T, A>::pointer ptr)
 	{
-		pointer tmp = ptr;
+		//pointer tmp = ptr;
 		while (first != last)
 		{
 			try
@@ -859,7 +859,7 @@ template< typename T, typename A >
 			}
 			catch (...)
 			{
-				_destroy(tmp, ptr);
+				//_destroy(tmp, ptr);
 				throw;
 			}
 		}
@@ -1085,7 +1085,8 @@ template< typename T, typename A >
 		else
 		{
 			size_type old_size = size();
-			size_type len = old_size + (old_size < n ? n : old_size);
+			//size_type len = old_size + (old_size < n ? n : old_size);
+			size_type len = (2 * capacity() < n + old_size ? n + old_size : 2 * capacity());
 			pointer new_start = allocate(len);
 			pointer new_finish = new_start;
 			pointer except_ptr = new_start;
@@ -1282,12 +1283,27 @@ at the first occurrence.
 		return !(lhs < rhs);
 	}
 
+	/*
+	Swap reloading
+	*/
   template< typename T, typename Allocator > inline
 	void swap(vector<T, Allocator>& x, vector<T, Allocator>& y)
 	{
 		x.swap(y);
 	}
 
+}
+
+	/*
+	STD::Swap reloading
+	*/
+namespace std
+{
+  template< typename T, typename Allocator > inline
+	void swap(ft::vector<T, Allocator>& x, ft::vector<T, Allocator>& y)
+	{
+		x.swap(y);
+	}
 }
 
 #endif
