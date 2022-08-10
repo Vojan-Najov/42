@@ -103,6 +103,7 @@ void test_set_clear(void);
 void test_set_find(void);
 void test_set_lower_bound(void);
 void test_set_upper_bound(void);
+void test_set_equal_range(void);
 
 int main(void)
 {
@@ -176,6 +177,7 @@ int main(void)
 	test_set_find();
 	test_set_lower_bound();
 	test_set_upper_bound();
+	test_set_equal_range();
 
 	std::cout << "SUCCESS\n";
 
@@ -2831,3 +2833,16 @@ void test_set_upper_bound(void)
 		assert(s.upper_bound(i) == s.end());
 }
 
+void test_set_equal_range(void)
+{
+
+  set<int> myset;
+
+  for (int i=1; i<=5; i++) myset.insert(i*10);   // myset: 10 20 30 40 50
+
+  pair<set<int>::const_iterator,set<int>::const_iterator> ret;
+  ret = myset.equal_range(30);
+
+  std::cout << "the lower bound points to: " << *ret.first << '\n';
+  std::cout << "the upper bound points to: " << *ret.second << '\n';
+}

@@ -643,7 +643,7 @@ namespace ft
 
   template< typename Iter > inline
 	reverse_iterator<Iter>
-	operator+(typename reverse_iterator<Iter>::defference_type n,
+	operator+(typename reverse_iterator<Iter>::difference_type n,
 			  reverse_iterator<Iter> const& rev_it)
 	{
 		return reverse_iterator<Iter>(rev_it.base() - n);
@@ -653,6 +653,14 @@ namespace ft
 	typename reverse_iterator<Iter>::difference_type
 	operator-(reverse_iterator<Iter> const& lhs,
 			  reverse_iterator<Iter> const& rhs)
+	{
+		return rhs.base() - lhs.base();
+	}
+
+  template <typename Iter1, typename Iter2> inline
+	typename reverse_iterator<Iter1>::difference_type
+	operator-(reverse_iterator<Iter1> const& lhs,
+			  reverse_iterator<Iter2> const& rhs)
 	{
 		return rhs.base() - lhs.base();
 	}
@@ -727,6 +735,9 @@ namespace ft
 
   template<>
 	struct _is_integral_helper<signed char> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<char16_t> : public true_type {};
 
   template<>
 	struct _is_integral_helper<short int> : public true_type {};

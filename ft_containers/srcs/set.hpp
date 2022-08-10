@@ -127,7 +127,7 @@ namespace ft{
 			return rbt.upper_bound(k);
 		}
 
-		iterator equal_range(const key_type& k) const
+		ft::pair<iterator, iterator> equal_range(const key_type& k) const
 		{
 			return rbt.equal_range(k);
 		}

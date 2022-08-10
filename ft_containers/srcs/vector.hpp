@@ -770,7 +770,7 @@ template< typename T, typename A >
 	{
 		pointer posptr = position.base();
 		if (posptr + 1 != finish)
-			copy(posptr + 1, finish, posptr);
+			ft::copy(posptr + 1, finish, posptr);
 		--finish;
 		destroy(finish);
 		return position;
@@ -783,7 +783,7 @@ template< typename T, typename A >
 	{
 		pointer fptr = first.base();
 		pointer lptr = last.base();
-		pointer ptr = copy(lptr, finish, fptr);
+		pointer ptr = ft::copy(lptr, finish, fptr);
 		_destroy(ptr, finish);
 		finish -= (lptr - fptr);
 		return first;
