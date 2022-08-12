@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cassert>
 #include <iterator>
+#include <list>
 #include <vector>
 #include <stack>
 #include <map>
@@ -119,7 +120,7 @@ int main(void)
 	test_equal();
 	test_lexicograhical_compare();
 	test_pair();
-//	test_vector();
+// vector
 	test_vector_constructor();
 	test_vector_operator_assign();
 	test_vector_assign();
@@ -871,7 +872,7 @@ void test_vector_constructor(void)
 		assert(v[i] == i);
 	}
 	{
-	std::fstream f("test1.txt", std::fstream::in);
+	std::fstream f("./test/test1.txt", std::fstream::in);
 	std::istream_iterator<int> start(f);
 	std::istream_iterator<int> end;
 	vector<int> v(start, end);
@@ -976,7 +977,7 @@ void test_vector_assign(void)
 	{
 	vector<int> vvv;
 	vvv.assign(100, 0);
-	std::fstream fs("test1.txt", std::fstream::in);
+	std::fstream fs("./test/test1.txt", std::fstream::in);
 	std::istream_iterator<int> ii(fs);
 	vvv.assign(ii, std::istream_iterator<int>());
 	for(int i = 0; i < 5; ++i)
@@ -989,7 +990,7 @@ void test_vector_assign(void)
 	{
 	vector<int> vt;
 	vt.assign(1, 0);
-	std::fstream fs("test1.txt", std::fstream::in);
+	std::fstream fs("./test/test1.txt", std::fstream::in);
 	std::istream_iterator<int> ii(fs);
 	vt.assign(ii, std::istream_iterator<int>());
 	for(int i = 0; i < 5; ++i)
@@ -1384,7 +1385,7 @@ void test_vector_insert3(void)
 {
 	vector<int> v;
 	v.reserve(9);
-	std::fstream f("test1.txt", std::fstream::in);
+	std::fstream f("./test/test1.txt", std::fstream::in);
 	std::istream_iterator<int> it(f);
 	v.insert(v.begin(), 0);
 	v.insert(v.begin(), 0);
@@ -1394,7 +1395,7 @@ void test_vector_insert3(void)
 	for(int i(1); i < 6; ++i)
 		assert(v[i] == i);
 	f.close();
-	std::fstream f2("test1.txt", std::fstream::in);
+	std::fstream f2("./test/test1.txt", std::fstream::in);
 	std::istream_iterator<int> it2(f2);
 	v.insert(v.end(), it2, std::istream_iterator<int>());
 	assert(v.front() == 0);
@@ -1520,7 +1521,7 @@ void test_vector_swap(void)
 	assert(*i11 == 0 && *i12 == 3 && *i13 == 9);	
 	assert(*i21 == 9 && *i22 == 6 && *i23 == 0);	
 
-	std::swap(v1, v2);
+    v1.swap(v2);
 	assert(*i11 == 0 && *i12 == 3 && *i13 == 9);	
 	assert(*i21 == 9 && *i22 == 6 && *i23 == 0);	
 	assert(i11 == v2.begin() && i12 == v2.begin() + 3 && i13 == --v2.end());
@@ -1579,6 +1580,19 @@ void test_stack(void)
 	assert(ss > s);
 	assert(s <= ss);
 	assert(ss >= s);
+
+    {
+        std::list<std::string> l(v.begin(), v.end());
+    
+	    stack<std::string, std::list<std::string> > s(l);
+        assert(s.top() == "4");
+        s.pop();
+        assert(s.top() == "3");
+        s.pop();
+        s.push("6");
+        assert(s.top() == "6");
+        assert(s.size() == 3);
+    }
 }
 
 bool fncomp (char lhs, char rhs) {return lhs<rhs;}
@@ -2799,7 +2813,7 @@ void test_set_find(void)
 
 void test_set_lower_bound(void)
 {
-	std::cout << "test_set_lower_bound\n";
+	//std::cout << "test_set_lower_bound\n";
 	set<int> s;
 
 	for(int i = 0; i < 100; ++i)
@@ -2817,7 +2831,7 @@ void test_set_lower_bound(void)
 
 void test_set_upper_bound(void)
 {
-	std::cout << "test_set_upper_bound\n";
+	//std::cout << "test_set_upper_bound\n";
 	set<int> s;
 
 	for(int i = 0; i < 100; ++i)
@@ -2843,6 +2857,6 @@ void test_set_equal_range(void)
   pair<set<int>::const_iterator,set<int>::const_iterator> ret;
   ret = myset.equal_range(30);
 
-  std::cout << "the lower bound points to: " << *ret.first << '\n';
-  std::cout << "the upper bound points to: " << *ret.second << '\n';
+  assert(*ret.first == 30);
+  assert(*ret.second == 40);
 }

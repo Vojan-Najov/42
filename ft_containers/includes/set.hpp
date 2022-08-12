@@ -192,4 +192,17 @@ namespace ft{
 	}
 }
 
+/*
+STD::SWAP specialization
+*/
+namespace std
+{
+  template< typename Key, typename Compare, typename Allocator >
+	inline void swap(ft::set<Key,Compare,Allocator>& lhs,
+					 ft::set<Key,Compare,Allocator>& rhs)
+	{
+		lhs.swap(rhs);
+	}
+}
+
 #endif

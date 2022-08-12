@@ -227,7 +227,6 @@ namespace ft
   		void _range_insert(iterator position, InputIterator first,
 						   InputIterator last, std::input_iterator_tag);
 	
-		//заменить iteratot на  pointer
    		template< typename ForwardIterator >
   		void _range_insert(iterator position, ForwardIterator first,
 						   ForwardIterator last, std::forward_iterator_tag);
@@ -1294,9 +1293,10 @@ at the first occurrence.
 
 }
 
-	/*
-	STD::Swap reloading
-	*/
+/*
+STD::SWAP specialization
+*/
+
 namespace std
 {
   template< typename T, typename Allocator > inline

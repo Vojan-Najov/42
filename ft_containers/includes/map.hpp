@@ -1,4 +1,7 @@
 /******************************************************************************/
+#ifndef FT_MAP_HPP
+#define FT_MAP_HPP
+
 #include "rb_tree.hpp"
 
 namespace ft
@@ -207,5 +210,20 @@ namespace ft
 	{
 		lhs.swap(rhs);
 	}
+}
+
+/*
+STD::SWAP specialization
+*/
+namespace std
+{
+  template< typename Key, typename T, typename Compare, typename Alloc >
+	inline void swap(const ft::map<Key,T,Compare,Alloc>& lhs,
+					 const ft::map<Key,T,Compare,Alloc>& rhs)
+	{
+		lhs.swap(rhs);
+	}
 
 }
+
+#endif
