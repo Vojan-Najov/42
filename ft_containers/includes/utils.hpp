@@ -354,9 +354,6 @@ namespace ft
 						   typename iterator_traits<Iter>::pointer,
 						   typename iterator_traits<Iter>::reference >
 	{
-		template< typename U >
-		friend class reverse_iterator;
-
 	protected:
 		Iter current;
 
@@ -426,7 +423,7 @@ namespace ft
   template< typename Iter >
   template< typename U >
 	reverse_iterator<Iter>::reverse_iterator(reverse_iterator<U> const& revIt)
-		: current(revIt.current) {}
+		: current(revIt.base()) {}
 
   template< typename Iter >
 	reverse_iterator<Iter>& reverse_iterator<Iter>::operator=(
@@ -441,7 +438,7 @@ namespace ft
 	reverse_iterator<Iter>& reverse_iterator<Iter>::operator=(
 		reverse_iterator<U> const& other)
 	{
-		current = other.current;
+		current = other.base();
 		return *this;
 	}
 
@@ -643,7 +640,7 @@ namespace ft
 
   template< typename Iter > inline
 	reverse_iterator<Iter>
-	operator+(typename reverse_iterator<Iter>::defference_type n,
+	operator+(typename reverse_iterator<Iter>::difference_type n,
 			  reverse_iterator<Iter> const& rev_it)
 	{
 		return reverse_iterator<Iter>(rev_it.base() - n);
@@ -653,6 +650,14 @@ namespace ft
 	typename reverse_iterator<Iter>::difference_type
 	operator-(reverse_iterator<Iter> const& lhs,
 			  reverse_iterator<Iter> const& rhs)
+	{
+		return rhs.base() - lhs.base();
+	}
+
+  template <typename Iter1, typename Iter2> inline
+	typename reverse_iterator<Iter1>::difference_type
+	operator-(reverse_iterator<Iter1> const& lhs,
+			  reverse_iterator<Iter2> const& rhs)
 	{
 		return rhs.base() - lhs.base();
 	}
@@ -727,6 +732,9 @@ namespace ft
 
   template<>
 	struct _is_integral_helper<signed char> : public true_type {};
+
+  template<>
+	struct _is_integral_helper<char16_t> : public true_type {};
 
   template<>
 	struct _is_integral_helper<short int> : public true_type {};
@@ -948,9 +956,6 @@ namespace ft
   template< typename Iterator, typename Container >
 	struct normal_iterator
 	{
-		template< typename Iter, typename Cont >
-		friend struct normal_iterator;
-
 	protected:
 		Iterator current;
 	public:
@@ -964,6 +969,7 @@ namespace ft
 			pointer;
 		typedef typename iterator_traits<Iterator>::reference
 			reference;
+		typedef Iterator iterator_type;
 
 		normal_iterator(void);
 		explicit normal_iterator(Iterator const& it);
@@ -1003,7 +1009,7 @@ namespace ft
 									typename enable_if<(is_same<Iter,
 									typename Container::pointer>::value),
 									Container>::type> const& it)
-		: current(it.current) { };
+		: current(it.base()) { };
 
   template< typename Iterator, typename Container >
 	typename normal_iterator<Iterator, Container>::reference

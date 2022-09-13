@@ -77,17 +77,11 @@ namespace ft
 
 	struct Rb_tree_base_iterator 
 	{
-  		template< class Key, class Val, class KeyOfValue, class Compare,
-				  class Allocator >
-		friend class Rb_tree;
-
-
-	protected:
 		typedef Rb_tree_node_base::Base_ptr				Base_ptr;
 		typedef Rb_tree_node_base::Const_Base_ptr		Const_Base_ptr;
 
 		Base_ptr	node;
-	public:
+
 		Rb_tree_base_iterator(void) : node(0) {}
 		Rb_tree_base_iterator(Base_ptr node) : node(node) {}
 		void increment(void);
@@ -143,9 +137,6 @@ namespace ft
   template< typename Value >
 	struct Rb_tree_iterator : public Rb_tree_base_iterator
 	{
-		template< typename T >
-		friend struct Rb_tree_const_iterator;
-
 		typedef Value							value_type;
 		typedef value_type&						reference;
 		typedef value_type*						pointer;
@@ -195,6 +186,9 @@ namespace ft
 			Rb_tree_base_iterator::decrement();
 			return tmp;
 		}
+
+        Base_ptr    base(void) const
+        { return Rb_tree_base_iterator::node; }
 
 		friend bool operator==(const Self& lhs, const Self& rhs)
 		{ return lhs.node == rhs.node; }
@@ -1173,7 +1167,7 @@ namespace ft
 	{
 		ft::pair<const_iterator, const_iterator> p = equal_range(k);
 		size_type n = 0;
-		distance(p.first, p.second, n);
+		ft::distance(p.first, p.second, n);
 		return n;
 	}
 

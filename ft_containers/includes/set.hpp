@@ -127,7 +127,7 @@ namespace ft{
 			return rbt.upper_bound(k);
 		}
 
-		iterator equal_range(const key_type& k) const
+		ft::pair<iterator, iterator> equal_range(const key_type& k) const
 		{
 			return rbt.equal_range(k);
 		}
@@ -187,6 +187,19 @@ namespace ft{
   template< typename Key, typename Compare, typename Allocator >
 	inline void swap(set<Key,Compare,Allocator>& lhs,
 					 set<Key,Compare,Allocator>& rhs)
+	{
+		lhs.swap(rhs);
+	}
+}
+
+/*
+STD::SWAP specialization
+*/
+namespace std
+{
+  template< typename Key, typename Compare, typename Allocator >
+	inline void swap(ft::set<Key,Compare,Allocator>& lhs,
+					 ft::set<Key,Compare,Allocator>& rhs)
 	{
 		lhs.swap(rhs);
 	}
